@@ -126,18 +126,66 @@
        (productos fisicos/equipos/protesis), nada mas. "Apenas 1 tono por
        color" (pedido original JFC): -bg y -dk son EL MISMO tono que la
        base, ya no 3 grados — un color prendido o apagado, sin matices. */
-    --sim-verde:#00A651;    --sim-verde-bg:#00A651;    --sim-verde-dk:#00A651;
-    --sim-amarillo:#FFD400; --sim-amarillo-bg:#FFD400; --sim-amarillo-dk:#FFD400;
+    /* -X y -X-bg = EL MISMO tono plano (el estado). -X-dk = sombra del mismo
+       matiz, SOLO para bordes/biseles/sombras: nunca relleno, nunca texto. */
+    --sim-verde:#00A651;    --sim-verde-bg:#00A651;    --sim-verde-dk:#006933;
+    --sim-amarillo:#FFD400; --sim-amarillo-bg:#FFD400; --sim-amarillo-dk:#A88C00;
     --sim-plata:#C4CDD8;    --sim-plata-bg:#E8ECF2;    --sim-plata-dk:#8A9AAA;
-    --sim-naranja:#FF6B00;  --sim-naranja-bg:#FF6B00;  --sim-naranja-dk:#FF6B00;
-    --sim-rojo:#E8112D;     --sim-rojo-bg:#E8112D;     --sim-rojo-dk:#E8112D;
-    --sim-azul:#0057B8;     --sim-azul-mid:#0057B8;    --sim-azul-bg:#0057B8;   --sim-azul-dk:#0057B8;
-    --sim-negro:#1A1A1A;    --sim-negro-bg:#1A1A1A;    --sim-negro-dk:#1A1A1A;
+    --sim-naranja:#FF6B00;  --sim-naranja-bg:#FF6B00;  --sim-naranja-dk:#A84600;
+    --sim-rojo:#E8112D;     --sim-rojo-bg:#E8112D;     --sim-rojo-dk:#970A1D;
+    --sim-azul:#0057B8;     --sim-azul-mid:#0057B8;    --sim-azul-bg:#0057B8;   --sim-azul-dk:#00397A;
+    --sim-negro:#1A1A1A;    --sim-negro-bg:#1A1A1A;    --sim-negro-dk:#000000;
 
     /* — accents (contable / secundario) — mismo criterio, 1 tono */
-    --sim-cyan:#8E2DE2;     --sim-cyan-bg:#8E2DE2;     --sim-cyan-dk:#8E2DE2;
-    --sim-magenta:#EC0868;  --sim-magenta-bg:#EC0868;  --sim-magenta-dk:#EC0868;
+    --sim-cyan:#8E2DE2;     --sim-cyan-bg:#8E2DE2;     --sim-cyan-dk:#5B1B94;
+    --sim-magenta:#EC0868;  --sim-magenta-bg:#EC0868;  --sim-magenta-dk:#9C0444;
+
+    /* === CHASIS METALICO — Timex Sinclair 2068 (JFC 2026-08-05) ===
+       Referencia literal de la maquina: aluminio cepillado tibio, panel de
+       teclado charcoal, banda de ranuras finas, biseles duros (canto claro
+       arriba, canto oscuro abajo). Precision japonesa, gusto britanico.
+       Esto es CHROME: nunca compite con el color de estado de una tarjeta. */
+    --metal-claro:#DCDED9;
+    --metal:#C9CBC6;
+    --metal-medio:#B0B2AD;
+    --metal-oscuro:#8E918C;
+    --panel-charcoal:#3A3D42;
+    --panel-charcoal-dk:#2A2D32;
+    --bisel-luz:#F2F3F0;
+    --bisel-sombra:#7E817C;
   }
+
+  /* Superficie de aluminio cepillado: gradiente sutil + microrayas verticales.
+     Se usa como fondo de header/nav/paneles, nunca detras de texto pequeno. */
+  .metal-superficie{
+    background-color:var(--metal);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.30) 0 1px, rgba(0,0,0,.04) 1px 3px),
+      linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 55%, var(--metal-medio) 100%);
+    border-top:1px solid var(--bisel-luz);
+    border-bottom:1px solid var(--bisel-sombra);
+  }
+
+  /* Banda de ranuras (la rejilla del tope de la 2068). Decorativa, sin texto. */
+  .metal-ranuras{
+    height:14px;
+    background-image:repeating-linear-gradient(180deg,
+      var(--metal-medio) 0 1px, var(--metal-claro) 1px 3px);
+    border-top:1px solid var(--bisel-luz);
+    border-bottom:1px solid var(--bisel-sombra);
+  }
+
+  /* Tecla: canto claro arriba, sombra dura abajo. Sin blur gordo. */
+  .metal-tecla{
+    background-image:linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 100%);
+    border:1px solid var(--metal-oscuro);
+    border-top-color:var(--bisel-luz);
+    border-radius:6px;
+    box-shadow:0 2px 0 var(--bisel-sombra);
+    color:var(--ink) !important;
+    -webkit-text-fill-color:var(--ink) !important;
+  }
+  .metal-tecla:active{ transform:translateY(2px); box-shadow:0 0 0 var(--bisel-sombra); }
 
   /* === FAILSAFE COLORES — navegadores sin CSS variables (Chrome <49, IE, Opera Mini)
      JFC 2026-07-03. Colores literales como base; el bloque :root los sobreescribe
@@ -237,7 +285,13 @@
 
   /* ================= HEADER ================= */
   header{
-    background:var(--azul-oscuro);
+    /* Panel de teclado de la Timex Sinclair 2068: charcoal con veta sutil y
+       una banda de ranuras finas al pie (la rejilla del tope de la maquina). */
+    background-color:var(--panel-charcoal);
+    background-image:
+      repeating-linear-gradient(180deg, rgba(255,255,255,.035) 0 1px, rgba(0,0,0,.05) 1px 4px),
+      linear-gradient(180deg, #43464C 0%, var(--panel-charcoal) 60%, var(--panel-charcoal-dk) 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10), inset 0 -1px 0 rgba(0,0,0,.35);
     color:var(--blanco-calido);
     padding:18px 20px;
     min-height:var(--header-h);
@@ -361,8 +415,13 @@
   nav{
     display:flex;
     gap:4px;
-    background:var(--paper-deep);
-    border-top:2px solid var(--ink);
+    /* Aluminio cepillado: microrayas verticales + gradiente vertical suave. */
+    background-color:var(--metal);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.28) 0 1px, rgba(0,0,0,.045) 1px 3px),
+      linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 55%, var(--metal-medio) 100%);
+    border-top:2px solid var(--bisel-sombra);
+    box-shadow:inset 0 1px 0 var(--bisel-luz);
     position:fixed;
     left:0; right:0; bottom:0;
     /* ALTURA FIJA + content-box (homologado de AMIGABLE, 2026-07-28).
