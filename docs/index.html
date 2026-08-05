@@ -88,36 +88,32 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Source+Sans+3:wght@400;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* === PALETA BRASILERA VIVIDA (Consultorio-123, JFC 2026-08-04) ===
-       Reemplaza la escala Sinclair Bloom/Kyoto Muted heredada de Consultorio 123.
-       Un solo tono SOLIDO por color como identidad; -bg/-dk son tinte claro y
-       sombra oscura de ESA MISMA familia (no colores nuevos), para conservar
-       las 3 intensidades del semaforo Simon sin volver a la mezcla apagada.
-       Mismos NOMBRES de variable que Consultorio 123 a proposito: todo el resto
-       del archivo (4700+ lineas) las referencia y no hay que tocarlas. */
-    --crema:#FFF8ED;          /* fondo calido vivo, no frio */
-    --blanco-calido:#FFF8ED;
-    --azul-oscuro:#1A1A1A;    /* tinta principal — solida, nunca azul en texto */
-    --azul-medio:#C45500;     /* texto secundario — laranja oscuro, NUNCA azul */
-    --dorado:#FF6B00;         /* alias -> laranja vivo */
-    --ambar:#FF6B00;          /* alias -> laranja vivo */
-    --negro:#1A1A1A;
-    --verde:#00A651;
-    --verde-claro:#B8F2D4;
-    --amarillo:#FFD400;
-    --amarillo-claro:#FFF3B0;
-    --rojo:#E8112D;
-    --rojo-claro:#FFC2CB;
-    --azul-op:#0057B8;
-    --azul-op-claro:#B3D4FF;
+    /* --- superficies y tinta: chrome GENERAL de la app, vuelve al neutral
+       Sinclair original (JFC 2026-08-04: "lo de los colores era para la
+       paleta del inventario", NO para el candado de PIN ni el chasis) --- */
+    --crema:#F8F9FB;
+    --blanco-calido:#F8F9FB;
+    --azul-oscuro:#0F1923;
+    --azul-medio:#2E6278;
+    --dorado:#5294AC;
+    --ambar:#E86040;
+    --negro:#1e1a12;
+    --verde:#00C87A;
+    --verde-claro:#C0F5E0;
+    --amarillo:#5294AC;
+    --amarillo-claro:#E8ECF2;
+    --rojo:#E8365D;
+    --rojo-claro:#FAD5DE;
+    --azul-op:#5294AC;
+    --azul-op-claro:#D4ECF5;
 
     /* --- nuevas variables del sistema --- */
-    --paper-deep:#F0E4CE;
-    --ink:#1A1A1A;
-    --ink-soft:#7A3C00;
-    --rust:#FF6B00;
-    --rust-deep:#C45500;
-    --brass:#FF6B00;
+    --paper-deep:#E2E8ED;
+    --ink:#0F1923;
+    --ink-soft:#2C3E50;
+    --rust:#E86040;
+    --rust-deep:#C05000;
+    --brass:#5294AC;
     --font-display:"Space Grotesk", "Avenir Next Condensed", sans-serif;
     --font-body:"Source Sans 3", "Segoe UI", sans-serif;
     --font-mono:"JetBrains Mono", monospace;
@@ -126,23 +122,21 @@
     --sidebar-w:248px;
     --header-h:104px;
     /* === SISTEMA SIMON — Brasilero Vivido, JFC 2026-08-04 ===
-       Inventario (core):  Verde · Amarillo · Naranja · Rojo · Azul · Negro
-       Accents (contable / secundario):  Roxo · Magenta
-       3 grados por color = -bg (tinte claro) · base (tono vivo) · -dk (sombra oscura),
-       misma familia de color siempre — nunca una mezcla apagada. */
+       ESTO es lo unico que cambia de paleta: el semaforo de INVENTARIO
+       (productos fisicos/equipos/protesis), nada mas. "Apenas 1 tono por
+       color" (pedido original JFC): -bg y -dk son EL MISMO tono que la
+       base, ya no 3 grados — un color prendido o apagado, sin matices. */
+    --sim-verde:#00A651;    --sim-verde-bg:#00A651;    --sim-verde-dk:#00A651;
+    --sim-amarillo:#FFD400; --sim-amarillo-bg:#FFD400; --sim-amarillo-dk:#FFD400;
+    --sim-plata:#C4CDD8;    --sim-plata-bg:#E8ECF2;    --sim-plata-dk:#8A9AAA;
+    --sim-naranja:#FF6B00;  --sim-naranja-bg:#FF6B00;  --sim-naranja-dk:#FF6B00;
+    --sim-rojo:#E8112D;     --sim-rojo-bg:#E8112D;     --sim-rojo-dk:#E8112D;
+    --sim-azul:#0057B8;     --sim-azul-mid:#0057B8;    --sim-azul-bg:#0057B8;   --sim-azul-dk:#0057B8;
+    --sim-negro:#1A1A1A;    --sim-negro-bg:#1A1A1A;    --sim-negro-dk:#1A1A1A;
 
-    /* — Inventario Simon core — */
-    --sim-verde:#00A651;    --sim-verde-bg:#B8F2D4;   --sim-verde-dk:#007A3D;
-    --sim-amarillo:#FFD400; --sim-amarillo-bg:#FFF3B0; --sim-amarillo-dk:#C79E00;
-    --sim-plata:#F0E4CE;    --sim-plata-bg:#FFF8ED;   --sim-plata-dk:#C9B68C;
-    --sim-naranja:#FF6B00;  --sim-naranja-bg:#FFD9B3; --sim-naranja-dk:#C45500;
-    --sim-rojo:#E8112D;     --sim-rojo-bg:#FFC2CB;    --sim-rojo-dk:#9E0A1D;
-    --sim-azul:#0057B8;     --sim-azul-mid:#3D82D6;   --sim-azul-bg:#B3D4FF;   --sim-azul-dk:#003D7D;
-    --sim-negro:#1A1A1A;    --sim-negro-bg:#3A3A3A;   --sim-negro-dk:#000000;
-
-    /* — accents (contable / secundario) — */
-    --sim-cyan:#8E2DE2;     --sim-cyan-bg:#E0C6FF;    --sim-cyan-dk:#5B1B94;
-    --sim-magenta:#EC0868;  --sim-magenta-bg:#FFC2DF; --sim-magenta-dk:#A00448;
+    /* — accents (contable / secundario) — mismo criterio, 1 tono */
+    --sim-cyan:#8E2DE2;     --sim-cyan-bg:#8E2DE2;     --sim-cyan-dk:#8E2DE2;
+    --sim-magenta:#EC0868;  --sim-magenta-bg:#EC0868;  --sim-magenta-dk:#EC0868;
   }
 
   /* === FAILSAFE COLORES — navegadores sin CSS variables (Chrome <49, IE, Opera Mini)
