@@ -1,0 +1,49 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "poscuenca",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "server.js"
+      ],
+      "port": 3001
+    },
+    {
+      "name": "amigable-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8734",
+        "--directory",
+        "public"
+      ],
+      "port": 8734
+    },
+    {
+      "name": "amigable-docs",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8736",
+        "--directory",
+        "C:\\00 Projects\\friendly-123\\docs"
+      ],
+      "port": 8736
+    },
+    {
+      "name": "f123-fresh",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8961",
+        "--directory",
+        "C:\\00 Projects\\friendly-123\\docs"
+      ],
+      "port": 8961
+    }
+  ]
+}
