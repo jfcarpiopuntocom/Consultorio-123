@@ -1430,14 +1430,21 @@
         <p style="margin:0;font-size:14px;color:var(--ink);" data-i18n-html="sold.step4html">4. If you don't ring up live, use <strong>Day close</strong> at the end.</p>
       </div>
     </details>
-    <!-- Modo de venta: dos RUTAS, no una restricción. "Quick tap" (default,
-         sin cambios) para una salida suelta; "Build a sale" para juntar
-         varios productos, ver el subtotal, y sellar todo junto con el
-         cliente ya elegido arriba. Ninguna reemplaza a la otra. -->
-    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-      <button id="btnModoQuick" data-modo-venta="quick" style="font-size:14px;font-weight:700;padding:7px 14px;border-radius:20px;border:2px solid var(--azul-medio,#2c4a68);cursor:pointer;">⚡ Quick tap</button>
-      <button id="btnModoCarrito" data-modo-venta="carrito" style="font-size:14px;font-weight:700;padding:7px 14px;border-radius:20px;border:2px solid var(--azul-medio,#2c4a68);cursor:pointer;">🧺 Build a sale</button>
+    <!-- Dos RUTAS para registrar salida de insumos, ninguna reemplaza a la
+         otra (concretado para consultorio, JFC 2026-08-05):
+           SALIDA RAPIDA  un toque = un insumo consumido. Para el gasto suelto
+                          del dia: un par de guantes, una jeringa.
+           ARMAR ATENCION junta todo lo que se uso en UNA atencion o
+                          procedimiento, muestra el total y lo registra de una
+                          sola vez contra el paciente elegido arriba. Asi el
+                          consumo queda atado a la atencion que lo causo, que
+                          es lo que despues alimenta el costo real. -->
+    <div style="display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+      <button id="btnModoQuick" data-modo-venta="quick" style="font-size:14px;font-weight:700;padding:7px 14px;border-radius:20px;border:2px solid var(--azul-medio,#2c4a68);cursor:pointer;" data-i18n="sold.modeQuick">⚡ Salida rápida</button>
+      <button id="btnModoCarrito" data-modo-venta="carrito" style="font-size:14px;font-weight:700;padding:7px 14px;border-radius:20px;border:2px solid var(--azul-medio,#2c4a68);cursor:pointer;" data-i18n="sold.modeVisit">🧺 Armar atención</button>
+    
     </div>
+    <p id="oc-modo-ayuda" data-i18n-html="sold.modeHint" style="font-size:14px;line-height:1.45;color:#3A4048;margin:0 0 12px;">Un toque descuenta un insumo. Si estás atendiendo a alguien, usa <strong>Armar atención</strong> para juntar todo lo que usaste y registrarlo junto.</p>
     <!-- Buscador/filtro rapido ANTES del grid tactil (JFC 2026-07-30). Solo
          filtra los botones ya renderizados por cargarGridVender() - no
          toca esa logica ni el listener delegado de venta. -->
