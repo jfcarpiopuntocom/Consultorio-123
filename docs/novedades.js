@@ -139,7 +139,11 @@
     var b = document.createElement("button");
     b.id = "oc-nav-novedades";
     b.dataset.vista = "novedades";
-    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c-4 3.4-6 7-6 10.2A6 6 0 0 0 12 21a6 6 0 0 0 6-8.3c0-3.2-2-6.8-6-10.2z"></path></svg><span>What’s New</span>';
+    // BUG FIJADO (JFC 2026-08-05): este span estaba en inglés fijo, ignoraba
+    // el idioma activo -- salía "What's New" aunque la app estuviera en
+    // español. Se lee el idioma real via OCI18n en vez de un string suelto.
+    var esLang = (function () { try { return window.OCI18n && window.OCI18n.getLang() === "es"; } catch (_) { return false; } })();
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c-4 3.4-6 7-6 10.2A6 6 0 0 0 12 21a6 6 0 0 0 6-8.3c0-3.2-2-6.8-6-10.2z"></path></svg><span>' + (esLang ? "Novedades" : "What’s New") + '</span>';
     refBtn.insertAdjacentElement("afterend", b);
     b.addEventListener("click", function () {
       document.querySelectorAll("nav button").forEach(function (x) { x.classList.remove("activo"); });

@@ -661,6 +661,7 @@
   .filtros-estado button[data-estado="naranja"]::before{background:var(--sim-naranja);}
   .filtros-estado button[data-estado="negro"]::before{background:var(--sim-negro);}
   .filtros-estado button[data-estado=""]{padding-left:14px;}
+  .filtros-estado button[data-estado=""]::before{content:none;}
   .filtros-estado button.activo{
     background:var(--azul-medio);
     color:var(--blanco-calido);
@@ -1062,7 +1063,7 @@
     <span class="oc-bilingual" data-i18n="brand.bilingual">Truly bilingual</span>
   </div>
   <div class="selector-ubicacion">
-    <label for="selectUbicacion" data-i18n="header.locationLabel">Store / shelf</label>
+    <label for="selectUbicacion" data-i18n="header.locationLabel">Location / office</label>
     <select id="selectUbicacion"></select>
   </div>
 </header>

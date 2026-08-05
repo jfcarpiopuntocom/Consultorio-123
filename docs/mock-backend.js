@@ -45,7 +45,7 @@
       },
       {
           "id": "bookshelf",
-          "nombre": "Sede Norte — Consulta Externa",
+          "nombre": "Sede Norte",
           "activa": true,
           "tipo": "socio",
           "sucursalId": "suc02",
@@ -73,7 +73,7 @@
       },
       {
           "id": "fairbooth",
-          "nombre": "Campaña de Salud — Fin de Semana",
+          "nombre": "Campaña de Salud",
           "activa": true,
           "tipo": "consignacion",
           "sucursalId": "suc03",
