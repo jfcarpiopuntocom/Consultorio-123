@@ -516,10 +516,10 @@
     display:flex;
     align-items:center;
   }
-  .lista-alertas li.verde{background:var(--sim-verde-bg); color:var(--sim-verde-dk); border:2px solid var(--sim-verde);}
-  .lista-alertas li.amarillo{background:var(--sim-amarillo-bg); color:var(--sim-amarillo-dk); border:2px solid var(--sim-amarillo);}
-  .lista-alertas li.naranja{background:var(--sim-naranja-bg); color:var(--sim-naranja-dk); border:2px solid var(--sim-naranja);}
-  .lista-alertas li.rojo{background:var(--sim-rojo-bg); color:var(--sim-rojo-dk); border:2px solid var(--sim-rojo);}
+  .lista-alertas li.verde{background:var(--sim-verde); color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:2px solid var(--sim-verde-dk);}
+  .lista-alertas li.amarillo{background:var(--sim-amarillo); color:#1A1A1A !important; -webkit-text-fill-color:#1A1A1A !important; border:2px solid var(--sim-amarillo-dk);}
+  .lista-alertas li.naranja{background:var(--sim-naranja); color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:2px solid var(--sim-naranja-dk);}
+  .lista-alertas li.rojo{background:var(--sim-rojo); color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; border:2px solid var(--sim-rojo-dk);}
   .lista-alertas li.negro{background:var(--sim-negro-bg); color:#E0E0E2; border:2px solid var(--sim-negro);}
 
   /* ================= INVENTARIO ================= */
@@ -737,9 +737,9 @@
     border-radius:20px;
     margin-top:10px;
   }
-  .badge-estado.verde{background:var(--sim-verde-bg); color:var(--sim-verde-dk);}
-  .badge-estado.amarillo{background:var(--sim-amarillo-bg); color:var(--sim-amarillo-dk);}
-  .badge-estado.rojo{background:var(--sim-rojo-bg); color:var(--sim-rojo-dk);}
+  .badge-estado.verde{background:var(--sim-verde); color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;}
+  .badge-estado.amarillo{background:var(--sim-amarillo); color:#1A1A1A !important; -webkit-text-fill-color:#1A1A1A !important;}
+  .badge-estado.rojo{background:var(--sim-rojo); color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;}
   /* Botones de evaluación de clientes (2026-07-08) */
   .oc-ev-btn{
     background:transparent; border:1.5px solid #D7E0E8; border-radius:6px;
@@ -2482,7 +2482,7 @@ async function cargarHoy(){
   const puntito = (color) => `<span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:currentColor;margin-right:9px;flex-shrink:0;"></span>`;
   const lista = document.getElementById("listaAlertas");
   if (data.alertas.length === 0){
-    lista.innerHTML = `<li class="verde" style="background:var(--sim-verde-bg); color:var(--sim-verde-dk); border:2px solid var(--sim-verde);">${puntito()}${t("hoy.noAlerts")}</li>`;
+    lista.innerHTML = `<li class="verde" style="background:var(--sim-verde); color:#FFFFFF; -webkit-text-fill-color:#FFFFFF; border:2px solid var(--sim-verde-dk);">${puntito()}${t("hoy.noAlerts")}</li>`;
   } else {
     lista.innerHTML = data.alertas.map(a =>
       `<li class="${a.estado}">${puntito()}${a.mensaje}</li>`
@@ -4338,16 +4338,16 @@ async function cargarAvanzado(){
     <tr><th style="background:var(--sim-azul-dk);color:#fff;">${t("adv.concept")}</th><th style="background:var(--sim-azul-dk);color:#fff;">${t("adv.amount")}</th></tr>
     <tr><td>${t("adv.pl.revenue")}</td><td>${fmtMoney(pl.ingresos)}</td></tr>
     <tr><td>${t("adv.pl.cogs")}</td><td>${fmtMoney(pl.costoVentas)}</td></tr>
-    <tr style="color:var(--sim-verde-dk);"><td>${t("adv.pl.grossProfit")}</td><td>${fmtMoney(pl.utilidadBruta)}</td></tr>
+    <tr style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;"><td>${t("adv.pl.grossProfit")}</td><td>${fmtMoney(pl.utilidadBruta)}</td></tr>
     <tr><td>${t("adv.pl.opex")}</td><td>${fmtMoney(pl.gastosOperativos)}</td></tr>
-    <tr style="background:var(--sim-verde-bg);"><td><strong style="color:var(--sim-verde-dk);">${t("adv.pl.netProfit")}</strong></td><td><strong style="color:var(--sim-verde-dk);">${fmtMoney(pl.utilidadNeta)}</strong></td></tr>
+    <tr style="background:var(--sim-verde);"><td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${t("adv.pl.netProfit")}</strong></td><td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${fmtMoney(pl.utilidadNeta)}</strong></td></tr>
   `;
 
   document.getElementById("tablaBalance").innerHTML = `
     <tr><th style="background:var(--sim-azul-dk);color:#fff;">${t("adv.concept")}</th><th style="background:var(--sim-azul-dk);color:#fff;">${t("adv.amount")}</th></tr>
     <tr><td>${t("adv.bal.estCash")}</td><td>${fmtMoney(balance.activos.efectivoEstimado)}</td></tr>
     <tr><td>${t("adv.bal.valuedInv")}</td><td>${fmtMoney(balance.activos.inventarioValorizado)}</td></tr>
-    <tr style="background:var(--sim-azul-bg);"><td><strong style="color:var(--sim-azul-dk);">${t("adv.bal.totalAssets")}</strong></td><td><strong style="color:var(--sim-azul-dk);">${fmtMoney(balance.activos.total)}</strong></td></tr>
+    <tr style="background:var(--sim-azul);"><td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${t("adv.bal.totalAssets")}</strong></td><td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${fmtMoney(balance.activos.total)}</strong></td></tr>
   `;
 
   document.getElementById("tablaValorizado").innerHTML = `
@@ -4367,12 +4367,12 @@ async function cargarAvanzado(){
         <td style="color:var(--sim-verde-dk);font-weight:600;">${fmtMoney(p.utilidadPotencial)}</td>
       </tr>
     `).join("")}
-    <tr style="background:var(--sim-azul-bg);">
-      <td><strong style="color:var(--sim-azul-dk);">${t("adv.val.total")}</strong></td>
+    <tr style="background:var(--sim-azul);">
+      <td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${t("adv.val.total")}</strong></td>
       <td></td>
-      <td><strong style="color:var(--sim-azul-dk);">${fmtMoney(valorizado.totales.valorCosto)}</strong></td>
-      <td><strong style="color:var(--sim-azul-dk);">${fmtMoney(valorizado.totales.valorVenta)}</strong></td>
-      <td><strong style="color:var(--sim-verde-dk);">${fmtMoney(valorizado.totales.utilidadPotencial)}</strong></td>
+      <td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${fmtMoney(valorizado.totales.valorCosto)}</strong></td>
+      <td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${fmtMoney(valorizado.totales.valorVenta)}</strong></td>
+      <td><strong style="color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;">${fmtMoney(valorizado.totales.utilidadPotencial)}</strong></td>
     </tr>
   `;
 }
