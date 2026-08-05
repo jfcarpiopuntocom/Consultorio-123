@@ -144,9 +144,26 @@ async function handleCheckin(req, env) {
     firstSeen: existente.firstSeen || Date.now(),
     lastSeen: Date.now(),
     lastAccion: body.accion || "checkin",
+
+    // ATESTACION DE RESPALDO (JFC 2026-08-05) — el corazon del panel.
+    // La app reporta PRUEBAS sobre su respaldo, jamas el respaldo ni un solo
+    // dato del consultorio: cuando fue el ultimo, cuantos registros abarcaba,
+    // y la cabeza de la cadena de hash. Con eso el panel puede vigilar la
+    // SALUD de los datos de un cliente sin poder leer ni uno solo de ellos.
+    // Si un dia esto empieza a recibir contenido real, se rompio el manifiesto.
+    respaldoUltimo: Number(body.respaldoUltimo) || existente.respaldoUltimo || 0,
+    respaldoRegistros: Number(body.respaldoRegistros) || existente.respaldoRegistros || 0,
+    cadenaCabeza: (body.cadenaCabeza ? String(body.cadenaCabeza).slice(0, 80) : "") || existente.cadenaCabeza || "",
+    cadenaIntegra: typeof body.cadenaIntegra === "boolean" ? body.cadenaIntegra : (existente.cadenaIntegra !== false),
+    // Aviso remoto pendiente: lo enciende el panel, lo apaga la app al acusarlo.
+    avisoRespaldo: existente.avisoRespaldo || null,
   };
+  // Si la app acusa recibo del aviso, se apaga aqui mismo.
+  if (body.avisoVisto && registro.avisoRespaldo) registro.avisoRespaldo = null;
   await guardarConHistorial(env, instanceId, registro);
-  return json({ ok: true, estado: registro.estado });
+  // El aviso viaja de vuelta en la respuesta del propio checkin: no hace falta
+  // push ni websockets para que un recordatorio llegue al dispositivo.
+  return json({ ok: true, estado: registro.estado, avisoRespaldo: registro.avisoRespaldo || null });
 }
 
 // /recover-pin — envía el PIN del dueño a su correo vía Resend.
@@ -426,6 +443,25 @@ export default {
       reg.estado = normalizarEstado(body.estado);
       await guardarConHistorial(env, instanceId, reg);
       return json({ ok: true });
+    }
+
+    // POST /licencias/:id/aviso — master. Enciende un recordatorio de respaldo
+    // que viaja al dispositivo en la respuesta de su proximo checkin. NO toca
+    // ni un dato del cliente: solo deja una nota para que su propia app le
+    // insista. Es la unica forma honesta de "forzar" un respaldo sin
+    // meternos donde no nos llaman.
+    const mAviso = url.pathname.match(/^\/licencias\/([^/]+)\/aviso$/);
+    if (mAviso && req.method === "POST") {
+      if (!requireMasterKey(req, env)) return json({ error: "Master Key incorrecta" }, 401);
+      const instanceId = decodeURIComponent(mAviso[1]);
+      const raw = await env.LICENCIAS.get(`inst:${instanceId}`);
+      if (!raw) return json({ error: "Instancia no encontrada" }, 404);
+      const reg = JSON.parse(raw);
+      let body; try { body = await req.json(); } catch (_) { body = {}; }
+      const nivel = ["suave", "firme", "insistente"].includes(body.nivel) ? body.nivel : "suave";
+      reg.avisoRespaldo = { nivel, ts: Date.now(), nota: String(body.nota || "").slice(0, 240) };
+      await guardarConHistorial(env, instanceId, reg);
+      return json({ ok: true, aviso: reg.avisoRespaldo });
     }
 
     // Historial de versiones de una instancia (master, homologado)

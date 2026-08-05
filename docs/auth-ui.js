@@ -40,6 +40,67 @@
   // ni nada de negocio. Ver worker.js para el lado servidor de esta regla.
   var _ocEp = "=YXZk5ycyV2ay92du8WawJXYjZmauMXYpNmblNWas1yMyEzbpJ3b0xWdz52bj9yL6MHc0RHa";
   var OC_WORKER_URL = (function () { try { return atob(_ocEp.split("").reverse().join("")); } catch (_) { return ""; } })();
+  // Muestra la nota que la consola dejo en la licencia. Una sola vez: al
+  // acusarla, el proximo checkin la apaga en el servidor. NO toca datos.
+  function mostrarAvisoRespaldoRemoto(aviso) {
+    if (document.getElementById("oc-aviso-respaldo-remoto")) return;
+    var esES = true;
+    try { esES = !window.OCI18n || window.OCI18n.getLang() !== "en"; } catch (_) {}
+    var textos = {
+      suave:      esES ? "Hace un tiempo que no respaldas. Cuando puedas, descarga una copia." : "It's been a while since your last backup. Download a copy when you can.",
+      firme:      esES ? "Llevas varias semanas sin respaldar. Descarga una copia hoy." : "You've gone weeks without a backup. Download a copy today.",
+      insistente: esES ? "Tus datos llevan más de un mes sin respaldo. Si este dispositivo falla, se pierden. Descarga una copia ahora." : "Your data has gone over a month without a backup. If this device fails, it's gone. Download a copy now."
+    };
+    var d = document.createElement("div");
+    d.id = "oc-aviso-respaldo-remoto";
+    d.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:9998;padding:14px 16px;" +
+      "background-image:linear-gradient(180deg,#F5C518 0%,#E0AF00 100%);border-top:1px solid #9E7C00;" +
+      "box-shadow:0 -2px 10px rgba(0,0,0,.24);display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;";
+    d.innerHTML =
+      '<span style="font-size:16px;font-weight:700;color:#14181C;-webkit-text-fill-color:#14181C;max-width:640px;">' +
+      (textos[aviso.nivel] || textos.suave) + "</span>" +
+      '<button id="oc-aviso-respaldar" style="min-height:44px;padding:10px 20px;border:1px solid #7C817A;border-radius:7px;' +
+      'background-image:linear-gradient(180deg,#FCFDFC 0%,#D8DBD6 100%);font-weight:800;font-size:15px;cursor:pointer;color:#14181C;">' +
+      (esES ? "Respaldar ahora" : "Back up now") + "</button>" +
+      '<button id="oc-aviso-cerrar" style="min-height:44px;padding:10px 16px;border:none;background:none;' +
+      'font-weight:700;font-size:15px;cursor:pointer;color:#14181C;text-decoration:underline;">' +
+      (esES ? "Después" : "Later") + "</button>";
+    document.body.appendChild(d);
+    var cerrar = function () {
+      d.remove();
+      // Acusa recibo: el proximo checkin apaga la nota en el servidor.
+      try { enviarHeartbeat({ instanceId: (window.OCDeviceId || ""), accion: "aviso-visto", avisoVisto: true }); } catch (_) {}
+    };
+    d.querySelector("#oc-aviso-cerrar").addEventListener("click", cerrar);
+    d.querySelector("#oc-aviso-respaldar").addEventListener("click", function () {
+      cerrar();
+      var b = document.querySelector('nav button[data-vista="avanzado"]');
+      if (b) b.click();
+    });
+  }
+
+  // Reune SOLO metadatos verificables del respaldo local. Nunca contenido.
+  function atestacionRespaldo() {
+    var out = {};
+    try {
+      var ultimo = 0;
+      // backup-scheduler.js deja la marca del ultimo respaldo hecho.
+      ["c123_backup_last_v1", "c123_backup_last_v", "f123_backup_last_v1"].forEach(function (k) {
+        var v = parseInt(localStorage.getItem(k) || "0", 10);
+        if (v > ultimo) ultimo = v;
+      });
+      if (ultimo) out.respaldoUltimo = ultimo;
+    } catch (_) {}
+    try {
+      var meta = window.AMG && window.AMG.Hechos && window.AMG.Hechos.meta ? window.AMG.Hechos.meta() : null;
+      if (meta) {
+        if (meta.contador) out.respaldoRegistros = meta.contador;
+        if (meta.ultimoHash) out.cadenaCabeza = String(meta.ultimoHash).slice(0, 80);
+      }
+    } catch (_) {}
+    return out;
+  }
+
   async function enviarHeartbeat(datos) {
     try {
       var url = (localStorage.getItem("c123_cf_worker_url") || "").trim() || OC_WORKER_URL;
@@ -55,6 +116,14 @@
         cedula: trim(datos.cedula, 40),
         activatedAt: datos.activatedAt,
         accion: trim(datos.accion, 30),
+        // ATESTACION DE RESPALDO (JFC 2026-08-05). Van PRUEBAS sobre los datos,
+        // jamas los datos: cuando fue el ultimo respaldo, cuantos registros
+        // abarcaba y la cabeza de la cadena de hash. Con eso la consola puede
+        // avisar a tiempo que un consultorio esta por perderlo todo, sin poder
+        // leer ni un solo registro suyo. Si algun dia aqui empieza a viajar
+        // contenido real, se rompio el manifiesto no-cloud: revisar.
+        ...atestacionRespaldo(),
+        avisoVisto: !!datos.avisoVisto,
       };
       var ctrl = new AbortController();
       var t = setTimeout(function () { ctrl.abort(); }, 8000);
@@ -67,6 +136,10 @@
         });
         if (res && res.ok) {
           var r = await res.json();
+          // Nota remota pedida desde la consola: la app se la muestra al dueno.
+          // No es una accion sobre sus datos, es un recordatorio para que EL
+          // respalde con sus propias manos.
+          try { if (r && r.avisoRespaldo) mostrarAvisoRespaldoRemoto(r.avisoRespaldo); } catch (_) {}
           if (r && typeof r.estado === "string" && /^[a-z]{2,20}$/.test(r.estado)) { // whitelist 2026-07-17: una respuesta corrupta del worker no puede escribir estados basura
             var owned = JSON.parse(localStorage.getItem("f123_owned") || "null") || {};
             owned.licenseEstado = r.estado;
