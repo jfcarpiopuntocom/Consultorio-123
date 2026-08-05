@@ -25,8 +25,8 @@
 //     es una fase futura, documentada aparte.
 // ============================================================================
 (function () {
-  const RELAY_URL = "wss://amigable-sync-relay.jfcarpio.workers.dev/sala/";
-  const ROOM_KEY = "amigable_sync_room"; // {codigo} — si no existe, sync apagado
+  const RELAY_URL = "wss://consultorio123-sync-relay.jfcarpio.workers.dev/sala/";
+  const ROOM_KEY = "c123_sync_room"; // {codigo} — si no existe, sync apagado
   const DEVICE_ID_KEY = "amigable_device_id";
   const LAMPORT_KEY = "amigable_sync_lamport";
   const COLA_KEY = "amigable_sync_cola"; // ops pendientes de enviar (offline)

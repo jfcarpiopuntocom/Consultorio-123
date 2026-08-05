@@ -1,0 +1,21 @@
+# Worker de sync propio de Consultorio-123 — separado de friendly-123/AMIGABLE
+# a proposito (mismo error que ya paso una vez: compartir nombre/KV entre
+# proyectos hace que un deploy sobreescriba al otro).
+name = "consultorio123-sync-relay"
+main = "worker.js"
+compatibility_date = "2026-07-10"
+preview_urls = false
+
+[[durable_objects.bindings]]
+name = "SALAS"
+class_name = "Sala"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Sala"]
+
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true

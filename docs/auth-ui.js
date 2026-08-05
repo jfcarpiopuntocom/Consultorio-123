@@ -38,11 +38,11 @@
   // (todos opcionales, solo si el dueno los ingreso), y el estado de accion
   // (register/login/update). JAMAS productos, ventas, clientes, inventario,
   // ni nada de negocio. Ver worker.js para el lado servidor de esta regla.
-  var _ocEp = "=YXZk5ycyV2ay92du8WawJXYjZmauMXYpNmblNWas1SZsJWYnlWbh9yL6MHc0RHa";
+  var _ocEp = "=YXZk5ycyV2ay92du8WawJXYjZmauMXYpNmblNWas1yMyEzbpJ3b0xWdz52bj9yL6MHc0RHa";
   var OC_WORKER_URL = (function () { try { return atob(_ocEp.split("").reverse().join("")); } catch (_) { return ""; } })();
   async function enviarHeartbeat(datos) {
     try {
-      var url = (localStorage.getItem("f123_cf_worker_url") || "").trim() || OC_WORKER_URL;
+      var url = (localStorage.getItem("c123_cf_worker_url") || "").trim() || OC_WORKER_URL;
       if (!url) return;
       var trim = function (v, n) { if (v == null) return v; var s = String(v); return s.length > n ? s.slice(0, n) : s; };
       var payload = {
@@ -971,7 +971,7 @@
     // (override en localStorage si existe, si no el endpoint ofuscado por
     // defecto) — sin duplicar el string. NO usar esto para guardar datos del
     // negocio en el worker — ver nota "NO CLOUD" al inicio de worker.js.
-    workerUrl: () => (localStorage.getItem("f123_cf_worker_url") || "").trim() || OC_WORKER_URL,
+    workerUrl: () => (localStorage.getItem("c123_cf_worker_url") || "").trim() || OC_WORKER_URL,
     // Pide la subclave contable con su propio teclado (emojis barajados, casillas enmascaradas).
     pedirSubclaveContable() {
       return new Promise((resolve) => {
