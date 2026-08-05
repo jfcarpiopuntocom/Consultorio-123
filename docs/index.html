@@ -699,7 +699,7 @@
      nada de degradé de color, solo un vinieta hacia el negro absoluto —
      "oscuridad que se traga todo". */
   /* ============ ENCENDIDOS EN LA PROPIA TARJETA (JFC 2026-07-07) ============
-     La Escala Sinclair Bloom se APLICA a la tarjeta entera, no se dibuja como
+     La semaforo de colores se APLICA a la tarjeta entera, no se dibuja como
      indicador aparte (la mini-escala de barras quedo DORMANT abajo):
        n1 (tenue)     -> fondo -bg del color, borde base, TINTA OSCURA
        n2 (medio)     -> degrade base->dk (el look clasico), texto blanco
@@ -710,7 +710,7 @@
   /* === 1 TONO PLANO POR ESTADO (JFC 2026-08-05) ===
      Se retiran los degradados y los overrides por nivel (.n1/.n2/.n3): daban
      a cada tarjeta un tono distinto segun intensidad, que es exactamente el
-     Sinclair Bloom retirado. Ahora el estado es UN color plano y el -dk solo
+     semaforo de colores retirado. Ahora el estado es UN color plano y el -dk solo
      pinta el borde/bisel. El pulso del rojo se queda: es movimiento, no un
      tono extra. NO reintroducir degradados por nivel. */
   .caja.verde{background:var(--sim-verde); border-color:var(--sim-verde-dk);}
@@ -2673,7 +2673,7 @@ document.getElementById("filtrosEstado")?.addEventListener("click", (e) => {
   cargarInventario();
 });
 
-// Escala Sinclair Bloom: 3 grados DENTRO de cada color (nunca un color nuevo).
+// semaforo de colores: 3 grados DENTRO de cada color (nunca un color nuevo).
 // Ojo dueno: esto es una heuristica con lo unico que el cliente ya recibe
 // (stockActual, perecible, fechaCaducidad). Si el backend algun dia expone
 // un campo real (p.ej. p.nivelBloom, o dias sin venta en el producto), esta
