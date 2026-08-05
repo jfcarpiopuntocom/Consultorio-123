@@ -146,7 +146,6 @@
   .caja.amarillo{background:#FFC700;border-color:#B8860B;color:#1e1a12;}
   .caja.naranja {background:#F97316;border-color:#C05000;color:#fff;}
   .caja.rojo    {background:#E8365D;border-color:#B0183E;color:#fff;}
-  .caja.azul    {background:#5294AC;border-color:#2E6278;color:#fff;}
   .caja.negro   {background:#0A0A0F;border-color:#000000;color:#fff;}
 
   .lista-alertas li.verde   {background:#C0F5E0;color:#009A5A;border:2px solid #00C87A;}
@@ -163,7 +162,6 @@
   .filtros-estado button[data-estado="amarillo"]::before{background:#FFC700;}
   .filtros-estado button[data-estado="naranja"]::before {background:#F97316;}
   .filtros-estado button[data-estado="rojo"]::before    {background:#E8365D;}
-  .filtros-estado button[data-estado="azul"]::before    {background:#5294AC;}
   .filtros-estado button[data-estado="negro"]::before   {background:#0A0A0F;}
   /* === fin FAILSAFE === */
 
@@ -578,9 +576,6 @@
   .caja.naranja{background:linear-gradient(135deg, var(--sim-naranja) 0%, var(--sim-naranja-dk) 100%); border-color:var(--sim-naranja-dk);}
   .caja.naranja.n1{background:var(--sim-naranja-bg); border-color:var(--sim-naranja);}
   .caja.naranja.n3{background:linear-gradient(135deg, var(--sim-naranja) 0%, var(--sim-naranja-dk) 45%, var(--sim-naranja-dk) 100%); box-shadow:0 0 16px -2px var(--sim-naranja);}
-  .caja.azul{background:linear-gradient(135deg, var(--sim-azul) 0%, var(--sim-azul-dk) 100%); border-color:var(--sim-azul-dk);}
-  .caja.azul.n1{background:var(--sim-azul-bg); border-color:var(--sim-azul);}
-  .caja.azul.n3{background:linear-gradient(135deg, var(--sim-azul) 0%, var(--sim-azul-dk) 45%, var(--sim-azul-dk) 100%); box-shadow:0 0 16px -2px var(--sim-azul);}
   .caja.negro{background:var(--sim-negro); border-color:var(--sim-negro-dk);}
   .caja.negro.n1{background:var(--sim-negro-bg); border-color:var(--sim-negro);}
   .caja.negro.n3{background:radial-gradient(circle at 30% 20%, #16161C 0%, var(--sim-negro) 55%, #000000 100%); border-color:var(--sim-negro-dk); box-shadow:inset 0 0 22px rgba(0,0,0,0.9);}
@@ -589,12 +584,12 @@
     50%{box-shadow:0 0 0 8px rgba(232,54,93,0), 0 4px 8px rgba(0,0,0,0.18);}
   }
   /* Fondos oscuros: texto blanco */
-  .caja.verde .nombre,.caja.rojo .nombre,.caja.azul .nombre,.caja.naranja .nombre,.caja.negro .nombre{color:#FFFFFF !important;}
-  .caja.verde .detalle,.caja.rojo .detalle,.caja.azul .detalle,.caja.naranja .detalle,.caja.negro .detalle{color:rgba(255,255,255,1) !important;}
-  .caja.verde .stock,.caja.rojo .stock,.caja.azul .stock,.caja.naranja .stock,.caja.negro .stock{color:#FFFFFF !important;}
-  .caja.verde [data-ajuste-menos],.caja.rojo [data-ajuste-menos],.caja.azul [data-ajuste-menos],.caja.naranja [data-ajuste-menos],.caja.negro [data-ajuste-menos],
-  .caja.verde [data-ajuste-mas],.caja.rojo [data-ajuste-mas],.caja.azul [data-ajuste-mas],.caja.naranja [data-ajuste-mas],.caja.negro [data-ajuste-mas],
-  .caja.verde [data-estrella-toggle],.caja.rojo [data-estrella-toggle],.caja.azul [data-estrella-toggle],.caja.naranja [data-estrella-toggle],.caja.negro [data-estrella-toggle]
+  .caja.verde .nombre,.caja.rojo .nombre,.caja.naranja .nombre,.caja.negro .nombre{color:#FFFFFF !important;}
+  .caja.verde .detalle,.caja.rojo .detalle,.caja.naranja .detalle,.caja.negro .detalle{color:rgba(255,255,255,1) !important;}
+  .caja.verde .stock,.caja.rojo .stock,.caja.naranja .stock,.caja.negro .stock{color:#FFFFFF !important;}
+  .caja.verde [data-ajuste-menos],.caja.rojo [data-ajuste-menos],.caja.naranja [data-ajuste-menos],.caja.negro [data-ajuste-menos],
+  .caja.verde [data-ajuste-mas],.caja.rojo [data-ajuste-mas],.caja.naranja [data-ajuste-mas],.caja.negro [data-ajuste-mas],
+  .caja.verde [data-estrella-toggle],.caja.rojo [data-estrella-toggle],.caja.naranja [data-estrella-toggle],.caja.negro [data-estrella-toggle]
   {color:#FFFFFF !important; border-color:#FFFFFF !important;}
   /* Dorado=oportunidad: tinta oscura (el amarillo nunca soporta texto blanco) */
   .caja.amarillo .nombre{color:#0F1923 !important;}
@@ -661,7 +656,6 @@
   .filtros-estado button[data-estado="rojo"]::before{background:var(--sim-rojo);}
   .filtros-estado button[data-estado="amarillo"]::before{background:var(--sim-amarillo);}
   .filtros-estado button[data-estado="verde"]::before{background:var(--sim-verde);}
-  .filtros-estado button[data-estado="azul"]::before{background:var(--sim-azul);}
   .filtros-estado button[data-estado="naranja"]::before{background:var(--sim-naranja);}
   .filtros-estado button[data-estado="negro"]::before{background:var(--sim-negro);}
   .filtros-estado button[data-estado=""]{padding-left:14px;}
@@ -752,7 +746,6 @@
   .oc-ev-btn.activo-neg{ background:#FDECEA; border-color:#C0392B; }
   .oc-ev-btn.activo-neu{ background:#F0F4F8; border-color:#7A9BB5; font-size:13px; font-weight:700; color:#2E6278 !important; -webkit-text-fill-color:#2E6278 !important; }
   .oc-ev-btn.activo-pos{ background:#E8F8F0; border-color:#009A5A; }
-  .badge-estado.azul{background:var(--sim-azul-bg); color:var(--sim-azul-dk);}
 
   .acciones-rapidas{
     display:flex;
@@ -1185,13 +1178,12 @@
     </details>
     <div class="filtros-estado" id="filtrosEstado">
       <!-- Filtros alineados a la semantica Simon CONGELADA (2026-07-07):
-           amarillo=Oportunidad, naranja=Revisar, azul=Dato, negro=Dormido -->
+           amarillo=Oportunidad, naranja=Revisar, negro=Dormido -->
       <button data-estado="" class="activo" data-i18n="filter.all">All</button>
       <button data-estado="rojo" data-i18n="filter.urgent">Urgent</button>
       <button data-estado="naranja" data-i18n="filter.review">Review</button>
       <button data-estado="amarillo" data-i18n="filter.opportunity">Opportunity</button>
       <button data-estado="verde" data-i18n="filter.healthy">Healthy</button>
-      <button data-estado="azul" data-i18n="filter.data">Data</button>
       <button data-estado="negro" data-i18n="filter.dormant">Dormant</button>
     </div>
     <input id="inputBuscarInventario" type="search" data-i18n-attr="placeholder:inv.searchPlaceholder" placeholder="Search by name, SKU or category…" style="width:100%;padding:10px 12px;margin-bottom:10px;border:2px solid var(--azul-medio,#2c4a68);border-radius:8px;font-size:15px;">
@@ -2368,7 +2360,7 @@ if (elLogoHeader) elLogoHeader.addEventListener("click", () => {
   const span = document.getElementById("oc-negocio-nombre");
   const btn = document.getElementById("oc-negocio-editar");
   if (!span || !btn) return;
-  const TITULO_DEFECTO = "Mi Local Comercial o Percha(s)";
+  const TITULO_DEFECTO = "Mi consulta médica o clínica";
   async function cargarNombre() {
     try {
       const inst = await (await fetch(`${API}/instancia`)).json();
@@ -2542,20 +2534,6 @@ function calcularNivelBloom(p){
       if (stock === 0) return 3;
       if (diasParaVencer !== null && diasParaVencer <= 0) return 3;
       return 2;
-    // Azul = oportunidad: mide MARGEN (precio - costo), no stock. Confirmado
-    // JFC 2026-07-04. El backend ya usa 0.5 de margen como umbral para
-    // marcar "azul" — aquí solo graduamos QUÉ TAN bueno es ese margen.
-    // Si p.costo aún no llega del backend, cae al nivel 2 fijo de antes
-    // (no rompe nada mientras se completa esa parte en mock-backend.js).
-    case "azul": {
-      const precio = Number(p.precio);
-      const costo = Number(p.costo);
-      if (Number.isFinite(costo) && costo >= 0 && precio > 0) {
-        const margen = (precio - costo) / precio;
-        return margen >= 0.70 ? 3 : margen >= 0.55 ? 2 : 1;
-      }
-      return 2;
-    }
     // Negro = producto dormido: mide DÍAS SIN VENTA de verdad, ya no un
     // gris fijo. Confirmado JFC 2026-07-04. p.diasSinVenta === null quiere
     // decir "nunca se ha vendido" — el estado más muerto que existe, más
@@ -2584,7 +2562,6 @@ function captionBloom(estado, nivel){
     amarillo: ["Start thinking about restocking", "Getting close to restock time", "Last unit — don't wait any longer"],
     naranja:  ["Keep an eye on it, still time", "Don't let it slip by", "Expiring soon — move it"],
     rojo:     ["Act today", "Act today", "Emergency: out of stock"],
-    azul:     ["Good margin", "Strong margin", "Your most profitable item"],
     negro:    ["Cooling down", "Has been dormant for a while", "Nobody has touched it in months"],
   };
   const arr = FRASES[estado];
@@ -2598,7 +2575,7 @@ function captionBloom(estado, nivel){
 // aplica como clase n1/n2/n3 de .caja (ver CSS de encendidos). Para
 // re-habilitar: volver a llamar renderBloom() en el template de tarjeta.
 function renderBloom(estado, nivel){
-  const estadosValidos = ["verde","amarillo","naranja","rojo","azul","negro"];
+  const estadosValidos = ["verde","amarillo","naranja","rojo","negro"];
   if (!estadosValidos.includes(estado)) return "";
   const stops = ["bg", "", "dk"];
   const caption = captionBloom(estado, nivel);
