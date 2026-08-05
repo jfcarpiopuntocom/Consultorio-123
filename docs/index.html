@@ -134,11 +134,13 @@
        base, ya no 3 grados — un color prendido o apagado, sin matices. */
     /* -X y -X-bg = EL MISMO tono plano (el estado). -X-dk = sombra del mismo
        matiz, SOLO para bordes/biseles/sombras: nunca relleno, nunca texto. */
-    --sim-verde:#00A651;    --sim-verde-bg:#00A651;    --sim-verde-dk:#006933;
-    --sim-amarillo:#FFD400; --sim-amarillo-bg:#FFD400; --sim-amarillo-dk:#A88C00;
+    /* Verde ESMERALDA, no chillon. Amarillo limpio, sin mostaza. Rojo con un
+       toque de vino/carmesi para que se vea elegante y no de semaforo. */
+    --sim-verde:#0FA46A;    --sim-verde-bg:#0FA46A;    --sim-verde-dk:#086944;
+    --sim-amarillo:#F5C518; --sim-amarillo-bg:#F5C518; --sim-amarillo-dk:#9E7C00;
     --sim-plata:#C4CDD8;    --sim-plata-bg:#E8ECF2;    --sim-plata-dk:#8A9AAA;
-    --sim-naranja:#FF6B00;  --sim-naranja-bg:#FF6B00;  --sim-naranja-dk:#A84600;
-    --sim-rojo:#E8112D;     --sim-rojo-bg:#E8112D;     --sim-rojo-dk:#970A1D;
+    --sim-naranja:#F26A1B;  --sim-naranja-bg:#F26A1B;  --sim-naranja-dk:#9E3F08;
+    --sim-rojo:#C41E3A;     --sim-rojo-bg:#C41E3A;     --sim-rojo-dk:#7C1024;
     --sim-azul:#0057B8;     --sim-azul-mid:#0057B8;    --sim-azul-bg:#0057B8;   --sim-azul-dk:#00397A;
     --sim-negro:#1A1A1A;    --sim-negro-bg:#1A1A1A;    --sim-negro-dk:#000000;
 
@@ -151,14 +153,27 @@
        teclado charcoal, banda de ranuras finas, biseles duros (canto claro
        arriba, canto oscuro abajo). Precision japonesa, gusto britanico.
        Esto es CHROME: nunca compite con el color de estado de una tarjeta. */
-    --metal-claro:#DCDED9;
-    --metal:#C9CBC6;
-    --metal-medio:#B0B2AD;
-    --metal-oscuro:#8E918C;
-    --panel-charcoal:#3A3D42;
-    --panel-charcoal-dk:#2A2D32;
-    --bisel-luz:#F2F3F0;
-    --bisel-sombra:#7E817C;
+    /* PLATA LUMINOSA. La plata refleja: va de casi-blanco a gris medio en la
+       MISMA superficie. Un gris plano se ve muerto — JFC lo rechaza. Todos
+       estos son SOLIDOS: el brillo sale del gradiente, nunca de opacidad.
+       La opacidad solo se permite en sombras y cantos (relieve del case). */
+    --plata-brillo:#FCFDFC;   /* punto de luz alto */
+    --plata-claro:#EDEFEC;
+    --plata:#D8DBD6;
+    --plata-media:#BFC3BD;
+    --plata-honda:#9DA29B;    /* fondo de bisel */
+    --plata-canto:#7C817A;    /* canto oscuro del case */
+    /* Alias heredados: muchas reglas ya los referencian. */
+    --metal-claro:#EDEFEC;
+    --metal:#D8DBD6;
+    --metal-medio:#BFC3BD;
+    --metal-oscuro:#9DA29B;
+    /* El header YA NO es charcoal: es case plateado. Se conservan los nombres
+       para no romper reglas viejas, pero apuntan a plata. */
+    --panel-charcoal:#D8DBD6;
+    --panel-charcoal-dk:#BFC3BD;
+    --bisel-luz:#FCFDFC;
+    --bisel-sombra:#7C817A;
   }
 
   /* Superficie de aluminio cepillado: gradiente sutil + microrayas verticales.
@@ -166,8 +181,8 @@
   .metal-superficie{
     background-color:var(--metal);
     background-image:
-      repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 1px, rgba(0,0,0,.018) 1px 2px),
-      linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 58%, var(--metal-medio) 100%);
+      repeating-linear-gradient(90deg, var(--plata-claro) 0 1px, var(--plata) 1px 3px),
+      linear-gradient(180deg, var(--plata-brillo) 0%, var(--plata-claro) 22%, var(--plata) 60%, var(--plata-media) 100%);
     border-top:1px solid var(--bisel-luz);
     border-bottom:1px solid var(--bisel-sombra);
   }
@@ -185,11 +200,12 @@
 
   /* Tecla: canto claro arriba, sombra dura abajo. Sin blur gordo. */
   .metal-tecla{
-    background-image:linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 100%);
-    border:1px solid var(--metal-oscuro);
-    border-top-color:var(--bisel-luz);
+    /* Tecla 2.5D: luz arriba, cuerpo plata, canto oscuro abajo. */
+    background-image:linear-gradient(180deg, var(--plata-brillo) 0%, var(--plata-claro) 40%, var(--plata) 100%);
+    border:1px solid var(--plata-honda);
+    border-top-color:var(--plata-brillo);
     border-radius:6px;
-    box-shadow:0 2px 0 var(--bisel-sombra);
+    box-shadow:0 2px 0 var(--plata-canto), 0 3px 5px rgba(0,0,0,.18);
     color:var(--ink) !important;
     -webkit-text-fill-color:var(--ink) !important;
   }
@@ -295,10 +311,21 @@
   header{
     /* Panel de teclado de la Timex Sinclair 2068: charcoal con veta sutil y
        una banda de ranuras finas al pie (la rejilla del tope de la maquina). */
-    background-color:var(--panel-charcoal);
-    background-image:linear-gradient(180deg, #464A50 0%, var(--panel-charcoal) 62%, var(--panel-charcoal-dk) 100%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.40);
-    color:var(--blanco-calido);
+    /* CASE PLATEADO 2.5D (JFC: "el header no puede ser negro sino parecer case
+       metalico plateado"). El brillo sale de un gradiente de solidos con un
+       punto de luz alto; el relieve, de cantos claros/oscuros. Sin opacidad
+       en la superficie: solo en la sombra inferior. */
+    background-color:var(--plata);
+    background-image:linear-gradient(180deg,
+      var(--plata-brillo) 0%,
+      var(--plata-claro) 18%,
+      var(--plata) 52%,
+      var(--plata-media) 82%,
+      var(--plata-honda) 100%);
+    border-bottom:1px solid var(--plata-canto);
+    box-shadow:inset 0 1px 0 var(--plata-brillo), 0 2px 6px rgba(0,0,0,.22);
+    color:var(--ink) !important;
+    -webkit-text-fill-color:var(--ink) !important;
     padding:18px 20px;
     min-height:var(--header-h);
     display:flex;
@@ -362,6 +389,33 @@
     background:transparent;
     border-color:transparent;
   }
+
+  /* === HEADER PLATEADO: tinta oscura obligatoria (JFC 2026-08-05) ===
+     El header dejo de ser oscuro y paso a case plateado claro. Todo lo que
+     escribe encima tiene que ser tinta solida, o queda ilegible. Colores
+     solidos y -webkit-text-fill-color por iOS. NO usar opacidad aqui. */
+  header, header h1, header .marca, header .slogan-app, header .sub,
+  header span, header small, header em, header strong, header label, header a{
+    color:#14181C !important;
+    -webkit-text-fill-color:#14181C !important;
+  }
+  header .slogan-app{ color:#3A4048 !important; -webkit-text-fill-color:#3A4048 !important; }
+  /* Botones del header como teclas del case: plata con relieve, tinta oscura. */
+  header button{
+    background-image:linear-gradient(180deg, var(--plata-brillo) 0%, var(--plata-claro) 45%, var(--plata) 100%);
+    border:1px solid var(--plata-honda);
+    border-top-color:var(--plata-brillo);
+    color:#14181C !important;
+    -webkit-text-fill-color:#14181C !important;
+    box-shadow:0 2px 0 var(--plata-canto);
+  }
+  header button:active{ transform:translateY(2px); box-shadow:0 0 0 var(--plata-canto); }
+  /* Tecla de idioma activa: se hunde y se oscurece, sin perder legibilidad. */
+  .oc-lang-btn.activo{
+    background-image:linear-gradient(180deg, var(--plata-media) 0%, var(--plata-honda) 100%) !important;
+    color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important;
+    box-shadow:inset 0 2px 3px rgba(0,0,0,.35) !important;
+  }
   header h1{
     margin:0;
     font-family:var(--font-serif);
@@ -422,13 +476,13 @@
     display:flex;
     gap:4px;
     /* Aluminio cepillado: microrayas verticales + gradiente vertical suave. */
-    background-color:var(--metal);
-    /* Veta de aluminio: vertical, finisima y de contraste bajisimo. Debe
-       insinuarse, no verse como rayas. NUNCA usar rayas horizontales aqui:
-       eso lee como scanline de monitor viejo, que es justo lo contrario. */
+    background-color:var(--plata);
+    /* Veta vertical finisima hecha con SOLIDOS (sin opacidad) + gradiente de
+       rango amplio para que la plata refleje. Rayas horizontales aqui NUNCA:
+       eso lee como scanline de monitor viejo. */
     background-image:
-      repeating-linear-gradient(90deg, rgba(255,255,255,.10) 0 1px, rgba(0,0,0,.018) 1px 2px),
-      linear-gradient(180deg, var(--metal-claro) 0%, var(--metal) 58%, var(--metal-medio) 100%);
+      repeating-linear-gradient(90deg, var(--plata-claro) 0 1px, var(--plata) 1px 3px),
+      linear-gradient(180deg, var(--plata-brillo) 0%, var(--plata-claro) 22%, var(--plata) 60%, var(--plata-media) 100%);
     border-top:2px solid var(--bisel-sombra);
     box-shadow:inset 0 1px 0 var(--bisel-luz);
     position:fixed;
