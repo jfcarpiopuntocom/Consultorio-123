@@ -105,43 +105,46 @@
     <span class="rolTag">Guía del dueño</span>
     <h3>Qué es consultorio-123 en realidad</h3>
     <p style="font-size:14px;line-height:1.6;margin:0 0 10px;">
-      No es una caja registradora. Es un sistema de gestión de inventario para
-      vendedores, promotoras y control de comisiones — organizado alrededor de
-      <b>perchas</b> (tus espacios, racks o ubicaciones) como unidad esencial. Los
-      colores reemplazan a las hojas de cálculo. Tus datos se quedan en tu
-      dispositivo: sin suscripción atada, sin necesidad de nube.
+      No es una caja registradora. Es un cuaderno digital compartido para tu
+      consulta: coordina ingresos, insumos y equipos, cuentas por cobrar de
+      pacientes y tus resultados del mes — organizado alrededor de tus
+      <b>sedes u oficinas</b> como unidad esencial. Los colores reemplazan a las
+      hojas de cálculo. Tus datos se quedan en tu dispositivo: sin suscripción
+      atada, sin necesidad de nube.
     </p>
     <h3>El lenguaje de colores (sistema Simon)</h3>
     <ul>
-      <li><b style="color:#00C87A;">Verde</b>: saludable — sigue así.</li>
-      <li><b style="color:#E8A020;">Dorado</b>: plata quieta ahí — actúa.</li>
-      <li><b style="color:#F97316;">Naranja</b>: se está agotando — reabastece antes de que sea problema.</li>
-      <li><b style="color:#E8365D;">Rojo</b>: emergencia — actúa ya.</li>
-      <li><b style="color:#0A0A0F;">Negro</b>: stock muerto — tu plata no se mueve. Arregla eso.</li>
+      <li><b style="color:#00A651;">Verde</b>: saludable — sigue así.</li>
+      <li><b style="color:#C79E00;">Amarillo</b>: oportunidad — hay margen esperándote ahí.</li>
+      <li><b style="color:#FF6B00;">Naranja</b>: se está agotando — repón antes de que sea problema.</li>
+      <li><b style="color:#E8112D;">Rojo</b>: emergencia — actúa ya (sin stock, o por vencer).</li>
+      <li><b style="color:#1A1A1A;">Negro</b>: insumo dormido — tu plata parada. Muévela.</li>
     </ul>
-    <p style="font-size:14px;color:var(--ink-soft);">El <b style="color:#5294AC;">azul</b> es distinto a propósito: nunca es una señal de stock. Solo aparece en secciones serenas — notas contables y reflexiones financieras breves.</p>
+    <p style="font-size:15px;line-height:1.55;color:var(--ink-soft);">Son <b>cinco</b> colores y nada más. El azul no es una señal de inventario a propósito: si aparece, es solo chrome de la interfaz, nunca un estado de tus insumos.</p>
     <h3>Hoy: tu señal diaria</h3>
     <ul>
       <li>Un vistazo a Hoy te dice qué necesita atención antes de abrir.</li>
       <li>El color del encabezado refleja el estado general del día.</li>
       <li>¿No registraste ventas en vivo? Usa Cierre de día para anotar todo de una vez.</li>
     </ul>
-    <h3>Vendido (no "vender")</h3>
+    <h3>Ingresos y consumo de insumos</h3>
     <ul>
-      <li>Toca un producto en la grilla — una unidad se registra como vendida. Deshazlo en 5 segundos.</li>
+      <li>Toca un insumo o equipo en la grilla — se descuenta una unidad al usarla o venderla. Lo deshaces en 5 segundos.</li>
       <li>Cada movimiento queda registrado con motivo y quién lo hizo.</li>
-      <li>Las comisiones se calculan automáticamente por percha y por vendedor.</li>
+      <li>Los referidos (quien te envía pacientes) se calculan automáticamente por sede.</li>
     </ul>
     <h3>Avanzado (tu clave, tus reglas)</h3>
     <ul>
-      <li><b>Gastos fijos</b>: alquiler, servicios, planilla — divididos entre los días reales del mes para que sepas el costo real de abrir mañana.</li>
+      <li><b>Gastos fijos</b>: arriendo del consultorio, servicios, salarios — divididos entre los días reales del mes para que sepas el costo real de abrir mañana.</li>
       <li><b>Capa contable</b>: cuentas T, P&amp;G, balance. PIN separado — tu contador o socio puede entrar directo sin ver todo el sistema.</li>
       <li><b>Claves y recuperación</b>: guarda tu correo antes de cambiar cualquier PIN. Sin correo registrado no hay recuperación posible.</li>
     </ul>
     <h3>¿Qué datos salen de este dispositivo?</h3>
     <p style="font-size:14px;line-height:1.6;margin:0 0 10px;">
-      Respuesta corta: tus datos de negocio nunca salen. Productos, ventas, clientes,
-      inventario, fotos — todo se queda en este navegador, en este dispositivo, siempre.
+      Respuesta corta: los datos de tu consulta nunca salen. Insumos, equipos, ingresos,
+      pacientes, cuentas por cobrar — todo se queda en este navegador, en este dispositivo,
+      siempre. Nota: el historial clínico de tus pacientes NO vive aquí, eso lo maneja el
+      sistema médico que ya uses; consultorio-123 coordina la parte administrativa.
       Lo único que se envía alguna vez es tu <b>licencia</b>: un ID de dispositivo
       aleatorio, y (solo si decidiste ingresarlos) tu nombre, correo, código de licencia
       y número de WhatsApp — para poder recuperar tu acceso o contactarte si hace falta.
