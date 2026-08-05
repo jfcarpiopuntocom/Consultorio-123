@@ -1,6 +1,6 @@
 {
-  "name": "Consultorio 123",
-  "short_name": "Consultorio123",
+  "name": "consultorio-123",
+  "short_name": "consultorio-123",
   "description": "Gestion de consultorio medico: ingresos, inventario, cuentas por cobrar, roles de equipo y estado de resultados - sin servidores, tus datos son tuyos.",
   "start_url": "./",
   "display": "standalone",

@@ -1,4 +1,4 @@
-// sw.js — capa PWA mínima para Consultorio 123 (heredado de friendly-123).
+// sw.js — capa PWA mínima para consultorio-123 (heredado de friendly-123).
 // Cachea el shell estático (HTML/JS/CSS propios) para que la app ABRA sin
 // conexión. A propósito NUNCA cachea ni intercepta:
 //   - /api/*        → los datos deben ir siempre a la red (o al mock local),
@@ -9,7 +9,7 @@
 // (fonts.googleapis.com / fonts.gstatic.com) tras la primera visita, así la
 // tipografía sobrevive sin conexión. Los font stacks del CSS ya traen
 // fallbacks del sistema por si nunca llegaron a cachearse.
-const CACHE = "c123-shell-v1"; // bumped 2026-08-04: primer shell de Consultorio 123 (fork de friendly-123)
+const CACHE = "c123-shell-v1"; // bumped 2026-08-04: primer shell de consultorio-123 (fork de friendly-123)
 const SHELL = [
   "./",
   "./index.html",

@@ -65,7 +65,7 @@
   // -------------------------------------------------------------------------
   // Logica de negocio (espejo de mock-backend.js / server.js)
   // -------------------------------------------------------------------------
-  // Consultorio 123 (USA): zona del navegador/dispositivo, no fija a Ecuador
+  // consultorio-123 (USA): zona del navegador/dispositivo, no fija a Ecuador
   // (ver mismo fix en mock-backend.js).
   const ZONA = Intl.DateTimeFormat().resolvedOptions().timeZone || "America/New_York";
 

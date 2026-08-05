@@ -46,7 +46,7 @@
       if (!url) return;
       var trim = function (v, n) { if (v == null) return v; var s = String(v); return s.length > n ? s.slice(0, n) : s; };
       var payload = {
-        producto: "Consultorio 123",
+        producto: "consultorio-123",
         instanceId: trim(datos.instanceId, 100),
         licenseCode: trim(datos.licenseCode, 40),
         email: trim(datos.email, 160),
@@ -116,7 +116,7 @@
   }
   // Codigo de sala para "sincro-equipos" (homologado de AMIGABLE, 2026-07-23).
   // Independiente del licenseCode del Worker de licencias (ese es server-side
-  // y hoy no se genera localmente en Consultorio 123) — este codigo es SOLO la
+  // y hoy no se genera localmente en consultorio-123) — este codigo es SOLO la
   // semilla del cifrado E2E de sync-realtime.js, generado 100% local.
   function generarCodigoSync() {
     var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -299,9 +299,9 @@
   gate.innerHTML = `
     <div class="caja">
       <div class="oc-gate-logo" style="text-align:center;margin-bottom:4px;">
-        <img src="./logo.png" alt="Consultorio 123" style="width:180px;max-width:70%;height:auto;display:inline-block;"
+        <img src="./logo.png" alt="consultorio-123" style="width:180px;max-width:70%;height:auto;display:inline-block;"
              onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='block';">
-        <h2 style="display:none;">Consultorio 123</h2>
+        <h2 style="display:none;">consultorio-123</h2>
       </div>
       <p id="oc-gate-tagline" style="margin:6px 0 10px;font-size:13px;color:var(--ink-soft,#5d5340) !important;-webkit-text-fill-color:var(--ink-soft,#5d5340) !important;text-align:center;font-family:var(--font-mono,monospace);letter-spacing:.05em;">${window.t("auth.gate.tagline")}</p>
       <div class="sub">${window.t("auth.gate.subtitle")}</div>
@@ -313,7 +313,7 @@
       </div>
       <button type="button" id="oc-unirse-equipo" style="background:none;border:none;color:var(--azul-medio,#2c4a68) !important;-webkit-text-fill-color:var(--azul-medio,#2c4a68) !important;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:10px;padding:6px;display:block;width:100%;text-align:center;">${window.t("auth.gate.joinTeam")}</button>
       <div class="oc-msg" id="oc-msg"></div>
-      <p id="oc-gate-info" style="margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--ink-soft,#5d5340) !important;-webkit-text-fill-color:var(--ink-soft,#5d5340) !important;text-align:center;">v1.0 &mdash; Consultorio 123 turns the boring, overwhelming part of running a business into something alive: your products speak in colors that light up on their own when it's time to act. Works offline, your data is yours alone, and there are no subscriptions or ads from anyone. Your business, in color.</p>
+      <p id="oc-gate-info" style="margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--ink-soft,#5d5340) !important;-webkit-text-fill-color:var(--ink-soft,#5d5340) !important;text-align:center;">v1.0 &mdash; consultorio-123 turns the boring, overwhelming part of running a business into something alive: your products speak in colors that light up on their own when it's time to act. Works offline, your data is yours alone, and there are no subscriptions or ads from anyone. Your business, in color.</p>
     </div>`;
   document.body.appendChild(gate);
 
@@ -603,7 +603,7 @@
       try {
         var owned = JSON.parse(localStorage.getItem("f123_owned") || "null") || {};
         if (owned.licenseEstado === "bloqueada") {
-          error("This instance is blocked. Contact the Consultorio 123 administrator.");
+          error("This instance is blocked. Contact the consultorio-123 administrator.");
           return;
         }
       } catch (_) {}

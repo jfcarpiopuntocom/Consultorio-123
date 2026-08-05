@@ -1,5 +1,5 @@
 /*!
- * respaldo-empleado.js — Consultorio 123
+ * respaldo-empleado.js — consultorio-123
  * Gemelo de docs/respaldo-empleado.js en AMIGABLE. Misma logica y mismo
  * alcance (los costos NO viajan); aqui los textos pasan por i18n.
  * Si se corrige un bug de logica, corregirlo en AMBOS.
@@ -164,7 +164,7 @@
       .map(function (m) { return { fecha: m.fecha, tipo: m.tipo, detalle: m.datos || {} }; });
 
     var paquete = {
-      app: "Consultorio 123",
+      app: "consultorio-123",
       tipo: "respaldo-empleado",
       schemaVersion: 1,
       generadoEn: new Date().toISOString(),

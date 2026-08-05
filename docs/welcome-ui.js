@@ -76,7 +76,7 @@
   modal.setAttribute('aria-hidden', 'true');
   modal.innerHTML = `
     <div id="am-welcome-card" class="am-welcome-card" role="dialog" aria-label="Welcome">
-      <p class="marca">Consultorio 123</p>
+      <p class="marca">consultorio-123</p>
       <h2>Welcome</h2>
       <p class="tagline">Manage your business, in color</p>
       <p class="formal">Inventory management · clients · commissions · racks</p>
@@ -97,7 +97,7 @@
   reminder.setAttribute('aria-hidden', 'true');
   reminder.innerHTML = `
     <div id="am-rec-card" class="am-welcome-card" role="dialog" aria-label="Confirm you watched the welcome tutorial">
-      <p class="marca">Consultorio 123</p>
+      <p class="marca">consultorio-123</p>
       <h2>Quick check</h2>
       <p class="cuerpo" style="margin-bottom:16px;">Before you continue, confirm you went through the welcome tutorial. It only takes a minute and it's how everything below will make sense.</p>
       <button id="am-rec-ver" style="width:100%;min-height:44px;padding:10px;border-radius:7px;border:2px solid var(--brass,#5294AC);background:transparent;color:var(--azul-medio,#2E6278) !important;-webkit-text-fill-color:var(--azul-medio,#2E6278) !important;font-family:var(--font-display,sans-serif);font-size:15px;font-weight:700;cursor:pointer;margin:0 0 14px;">See the tutorial now</button>

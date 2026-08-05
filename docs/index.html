@@ -61,18 +61,18 @@
 <script src="./mock-backend.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Consultorio 123</title>
+<title>consultorio-123</title>
 <!-- iOS Safari + WhatsApp legibility stack: light-only, prevents auto-dark repaint -->
 <meta name="color-scheme" content="light only">
 <meta name="supported-color-schemes" content="light">
 <meta name="theme-color" content="#0F1923">
 <!-- Open Graph: link previews in WhatsApp / social when the URL is shared -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Consultorio 123">
+<meta property="og:title" content="consultorio-123">
 <meta property="og:description" content="Your business, in color. Serverless point of sale and inventory control for small business.">
 <meta property="og:image" content="./icons/android-chrome-512x512.png">
-<!-- Favicon "123" (cropped from the Consultorio 123 wordmark, not the full logo —
-     illegible at 16px). Full set generated 2026-07-15 from Consultorio 123-logo-source. -->
+<!-- Favicon "123" (cropped from the consultorio-123 wordmark, not the full logo —
+     illegible at 16px). Full set generated 2026-07-15 from consultorio-123-logo-source. -->
 <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
@@ -284,7 +284,7 @@
      ═══════════════════════════════════════════════════════════════════════
      ESTADO APROBADO POR JFC (2026-07-15). NO TOCAR.
      ═══════════════════════════════════════════════════════════════════════
-     DESCRIPCIÓN: wordmark Consultorio 123 (176×40px), transparente sobre
+     DESCRIPCIÓN: wordmark consultorio-123 (176×40px), transparente sobre
      el header azul oscuro. El logo es dorado/naranja con contorno oscuro,
      legible directamente — no necesita fondo blanco ni filtros.
 
@@ -293,9 +293,9 @@
        ❌ NO agregar border-radius mayor a 0 (crea pastilla).
        ❌ NO agregar filter:invert() o brightness() sobre este elemento.
        ❌ NO cambiar width>176px ni height>40px.
-       ❌ NO copiar CSS de AMIGABLE aquí — Consultorio 123 y AMIGABLE tienen
+       ❌ NO copiar CSS de AMIGABLE aquí — consultorio-123 y AMIGABLE tienen
           logos distintos con tratamiento CSS distinto (AMIGABLE: 104×26px
-          esquinado; Consultorio 123: 176×40px centrado en .marca).
+          esquinado; consultorio-123: 176×40px centrado en .marca).
      ═══════════════════════════════════════════════════════════════════════ */
   header .sello.con-logo{
     width:176px;
@@ -1011,7 +1011,7 @@
     nav button{font-size:13px;}
   }
 
-  /* ---------- SPLASH breve de arranque (marca "Consultorio 123" ~0.8s) ---------- */
+  /* ---------- SPLASH breve de arranque (marca "consultorio-123" ~0.8s) ---------- */
   #oc-splash{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--azul-oscuro);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity .45s ease;
     /* pointer-events:none SIEMPRE: es decorativo, jamas debe bloquear taps.
        La animacion CSS con forwards lo oculta AUNQUE el JS falle (red de
@@ -1037,19 +1037,19 @@
 </head>
 <body>
 
-<!-- Splash brevisimo de arranque: dice "Consultorio 123" (marca de la linea de apps
+<!-- Splash brevisimo de arranque: dice "consultorio-123" (marca de la linea de apps
      contables amigables). Si un cliente pide su propia marca aqui, se cambia
-     este texto; el default SIEMPRE es "Consultorio 123". Se desvanece a los ~0.8s. -->
+     este texto; el default SIEMPRE es "consultorio-123". Se desvanece a los ~0.8s. -->
 <!-- Logo embebido en base64 (JFC 2026-07-18, paridad con AMIGABLE): la splash
      es lo PRIMERO que se ve al abrir la app, antes de que cargue ningun otro
      recurso -- el logo va inline para que aparezca instantaneo, sin depender
      de una segunda peticion de red a logo.png (evita el parpadeo de "sin
      logo" un instante). -->
-<div id="oc-splash" aria-hidden="true"><div class="oc-splash-wordmark">Consultorio<span>123</span></div><p class="oc-splash-tag">Tu consultorio, en color.</p></div>
+<div id="oc-splash" aria-hidden="true"><div class="oc-splash-wordmark">consultorio-<span>123</span></div><p class="oc-splash-tag">tu consultorio, en color.</p></div>
 
 <header>
   <div class="marca">
-    <!-- NO logoHeader aquí — logo Consultorio 123 va SOLO encima de Help(?), en brandWrap (help-ui.js).
+    <!-- NO logoHeader aquí — logo consultorio-123 va SOLO encima de Help(?), en brandWrap (help-ui.js).
          Misma decisión que AMIGABLE (2026-07-15, JFC). NO AGREGAR sello/logoHeader de vuelta. -->
     <div>
       <h1><span id="oc-negocio-nombre" data-i18n="header.bizNameDefault">My store or shelf(s)</span><button id="oc-negocio-editar" type="button" data-i18n-attr="title:header.editBizName,aria-label:header.editBizName" title="Edit your business name" aria-label="Edit your business name" style="display:none;margin-left:8px;font-size:14px;line-height:1;background:transparent;border:none;color:var(--azul-medio,#2c4a68);cursor:pointer;vertical-align:middle;padding:2px 4px;">✎</button></h1>
@@ -1492,7 +1492,7 @@
 </main>
 
 <footer>
-  <em data-i18n="footer.tagline">Consultorio 123: shelf, customer, and commission control</em>
+  <em data-i18n="footer.tagline">consultorio-123: shelf, customer, and commission control</em>
   <br><a href="https://jfcarpio.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">jfcarpio.com</a> — 2026
 </footer>
 
@@ -4047,7 +4047,7 @@ async function enviarResumenWhatsApp(){
   const pend = (Array.isArray(liq) ? liq : []).filter(f => f.estado === "pendiente");
   const totalPend = pend.reduce((a, f) => a + (f.comisionSocio || 0), 0);
   const criticos = (dash.alertas || []).filter(a => a.estado === "rojo").slice(0, 3).map(a => a.mensaje);
-  const L = ["*Daily summary — Consultorio 123*"];
+  const L = ["*Daily summary — consultorio-123*"];
   L.push(`Today's sales: ${fmtMoney(rd.entra || 0)} in ${rd.ventasCount || 0} sale(s).`);
   if (totalPend > 0) L.push(`Pending commissions: ${fmtMoney(totalPend)} (${pend.length} rack(s)).`);
   if (criticos.length){ L.push("Critical stock:"); criticos.forEach(c => L.push("• " + c)); }
@@ -4195,7 +4195,7 @@ async function marcarComisionPagada(ubicacionId, promotorNombre, monto){
       lineasDet.length ? `*Detalle (${detalle.reduce((a,d)=>a+d.cantidad,0)} u):*` : "",
       ...lineasDet,
       ``,
-      `Gracias por tu trabajo este mes. — Consultorio 123`,
+      `Gracias por tu trabajo este mes. — consultorio-123`,
     ].filter(Boolean).join("\n");
     if (await ocConfirm(`Send receipt to ${promotorNombre} via WhatsApp?`)) {
       window.open("https://wa.me/?text=" + encodeURIComponent(recibo), "_blank");
@@ -4547,7 +4547,7 @@ window.addEventListener("oc-datos-importados", async () => {
 window.dialogosBloqueados = function () {
   try {
     const t0 = performance.now();
-    const r = window.confirm("Consultorio 123: toca Aceptar para continuar");
+    const r = window.confirm("consultorio-123: toca Aceptar para continuar");
     return (performance.now() - t0) < 15 && r === false;
   } catch (_) { return true; }
 };
@@ -4563,7 +4563,7 @@ window.dialogosBloqueados = function () {
       const d = document.createElement("div");
       d.id = "oc-doble-tab";
       d.style.cssText = "position:fixed;inset:0;z-index:10003;background:#0F1923;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;";
-      d.innerHTML = '<p style="color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-size:18px;font-weight:700;max-width:420px;">A Consultorio 123 session is already open in another tab. To avoid data conflicts, use only one at a time.</p>' +
+      d.innerHTML = '<p style="color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-size:18px;font-weight:700;max-width:420px;">A consultorio-123 session is already open in another tab. To avoid data conflicts, use only one at a time.</p>' +
         '<button id="oc-doble-usar" style="min-height:48px;padding:12px 22px;border-radius:8px;border:2px solid #5294AC;background:transparent;color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-size:16px;font-weight:700;cursor:pointer;">Use here anyway</button>';
       document.body.appendChild(d);
       document.getElementById("oc-doble-usar").addEventListener("click", () => { soyPrincipal = true; d.remove(); });

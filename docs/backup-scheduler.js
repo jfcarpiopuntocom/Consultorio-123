@@ -2,7 +2,7 @@
 // directly to the owner. NEVER to a central server. Philosophy: "the backup
 // goes to YOU, not to us. You never lose control of your data."
 //
-// Ported from amigable-123 (JFC 2026-07-21), adapted for Consultorio 123:
+// Ported from amigable-123 (JFC 2026-07-21), adapted for consultorio-123:
 // uses f123_* localStorage keys, English UI, i18n-agnostic (plain English
 // strings — avanzado-extra.js is already in English).
 //
@@ -117,7 +117,7 @@
     // wa.me needs FULL international format (country code, no +). A leading 0
     // is a national trunk prefix (e.g. 020..., 09...): wa.me/0... opens an
     // empty/invalid chat. Reject it so the owner adds their country code.
-    // Consultorio 123 is international, so we can't guess the code for them.
+    // consultorio-123 is international, so we can't guess the code for them.
     if (d[0] === "0") return false;
     return true;
   }
@@ -130,14 +130,14 @@
     if (!res.ok) throw new Error("Could not read business data.");
     const datos = await res.json();
     const paquete = {
-      app: "Consultorio 123",
+      app: "consultorio-123",
       exportadoEn: new Date().toISOString(),
       schemaVersion: 2,
       datos,
     };
     const texto = JSON.stringify(paquete, null, 2);
     const now = new Date();
-    const nombre = `backup-Consultorio 123-${stampArchivo(now)}.json`;
+    const nombre = `backup-consultorio-123-${stampArchivo(now)}.json`;
     return { texto, nombre, humano: stampHumano(now) };
   }
 
@@ -159,18 +159,18 @@
   }
 
   function cuerpoEmail(nombreArchivo, humano) {
-    return `Consultorio 123 backup generated on ${humano}.\n\n`
+    return `consultorio-123 backup generated on ${humano}.\n\n`
          + `1) Attach the file "${nombreArchivo}" that just downloaded on this device (Android/PC: Downloads folder; iPhone/iPad: it opens in a tab — tap Share and "Save to Files").\n`
          + `2) Send it to this address (to yourself).\n\n`
          + `— Your backup goes to YOU, not to a server. You never lose control of your data.`;
   }
 
   function cuerpoWa(nombreArchivo, humano) {
-    return `Consultorio 123 backup ${humano}. Attach the file ${nombreArchivo} just downloaded and send it to yourself. The backup lives with you, not in the cloud.`;
+    return `consultorio-123 backup ${humano}. Attach the file ${nombreArchivo} just downloaded and send it to yourself. The backup lives with you, not in the cloud.`;
   }
 
   function abrirMailto(email, nombreArchivo, humano) {
-    const asunto = `Consultorio 123 backup — ${humano}`;
+    const asunto = `consultorio-123 backup — ${humano}`;
     const body = cuerpoEmail(nombreArchivo, humano);
     window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(body)}`;
   }
@@ -287,8 +287,8 @@
     //      email/WhatsApp (owner attaches the just-downloaded file).
     // NEVER put a server in the middle of this data. That rule is JFC's.
     // ========================================================================
-    const resultado = await entregarArchivo(info, prefs, "Consultorio 123 backup",
-      `Backup of your business (Consultorio 123) ${info.humano}. Send it to YOURSELF via %CANAL% — it's yours, it never goes through any server.`);
+    const resultado = await entregarArchivo(info, prefs, "consultorio-123 backup",
+      `Backup of your business (consultorio-123) ${info.humano}. Send it to YOURSELF via %CANAL% — it's yours, it never goes through any server.`);
 
     if (resultado === "cancelado") return; // owner closed the share sheet — don't mark a backup that didn't happen
 

@@ -1,5 +1,5 @@
 /*!
- * edutips.js — Consultorio 123
+ * edutips.js — consultorio-123
  * ============================================================================
  * The blue box at the foot of the accounting view. A short reflection that
  * teaches how to read the numbers already on screen, not a new number.

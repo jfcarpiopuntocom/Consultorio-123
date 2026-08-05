@@ -1,4 +1,4 @@
-// idb-archivo.js — Consultorio 123 (Fase 2 del plan de blindaje de datos, 2026-08-04)
+// idb-archivo.js — consultorio-123 (Fase 2 del plan de blindaje de datos, 2026-08-04)
 // ============================================================================
 // POR QUE: cuando localStorage se llena, guardarEstadoLocal() (mock-backend.js)
 // tenia que elegir entre no guardar la venta de HOY o recortar el log de
