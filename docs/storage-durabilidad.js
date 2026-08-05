@@ -1,4 +1,4 @@
-// storage-durabilidad.js — friendly-123 (Fase 1 del plan de blindaje de datos, 2026-08-04)
+// storage-durabilidad.js — Consultorio 123 (Fase 1 del plan de blindaje de datos, 2026-08-04)
 // ============================================================================
 // QUE HACE: navigator.storage.persist() se llamaba una sola vez, al activar el
 // dispositivo (auth-ui.js), sin leer el resultado. Si el navegador lo negaba

@@ -1,5 +1,5 @@
 // ============================================================================
-// i18n.js — Capa bilingüe EN/ES para friendly-123.
+// i18n.js — Capa bilingüe EN/ES para Consultorio 123.
 // Inglés es el idioma por DEFECTO; el español se retiene completo (no se
 // descarta nada). El usuario cambia de idioma con el switch del header.
 //
@@ -70,7 +70,7 @@
       "emp.done": " sale(s) in your record. Attach and send.",
       "emp.notActivated": "This device is not activated yet, so there is nothing to back up.",
       "emp.readFail": "Could not read the data.",
-      "emp.shareTitle": "My work \u2014 friendly-123",
+      "emp.shareTitle": "My work \u2014 Consultorio 123",
       "emp.shareText": "Record of my work ({fecha}). Sending it to myself by %CANAL%. It is mine and does not pass through any server.",
       "edutip.eyebrow": "TO GET MORE OUT OF YOUR APP",
       "adv.underWatch": "Under watch",
@@ -93,11 +93,11 @@
       "lang.label": "Language",
       "nav.today": "Today",
       "nav.inventory": "Inventory",
-      "nav.sell": "Sold",
+      "nav.sell": "Income",
       "nav.labels": "Labels",
-      "nav.shelves": "Shelves",
-      "nav.customers": "Customers",
-      "nav.commissions": "Commissions",
+      "nav.shelves": "Locations",
+      "nav.customers": "Patients",
+      "nav.commissions": "Referrals",
       "nav.advanced": "Advanced",
       "nav.contable": "Accounting",
       "hoy.loading": "Loading your business...",
@@ -190,7 +190,7 @@
       "adv.save": "Save",
       "adv.pnlHeading": "Profit & loss (today)",
       "adv.balanceHeading": "Simplified balance sheet",
-      "auth.act.tagline": "friendly-123 · activate my business",
+      "auth.act.tagline": "Consultorio 123 · activate my business",
       "auth.act.title": "This device becomes yours",
       "auth.act.intro": "From now on, this copy is your business: your products, your customers, your PINs. Everything lives on your device, no cloud, no middlemen.",
       "auth.act.dataPromise": "The only thing you need to register is your program license — everything else about your data stays with you, by design.",
@@ -201,7 +201,7 @@
       "auth.act.emailLabel": "Your email (to recover access if you forget your PIN)",
       "auth.act.confirmBtn": "Activate my business",
       "auth.act.cancelBtn": "Not now",
-      "auth.act.doneTagline": "friendly-123 · ready",
+      "auth.act.doneTagline": "Consultorio 123 · ready",
       "auth.act.doneTitle": "Your business is active",
       "auth.act.enterBtn": "Enter my business",
       "auth.act.invalidEmail": "Enter a valid email — it's your only way to recover access if you forget your PIN.",
@@ -284,7 +284,7 @@
       "adv.val.saleValue": "Sale value",
       "adv.val.potentialProfit": "Potential profit",
       "adv.val.total": "Total",
-      "footer.tagline": "friendly-123: shelf, customer, and commission control",
+      "footer.tagline": "Consultorio 123: shelf, customer, and commission control",
       "hoy.err": "Could not load the summary. Reload to try again.",
       "hoy.titulo.verde": "Everything's flowing today. Your business is healthy.",
       "hoy.titulo.amarillo": "A few things need attention — manageable, not urgent.",
@@ -391,7 +391,7 @@
       "hoy.alertsHeading": "Today's alerts",
       "shelves.myShelvesHeading": "My shelves",
       "shelves.myShelvesIntro": "Real photos of each shelf with its target status. Tap a photo to update it.",
-      "help.title": "How does friendly-123 work?",
+      "help.title": "How does Consultorio 123 work?",
       "help.gotIt": "Got it",
       "help.btnLabel": "Help (?)",
       "help.seeWelcomeAgain": "See the welcome tutorial again",
@@ -421,7 +421,7 @@
       "weekly.nudgeTitle": "📊 Send yourself this week's summary via WhatsApp?",
       "weekly.nudgeSend": "Send",
       "weekly.nudgeNotNow": "Not now",
-      "weekly.msgTitle": "*Weekly summary — friendly-123*",
+      "weekly.msgTitle": "*Weekly summary — Consultorio 123*",
       "weekly.msgSales": "This week's sales: {amount} in {count} sale(s).",
       "weekly.msgPending": "Pending commissions: {amount} ({count} rack(s)).",
       "weekly.msgCritical": "Critical stock:",
@@ -543,7 +543,7 @@
       "emp.done": " venta(s) en tu constancia. Adjunta y env\u00eda.",
       "emp.notActivated": "Este dispositivo todav\u00eda no est\u00e1 activado, as\u00ed que no hay datos que respaldar.",
       "emp.readFail": "No se pudieron leer los datos.",
-      "emp.shareTitle": "Mi trabajo \u2014 friendly-123",
+      "emp.shareTitle": "Mi trabajo \u2014 Consultorio 123",
       "emp.shareText": "Constancia de mi trabajo ({fecha}). Me la env\u00edo a m\u00ed por %CANAL%. Es m\u00eda y no pasa por ning\u00fan servidor.",
       "edutip.eyebrow": "PARA APROVECHAR MEJOR TU APP",
       "adv.underWatch": "En observaci\u00f3n",
@@ -566,11 +566,11 @@
       "lang.label": "Idioma",
       "nav.today": "Hoy",
       "nav.inventory": "Inventario",
-      "nav.sell": "Vendido",
+      "nav.sell": "Ingresos",
       "nav.labels": "Etiquetas",
-      "nav.shelves": "Perchas",
-      "nav.customers": "Clientes",
-      "nav.commissions": "Comisiones",
+      "nav.shelves": "Sedes",
+      "nav.customers": "Pacientes",
+      "nav.commissions": "Referidos",
       "nav.advanced": "Avanzado",
       "nav.contable": "Contabilidad",
       "hoy.loading": "Cargando tu negocio...",
@@ -663,7 +663,7 @@
       "adv.save": "Guardar",
       "adv.pnlHeading": "Pérdidas y ganancias (hoy)",
       "adv.balanceHeading": "Balance simplificado",
-      "auth.act.tagline": "friendly-123 · activar mi negocio",
+      "auth.act.tagline": "Consultorio 123 · activar mi negocio",
       "auth.act.title": "Este dispositivo pasa a ser tuyo",
       "auth.act.intro": "De aquí en adelante, esta copia es tu negocio: tus productos, tus clientes, tus claves. Todo vive en tu dispositivo, sin nube ni intermediarios.",
       "auth.act.dataPromise": "Lo único que necesitas registrar es tu licencia del programa — todo el resto de tus datos permanece solamente contigo, por diseño.",
@@ -674,7 +674,7 @@
       "auth.act.emailLabel": "Tu correo (para recuperar el acceso si olvidas el PIN)",
       "auth.act.confirmBtn": "Activar mi negocio",
       "auth.act.cancelBtn": "Ahora no",
-      "auth.act.doneTagline": "friendly-123 · listo",
+      "auth.act.doneTagline": "Consultorio 123 · listo",
       "auth.act.doneTitle": "Tu negocio está activo",
       "auth.act.enterBtn": "Entrar a mi negocio",
       "auth.act.invalidEmail": "Escribe un correo válido — es tu única forma de recuperar el acceso si olvidas el PIN.",
@@ -757,7 +757,7 @@
       "adv.val.saleValue": "Valor venta",
       "adv.val.potentialProfit": "Utilidad potencial",
       "adv.val.total": "Total",
-      "footer.tagline": "friendly-123: control de inventario, clientes y perchas",
+      "footer.tagline": "Consultorio 123: control de inventario, clientes y perchas",
       "hoy.err": "No se pudo cargar el resumen. Recarga para intentar de nuevo.",
       "hoy.titulo.verde": "Todo fluye hoy. Tu negocio está saludable.",
       "hoy.titulo.amarillo": "Hay cosas que piden atención — manejable, no urgente.",
@@ -864,7 +864,7 @@
       "hoy.alertsHeading": "Alertas de hoy",
       "shelves.myShelvesHeading": "Mis perchas",
       "shelves.myShelvesIntro": "Fotos reales de cada percha con su semáforo de meta. Toca una foto para actualizarla.",
-      "help.title": "¿Cómo funciona friendly-123?",
+      "help.title": "¿Cómo funciona Consultorio 123?",
       "help.gotIt": "Entendido",
       "help.btnLabel": "Ayuda (?)",
       "help.seeWelcomeAgain": "Ver el tutorial de bienvenida otra vez",
@@ -894,7 +894,7 @@
       "weekly.nudgeTitle": "📊 ¿Enviarte el resumen de esta semana por WhatsApp?",
       "weekly.nudgeSend": "Enviar",
       "weekly.nudgeNotNow": "Ahora no",
-      "weekly.msgTitle": "*Resumen semanal — friendly-123*",
+      "weekly.msgTitle": "*Resumen semanal — Consultorio 123*",
       "weekly.msgSales": "Ventas de esta semana: {amount} en {count} venta(s).",
       "weekly.msgPending": "Comisiones pendientes: {amount} ({count} percha(s)).",
       "weekly.msgCritical": "Stock crítico:",
@@ -967,9 +967,9 @@
     },
   };
 
-  const LS_KEY = "f123_lang"; // f123_ prefijo (2026-07-17): namespace propio, no compartir con AMIGABLE
+  const LS_KEY = "c123_lang";
   let lang = localStorage.getItem(LS_KEY);
-  if (lang !== "en" && lang !== "es") lang = "en"; // default English
+  if (lang !== "en" && lang !== "es") lang = "es"; // Consultorio 123: español por defecto
 
   function t(key, fallback) {
     const d = DICT[lang] || DICT.en;

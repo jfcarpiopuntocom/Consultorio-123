@@ -44,7 +44,7 @@
   // see ayudaDuenoHTML()/ayudaEmpleadoHTML() below.
   const AYUDA_DUENO_EN = `
     <span class="rolTag">Owner's guide</span>
-    <h3>What friendly-123 actually is</h3>
+    <h3>What Consultorio 123 actually is</h3>
     <p style="font-size:14px;line-height:1.6;margin:0 0 10px;">
       Not a cash register. An inventory management system for vendors, promoters,
       and commission tracking — organized around <b>perchas</b> (your slots, racks,
@@ -85,7 +85,7 @@
       that's ever sent anywhere is your <b>license</b>: a random device ID, and (only if
       you chose to enter them) your name, email, license code, and WhatsApp number — so
       we can recover your access or reach you if needed. Nothing else, ever, under any
-      feature. See <a href="https://github.com/jfcarpiopuntocom/friendly-123/blob/main/PRIVACY.md" target="_blank" rel="noopener" style="color:#5294AC;">PRIVACY.md</a>
+      feature. See <a href="https://github.com/jfcarpiopuntocom/Consultorio 123/blob/main/PRIVACY.md" target="_blank" rel="noopener" style="color:#5294AC;">PRIVACY.md</a>
       for the full detail, or just open DevTools → Network and watch for yourself.
     </p>
     <h3>Ownership and updates</h3>
@@ -103,7 +103,7 @@
 
   const AYUDA_DUENO_ES = `
     <span class="rolTag">Guía del dueño</span>
-    <h3>Qué es friendly-123 en realidad</h3>
+    <h3>Qué es Consultorio 123 en realidad</h3>
     <p style="font-size:14px;line-height:1.6;margin:0 0 10px;">
       No es una caja registradora. Es un sistema de gestión de inventario para
       vendedores, promotoras y control de comisiones — organizado alrededor de
@@ -145,7 +145,7 @@
       Lo único que se envía alguna vez es tu <b>licencia</b>: un ID de dispositivo
       aleatorio, y (solo si decidiste ingresarlos) tu nombre, correo, código de licencia
       y número de WhatsApp — para poder recuperar tu acceso o contactarte si hace falta.
-      Nada más, nunca, en ninguna función. Ve <a href="https://github.com/jfcarpiopuntocom/friendly-123/blob/main/PRIVACY.md" target="_blank" rel="noopener" style="color:#5294AC;">PRIVACY.md</a>
+      Nada más, nunca, en ninguna función. Ve <a href="https://github.com/jfcarpiopuntocom/Consultorio 123/blob/main/PRIVACY.md" target="_blank" rel="noopener" style="color:#5294AC;">PRIVACY.md</a>
       para el detalle completo, o abre DevTools → Network y compruébalo tú mismo.
     </p>
     <h3>Propiedad y actualizaciones</h3>
@@ -209,7 +209,7 @@
   const modal = document.createElement("div");
   modal.id = "oc-help-modal";
   modal.innerHTML = `<div id="oc-help-sheet">
-    <h2 id="oc-help-titulo">How does friendly-123 work?</h2>
+    <h2 id="oc-help-titulo">How does Consultorio 123 work?</h2>
     <!-- Tagline (JFC 2026-07-15): "Manage your business, in color" — marketing promise, not description. -->
     <p id="oc-help-tagline" style="font-family:var(--font-display,sans-serif);color:#E8A020;font-size:15px;font-weight:700;margin:0 0 14px;">Manage your business, in color</p>
     <div id="oc-help-body"></div>
@@ -236,7 +236,7 @@
   window.addEventListener("oc-lang-change", pintarTextosFijos);
   pintarTextosFijos();
 
-  // brandWrap: logo friendly-123 encima del botón Help, igual que AMIGABLE.
+  // brandWrap: logo Consultorio 123 encima del botón Help, igual que AMIGABLE.
   // ESTADO APROBADO POR JFC (2026-07-15). NO CAMBIAR ESTRUCTURA.
   // - Logo: logo.png (wordmark coloreado), height:22px, clickeable → va a Hoy
   // - Btn: "Help (?)" debajo del logo
@@ -248,7 +248,7 @@
 
   const brandLogo = document.createElement("img");
   brandLogo.src = "./logo.png";
-  brandLogo.alt = "friendly-123";
+  brandLogo.alt = "Consultorio 123";
   brandLogo.title = "Ir a Hoy";
   brandLogo.style.cssText = "height:22px;width:auto;object-fit:contain;display:block;cursor:pointer;";
   brandLogo.onerror = function () { this.style.display = "none"; };

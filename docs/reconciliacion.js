@@ -1,5 +1,5 @@
 /*!
- * reconciliacion.js — friendly-123 · MICELIO FASE B
+ * reconciliacion.js — Consultorio 123 · MICELIO FASE B
  * Gemelo de docs/reconciliacion.js en AMIGABLE. El motor es identico; solo
  * el panel cambia, porque aqui pasa por i18n (t()). Si se corrige un bug de
  * logica, corregirlo en AMBOS.

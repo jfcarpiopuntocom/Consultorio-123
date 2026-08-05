@@ -1,5 +1,5 @@
 /*!
- * cartera.js — friendly-123 · Roadmap Agosto 2026, Fase 0 + Fase 1
+ * cartera.js — Consultorio 123 · Roadmap Agosto 2026, Fase 0 + Fase 1
  * ============================================================================
  * Cartera de clientes (fiado / abono). Sigue al pie la regla dura del roadmap:
  * "ninguna feature nueva que toque dinero se construye como estado mutable.

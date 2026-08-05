@@ -1,5 +1,5 @@
 /*!
- * caja-chica.js — friendly-123 · Roadmap Agosto 2026, Fase 2
+ * caja-chica.js — Consultorio 123 · Roadmap Agosto 2026, Fase 2
  * ============================================================================
  * Caja chica por percha. Mismo patron EXACTO que cartera.js (Fase 1): el
  * "dueño del saldo" es una percha (ubicacionId) en vez de un cliente. Ver

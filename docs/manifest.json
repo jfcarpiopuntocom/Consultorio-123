@@ -1,13 +1,13 @@
 {
-  "name": "friendly-123",
-  "short_name": "friendly",
-  "description": "Manage your business, in color. Inventory, clients, commissions and racks for small business - no servers, your data stays yours.",
+  "name": "Consultorio 123",
+  "short_name": "Consultorio123",
+  "description": "Gestion de consultorio medico: ingresos, inventario, cuentas por cobrar, roles de equipo y estado de resultados - sin servidores, tus datos son tuyos.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#F8F9FB",
-  "theme_color": "#0F1923",
-  "lang": "en",
+  "background_color": "#FFF8ED",
+  "theme_color": "#FF6B00",
+  "lang": "es",
   "icons": [
     {
       "src": "./icons/android-chrome-192x192.png",

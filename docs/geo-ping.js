@@ -1,5 +1,5 @@
 /*!
- * geo-ping.js — friendly-123 · Control de ubicación del equipo (2026-07-28)
+ * geo-ping.js — Consultorio 123 · Control de ubicación del equipo (2026-07-28)
  * ============================================================================
  * QUE ES ESTO
  * ----------------------------------------------------------------------------
@@ -49,7 +49,7 @@
   var DB_VERSION = 1;
   var STORE = "pings";
 
-  // Bilingue (JFC 2026-07-28, "friendly-123 es EN-first"): mismo patron que
+  // Bilingue (JFC 2026-07-28, "Consultorio 123 es EN-first"): mismo patron que
   // reconciliacion.js — T()/TF() envuelven window.t()/window.tf() (definidos
   // en i18n.js) y caen a la propia clave si i18n.js no cargo todavia, para
   // que un fallo de orden de carga nunca deje texto en blanco.

@@ -45,8 +45,8 @@
     // from them to them: it never passes through any server.
     try {
       if (email && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        var asunto = "Your access key — friendly-123";
-        var cuerpo = "Your owner key in friendly-123 is: " + pin
+        var asunto = "Your access key — Consultorio 123";
+        var cuerpo = "Your owner key in Consultorio 123 is: " + pin
           + "\n\nKeep it somewhere safe. This email goes from you to you: it never passes through any server."
           + "\nIf you didn't request it, change it in Advanced → Keys.";
         window.location.href = "mailto:" + encodeURIComponent(email)

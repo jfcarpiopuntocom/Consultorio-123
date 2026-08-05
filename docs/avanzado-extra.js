@@ -309,7 +309,7 @@
       <hr style="border:none;border-top:1px solid var(--azul-suave,#dde5ec);margin:16px 0;">
       <h4 style="margin:0 0 6px;font-size:14px;">🔐 Local safe (automatic)</h4>
       <p style="font-size:13px;color:var(--ink-soft);margin-top:0;">
-        In addition to the manual backup above, friendly-123 saves a snapshot of your data here (in this browser) periodically,
+        In addition to the manual backup above, Consultorio 123 saves a snapshot of your data here (in this browser) periodically,
         in case you delete something by accident. This does NOT replace the manual backup — if the browser cache is cleared, these checkpoints are lost too.
         <em>Coming soon: automatic replication of these checkpoints across your devices. In the meantime, you can copy your data to another device via Advanced → QR Sync.</em></p>
       <p id="oc-caja-alerta" style="font-size:13px;font-weight:700;"></p>
@@ -367,7 +367,7 @@
     if (window.OCRespaldoEmpleado) window.OCRespaldoEmpleado.montar(reMount);
 
     // === RESTORE POINTS (mycelium phase B) =================================
-    // The div is built here in JS rather than in index.html: friendly-123 has
+    // The div is built here in JS rather than in index.html: Consultorio 123 has
     // no accounting section like AMIGABLE, so there is no equivalent HTML
     // anchor to hang it from.
     const recMount = document.createElement("div");
@@ -1218,7 +1218,7 @@
       ]);
       const fila = (a, b) => `"${a}","${b}"`;
       const filas = [
-        fila("Accounting report — friendly-123", new Date().toLocaleString(window.OCI18n ? window.OCI18n.locale() : "en-US")),
+        fila("Accounting report — Consultorio 123", new Date().toLocaleString(window.OCI18n ? window.OCI18n.locale() : "en-US")),
         fila("NOTICE", "Input for your accountant. Not a valid tax declaration."),
         fila("", ""),
         fila("PROFIT & LOSS (today)", ""),
@@ -1298,7 +1298,7 @@
         // exportaba un archivo CON oc_secure adentro sin que el dueno lo pidiera.
         // Cancelar ahora cancela de verdad.
         if (clave === null) {
-          if (window.dialogosBloqueados && window.dialogosBloqueados()) { msg("oc-respaldo-msg", "Your browser blocks dialogs (happens in WhatsApp's browser). Open friendly-123 in Chrome or Safari to export with a key.", "var(--rojo)"); return; }
+          if (window.dialogosBloqueados && window.dialogosBloqueados()) { msg("oc-respaldo-msg", "Your browser blocks dialogs (happens in WhatsApp's browser). Open Consultorio 123 in Chrome or Safari to export with a key.", "var(--rojo)"); return; }
           msg("oc-respaldo-msg", "Export cancelled.", "var(--ink)");
           return;
         }
@@ -1361,8 +1361,8 @@
           const ok = (await window.OCSecure.hashTexto(JSON.stringify(resto))) === checksum;
           if (!ok) { msg("oc-respaldo-msg", "Content does not match its checksum — file may be corrupted.", "var(--rojo)"); e.target.value = ""; return; }
         }
-        if (!paquete.datos) { msg("oc-respaldo-msg", "This file does not look like a friendly-123 backup.", "var(--rojo)"); return; }
-        if ((paquete.schemaVersion || 1) > 2) { msg("oc-respaldo-msg", "This backup is from a newer version of friendly-123 — update the app before importing it.", "var(--rojo)"); return; }
+        if (!paquete.datos) { msg("oc-respaldo-msg", "This file does not look like a Consultorio 123 backup.", "var(--rojo)"); return; }
+        if ((paquete.schemaVersion || 1) > 2) { msg("oc-respaldo-msg", "This backup is from a newer version of Consultorio 123 — update the app before importing it.", "var(--rojo)"); return; }
         if (!confirm("This REPLACES all current data (products, sales, keys) with the backup data. Continue?")) return;
         const res = await fetch(`${API}/respaldo/importar`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(paquete.datos) });
         const r = await res.json();
@@ -1775,7 +1775,7 @@
     if (btnWaCambios) btnWaCambios.addEventListener("click", async () => {
       const texto = await OCSync.generarPaqueteManual();
       if (!texto) { msg("oc-syncdev-msg", "No hay cambios pendientes en este dispositivo.", "var(--ink)"); return; }
-      const mensaje = "friendly-123 — changes to sync. Paste this on the other device (Advanced → Paste changes):\n\n" + texto;
+      const mensaje = "Consultorio 123 — changes to sync. Paste this on the other device (Advanced → Paste changes):\n\n" + texto;
       if (navigator.share) {
         try { await navigator.share({ text: mensaje }); msg("oc-syncdev-msg", "Shared. On the other device: Advanced → Paste changes.", "var(--verde)"); return; } catch (_) {}
       }
@@ -1831,7 +1831,7 @@
         const nombre = `respaldo-amigable-${new Date().toISOString().slice(0, 10)}.json`;
         const file = new File([archivoFinal], nombre, { type: "application/json" });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: "friendly-123 backup", text: "My business backup (friendly-123)." });
+          await navigator.share({ files: [file], title: "Consultorio 123 backup", text: "My business backup (Consultorio 123)." });
           msg("oc-syncdev-msg", "Backup shared. On the other device: Advanced → Import backup.", "var(--verde)");
         } else {
           const a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = nombre; a.click(); URL.revokeObjectURL(a.href);

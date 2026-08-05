@@ -299,7 +299,7 @@
   // estado se persiste en localStorage tras cada mutación (ver debePersistir
   // en el interceptor de fetch) y se recarga al arrancar (cargarEstadoLocal).
   // CRITICO (2026-07-17): la clave vieja "amigable_demo_state_v4" nunca tuvo
-  // prefijo f123_, y GitHub Pages sirve friendly-123 y AMIGABLE bajo el MISMO
+  // prefijo f123_, y GitHub Pages sirve Consultorio 123 y AMIGABLE bajo el MISMO
   // origen (jfcarpiopuntocom.github.io) — localStorage se comparte por origen,
   // no por carpeta. Con la clave vieja, TODO el estado del negocio (productos,
   // ventas, clientes) se mezclaba entre ambas apps en el mismo navegador.

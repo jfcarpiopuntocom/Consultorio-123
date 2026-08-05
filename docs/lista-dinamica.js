@@ -1,5 +1,5 @@
 /*!
- * lista-dinamica.js — friendly-123 · listas dinámicas (búsqueda + orden)
+ * lista-dinamica.js — Consultorio 123 · listas dinámicas (búsqueda + orden)
  * ============================================================================
  * Componente genérico y reusable: búsqueda en vivo + ordenar por columna
  * (ascendente/descendente) sobre un array ya cargado en memoria. Pedido

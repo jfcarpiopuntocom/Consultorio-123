@@ -1,4 +1,4 @@
-// tutorial-ui.js — INTERACTIVE TUTORIAL for friendly-123 (JFC 2026-07-17).
+// tutorial-ui.js — INTERACTIVE TUTORIAL for Consultorio 123 (JFC 2026-07-17).
 // This is NOT the welcome guide (welcome-ui.js, a reading modal) nor Help
 // (help-ui.js): this is a LIVE TOUR over the real interface. It dims the
 // screen, spotlights the element being explained, navigates between views on
