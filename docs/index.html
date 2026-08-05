@@ -1948,10 +1948,10 @@ if (elBtnCierre) elBtnCierre.addEventListener("click", async () => {
 // - Matriz de estaciones (clientes) y matriz BCG (inventario): SOLO dueno.
 // ============================================================================
 const ESTACIONES = {
-  verano:    { icono: "☀️", titulo: "Summer — peak harvest",  bg: "var(--sim-amarillo-bg)", borde: "var(--sim-amarillo)", tinta: "#B8860B", frase: "Buy often and big. Treat them like gold." },
-  primavera: { icono: "🌱", titulo: "Spring — growing",       bg: "var(--sim-verde-bg)",    borde: "var(--sim-verde)",    tinta: "#009A5A", frase: "Just sprouting. One touch of attention and they come back." },
-  otono:     { icono: "🍂", titulo: "Autumn — cooling down",         bg: "var(--sim-naranja-bg)",  borde: "var(--sim-naranja)",  tinta: "#C05000", frase: "Were your best clients and haven't shown up in a while. Reach out today." },
-  invierno:  { icono: "❄️", titulo: "Winter — dormant",         bg: "var(--sim-azul-bg)",     borde: "var(--sim-azul)",     tinta: "#2E6278", frase: "No signs of life. One message might wake them up." },
+  verano:    { icono: "☀️", titulo: "Summer — peak harvest",  bg: "var(--sim-amarillo)", borde: "var(--sim-amarillo-dk)", tinta: "#1A1A1A", frase: "Buy often and big. Treat them like gold." },
+  primavera: { icono: "🌱", titulo: "Spring — growing",       bg: "var(--sim-verde)",    borde: "var(--sim-verde-dk)",    tinta: "#FFFFFF", frase: "Just sprouting. One touch of attention and they come back." },
+  otono:     { icono: "🍂", titulo: "Autumn — cooling down",         bg: "var(--sim-naranja)",  borde: "var(--sim-naranja-dk)",  tinta: "#FFFFFF", frase: "Were your best clients and haven't shown up in a while. Reach out today." },
+  invierno:  { icono: "❄️", titulo: "Winter — dormant",         bg: "var(--sim-azul)",     borde: "var(--sim-azul-dk)",     tinta: "#FFFFFF", frase: "No signs of life. One message might wake them up." },
 };
 // Etiqueta de comportamiento según trato × confiabilidad.
 // Badges de comportamiento como chips HTML — sin emojis, legibles y serios.
@@ -2314,21 +2314,21 @@ async function cargarBCG(){
   try { q = await (await fetch(`${API}/inventario/bcg?ubicacionId=${ubicacionActual}`)).json(); }
   catch (_) { cont.innerHTML = '<p style="font-size:14px;color:var(--ink-soft);">Could not load BCG analysis. Reload the view.</p>'; return; }
   const CUAD = {
-    estrellas:    { icono: "⭐", titulo: "Estrellas",      sub: "Sell a lot and trending up. Protect their stock.",         bg: "var(--sim-verde-bg)",    borde: "var(--sim-verde)",    tinta: "#009A5A" },
-    vacas:        { icono: "🐄", titulo: "Cash cows", sub: "Sell a lot, stable. They fund everything else.",       bg: "var(--sim-amarillo-bg)", borde: "var(--sim-amarillo)", tinta: "#B8860B" },
-    promesas:     { icono: "❓", titulo: "Rising stars",       sub: "Sell little but trending up. Give them shelf space.",          bg: "var(--sim-azul-bg)",     borde: "var(--sim-azul)",     tinta: "#2E6278" },
-    pesosMuertos: { icono: "💤", titulo: "Dead weight",  sub: "No movement in 60 days. Free up that capital.",         bg: "var(--sim-plata-bg)",    borde: "var(--sim-plata-dk)", tinta: "#2C3E50" },
+    estrellas:    { icono: "⭐", titulo: "Estrellas",      sub: "Sell a lot and trending up. Protect their stock.",         bg: "var(--sim-verde)",    borde: "var(--sim-verde-dk)",    tinta: "#FFFFFF" },
+    vacas:        { icono: "🐄", titulo: "Cash cows", sub: "Sell a lot, stable. They fund everything else.",       bg: "var(--sim-amarillo)", borde: "var(--sim-amarillo-dk)", tinta: "#1A1A1A" },
+    promesas:     { icono: "❓", titulo: "Rising stars",       sub: "Sell little but trending up. Give them shelf space.",          bg: "var(--sim-cyan)",     borde: "var(--sim-cyan-dk)",     tinta: "#FFFFFF" },
+    pesosMuertos: { icono: "💤", titulo: "Dead weight",  sub: "No movement in 60 days. Free up that capital.",         bg: "var(--sim-plata-bg)",    borde: "var(--sim-plata-dk)", tinta: "#1A1A1A" },
   };
   const celda = (k) => {
     const c = CUAD[k], l = q[k] || [];
-    const chips = l.slice(0, 8).map((i) => `<span style="display:inline-block;background:#FFFFFF;border:1.5px solid ${c.borde};border-radius:6px;padding:3px 8px;margin:3px 3px 0 0;font-size:14px;color:#0F1923;">${escHtml(i.nombre)}${i.total > 0 ? ` · ${fmtMoney(i.total)}` : ""}</span>`).join("");
-    const extra = l.length > 8 ? `<div style="font-size:14px;color:#2C3E50;margin-top:4px;">and ${l.length - 8} more…</div>` : "";
+    const chips = l.slice(0, 8).map((i) => `<span style="display:inline-block;background:#FFFFFF;border:2px solid ${c.borde};border-radius:6px;padding:5px 10px;margin:4px 4px 0 0;font-size:16px;font-weight:600;color:#1A1A1A;">${escHtml(i.nombre)}${i.total > 0 ? ` · ${fmtMoney(i.total)}` : ""}</span>`).join("");
+    const extra = l.length > 8 ? `<div style="font-size:16px;font-weight:600;color:${c.tinta};-webkit-text-fill-color:${c.tinta};margin-top:6px;">and ${l.length - 8} more…</div>` : "";
     return `<div style="background:${c.bg};border:2px solid ${c.borde};border-radius:10px;padding:12px;">
-      <div style="font-weight:700;font-size:15px;color:${c.tinta};">${c.icono} ${c.titulo} (${l.length})</div>
-      <div style="font-size:14px;color:#2C3E50;margin:2px 0 6px;">${c.sub}</div>${chips}${extra}</div>`;
+      <div style="font-weight:800;font-size:19px;color:${c.tinta};-webkit-text-fill-color:${c.tinta};">${c.icono} ${c.titulo} (${l.length})</div>
+      <div style="font-size:16px;font-weight:600;color:${c.tinta};-webkit-text-fill-color:${c.tinta};margin:4px 0 8px;line-height:1.45;">${c.sub}</div>${chips}${extra}</div>`;
   };
   cont.innerHTML = `<h3 class="seccion">${t("bcg.heading")}</h3>
-    <p style="font-size:15px;color:var(--ink-soft);margin-top:0;">${t("bcg.intro")}</p>
+    <p style="font-size:17px;color:#1A1A1A;margin-top:0;line-height:1.5;">${t("bcg.intro")}</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       ${celda("promesas")}${celda("estrellas")}
       ${celda("pesosMuertos")}${celda("vacas")}
