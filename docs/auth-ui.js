@@ -103,13 +103,16 @@
   // Rol DEMO oculto (JFC, 2026-07-02): la clave 456 entra con acceso de dueño
   // pero SIN poder cambiar claves ni correo. Para que un cliente pruebe todo
   // sin bloquear al dueño ni secuestrar la recuperación. NO se anuncia en la UI.
-  const DEMO_PIN = "456";
+  // consultorio-123 usa 4 digitos desde su diseno inicial (JFC 2026-08-05).
+  // Cambiar este numero ajusta teclado y casillas a la vez.
+  const LARGO_PIN = 4;
+  const DEMO_PIN = "8888"; // DEMO permanente de consultorio-123 (JFC 2026-08-05)
   // Apropiacion (JFC 2026-07-08): 789 convierte ESTE dispositivo en la
   // instancia propia del comprador — datos propios, correo propio, control
   // de PINs. Una sola vez por dispositivo: una vez apropiado, 789 deja de
   // ser codigo de activacion y pasa a ser (o no) el PIN de dueno. No se
   // puede redundar la apropiacion en el mismo dispositivo.
-  const ACTIVATION_PIN = "789";
+  const ACTIVATION_PIN = "7895"; // activacion de consultorio-123 (JFC 2026-08-05)
   function dispositivoApropiado() {
     try { return !!(JSON.parse(localStorage.getItem("f123_owned") || "null") || {}).instanceId; }
     catch (_) { return false; }
@@ -278,7 +281,7 @@
       padEl.dataset.ocListenerMontado = "1";
       padEl.addEventListener("click", (e) => {
         const st = padEl._ocTeclado; // siempre el estado de la montada MÁS RECIENTE
-        const b = e.target.closest("button[data-d]"); if (!b || st.entrada().length >= 3) return;
+        const b = e.target.closest("button[data-d]"); if (!b || st.entrada().length >= LARGO_PIN) return;
         st.push(Number(b.dataset.d));
         st.pintar();
         // JFC 2026-07-29: 150ms apuraba a la gente — apenas alcanza a ver que
@@ -286,7 +289,7 @@
         // notar un typo (el punto sigue enmascarado por diseño, pero el
         // usuario SIENTE que se completo, no que salio disparado) antes de
         // que cuente como intento.
-        if (st.entrada().length === 3) { const code = st.entrada().join(""); setTimeout(() => st.onComplete(code), 900); }
+        if (st.entrada().length === LARGO_PIN) { const code = st.entrada().join(""); setTimeout(() => st.onComplete(code), 900); }
       });
     }
     pintar();
@@ -305,7 +308,7 @@
       </div>
       <p id="oc-gate-tagline" style="margin:6px 0 10px;font-size:13px;color:var(--ink-soft,#5d5340) !important;-webkit-text-fill-color:var(--ink-soft,#5d5340) !important;text-align:center;font-family:var(--font-mono,monospace);letter-spacing:.05em;">${window.t("auth.gate.tagline")}</p>
       <div class="sub">${window.t("auth.gate.subtitle")}</div>
-      <div class="oc-slots" id="oc-slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+      <div class="oc-slots" id="oc-slots"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
       <div class="oc-pad" id="oc-pad"></div>
       <div class="oc-acciones">
         <button id="oc-borrar">${window.t("auth.gate.clear")}</button>
@@ -313,7 +316,13 @@
       </div>
       <button type="button" id="oc-unirse-equipo" style="background:none;border:none;color:var(--azul-medio,#2c4a68) !important;-webkit-text-fill-color:var(--azul-medio,#2c4a68) !important;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:10px;padding:6px;display:block;width:100%;text-align:center;">${window.t("auth.gate.joinTeam")}</button>
       <div class="oc-msg" id="oc-msg"></div>
-      <p id="oc-gate-info" style="margin:16px 0 0;font-size:13px;line-height:1.5;color:var(--ink-soft,#5d5340) !important;-webkit-text-fill-color:var(--ink-soft,#5d5340) !important;text-align:center;">v1.0 &mdash; consultorio-123 turns the boring, overwhelming part of running a business into something alive: your products speak in colors that light up on their own when it's time to act. Works offline, your data is yours alone, and there are no subscriptions or ads from anyone. Your business, in color.</p>
+      <!-- MARCA AL PIE (JFC 2026-08-05). Antes aqui vivia un parrafo largo en
+           ingles que empujaba la pantalla fuera del viewport en PC. Ahora es
+           solo la marca: tipografia gruesa, ancha y moderna, con el relieve
+           del case metalico. Debe caber sin scroll. -->
+      <div id="oc-gate-marca" style="margin:18px 0 0;text-align:center;">
+        <span style="display:inline-block;font-family:var(--font-display,sans-serif);font-size:19px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#14181C !important;-webkit-text-fill-color:#14181C !important;text-shadow:0 1px 0 #FCFDFC, 0 2px 0 #BFC3BD;">Made in Cuenca</span>
+      </div>
     </div>`;
   document.body.appendChild(gate);
 
@@ -543,7 +552,7 @@
       // siguiera siendo el 888 de demo. Ahora, si falla, se detiene ANTES de
       // dejar el dispositivo en un estado a medias y avisa honesto.
       var pinGuardado = false;
-      try { pinGuardado = await window.OCSecure.fijarOwnerPin("789"); } catch (_) {}
+      try { pinGuardado = await window.OCSecure.fijarOwnerPin("7895"); } catch (_) {}
       if (!pinGuardado) {
         btn.disabled = false;
         setMsg("No se pudo activar (memoria del dispositivo llena). Libera espacio y toca \"Activar mi negocio\" de nuevo — nada quedó a medias.");
@@ -983,7 +992,7 @@
         cont.innerHTML = `<div class="caja" style="background:var(--blanco-calido,#fbf5e8);border:2px solid var(--brass,#9c7a35);border-radius:8px;padding:26px 22px;max-width:420px;width:100%;text-align:center;">
           <h2 style="font-family:var(--font-display,sans-serif);color:var(--ink,#211c14);font-size:22px;margin:0 0 4px;">${window.t("auth.gate.accountingLayer")}</h2>
           <div class="sub" style="font-size:14px;color:var(--ink-soft,#5d5340);margin-bottom:18px;">${window.t("auth.gate.accountingSubtitle")}</div>
-          <div class="oc-slots" id="oc-slots2"><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
+          <div class="oc-slots" id="oc-slots2"><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
           <div class="oc-pad" id="oc-pad2"></div>
           <div class="oc-acciones"><button id="sc-cancelar">${window.t("auth.gate.cancel")}</button><button id="sc-borrar">${window.t("auth.gate.clear")}</button></div>
           <div class="oc-msg" id="oc-msg2"></div></div>`;

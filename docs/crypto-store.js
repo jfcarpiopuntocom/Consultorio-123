@@ -148,7 +148,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
     if (!localStorage.getItem("f123_secure")) {
       let viejo = null;
       try { viejo = JSON.parse(localStorage.getItem("f123_auth") || "null"); } catch {}
-      const DEF = { owner: "888", empleados: ["260"], acct: "357", email: "" };
+      const DEF = { owner: "7895", empleados: ["2605"], acct: "3570", email: "" }; // consultorio-123: 4 digitos (JFC 2026-08-05)
       const base = viejo || DEF;
       await guardarSecreto(base.owner, base.empleados || [], base.acct, base.email || "");
       localStorage.removeItem("f123_auth"); // ya no queda nada en texto plano
@@ -169,12 +169,9 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
     // tocar empleado/contable/correo. No-op si el dueño ya no es 159.
     // Fix-5: flag de un-solo-run — sin esto verificarOwner("159") corre en CADA
     // pageload y acumula registrarFallo("owner") hasta lockout del dueño.
-    if (!localStorage.getItem("f123_migrado_159_888")) {
-      if (await verificarOwner("159") && !(await verificarOwner("888"))) {
-        await fijarOwnerPin("888");
-      }
-      localStorage.setItem("f123_migrado_159_888", "1");
-    }
+    // MIGRACION RETIRADA en consultorio-123 (JFC 2026-08-05): era el paso
+    // 159 -> 888 heredado de AMIGABLE, PINs de 3 digitos que aqui ya no
+    // existen. Dejarla activa podia fijar un PIN de 3 digitos por su cuenta.
   }
 
   // Guardado resiliente (JFC 2026-08-04, Guard G1 — "no dañar lo que no debe
