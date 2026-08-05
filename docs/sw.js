@@ -9,7 +9,7 @@
 // (fonts.googleapis.com / fonts.gstatic.com) tras la primera visita, así la
 // tipografía sobrevive sin conexión. Los font stacks del CSS ya traen
 // fallbacks del sistema por si nunca llegaron a cachearse.
-const CACHE = "c123-shell-v2"; // bumped 2026-08-05: fix de contraste (texto ilegible sobre fondos solidos) + tamanos de letra para tablet/movil
+const CACHE = "c123-shell-v3"; // bumped 2026-08-05: fix de contraste (texto ilegible sobre fondos solidos) + tamanos de letra para tablet/movil
 const SHELL = [
   "./",
   "./index.html",
@@ -64,7 +64,11 @@ self.addEventListener("install", (evento) => {
 
 self.addEventListener("activate", (evento) => {
   evento.waitUntil(
-    caches.keys().then((nombres) => Promise.all(nombres.filter((n) => n.startsWith("f123-shell-") && n !== CACHE).map((n) => caches.delete(n))))
+    // BUG FIJADO (2026-08-05): filtraba por "f123-shell-" (heredado de
+    // friendly-123) mientras el cache de esta app se llama "c123-shell-",
+    // asi que NINGUN cache viejo se borraba nunca y el shell obsoleto podia
+    // sobrevivir a los deploys. Ahora limpia ambos prefijos.
+    caches.keys().then((nombres) => Promise.all(nombres.filter((n) => (n.startsWith("c123-shell-") || n.startsWith("f123-shell-")) && n !== CACHE).map((n) => caches.delete(n))))
   );
   self.clients.claim();
 });
