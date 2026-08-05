@@ -21,6 +21,57 @@
   var LS_ON = "f123_gamification_on";
   var LS_STATE = "f123_novedades_v1";
 
+  // Diccionario local EN/ES (mismo patron que tutorial-ui.js): este panel se
+  // pinta fuera del ciclo de i18n.js, asi que resuelve su propio idioma.
+  var TXT = {
+    en: {
+      titulo: "What's New",
+      resumen: "Your day",
+      racha: function (n) { return "Streak: " + n + " day" + (n === 1 ? "" : "s"); },
+      puntos: "Points",
+      ventasHoy: "Logged today",
+      sinInsignias: "No badges yet - they start appearing with your first good habit of the day.",
+      tip: "Tip of the day",
+      turno: "Your shift",
+      cargando: "Loading...",
+      turnoFallback: "Check Inventory for what needs attention today, and Locations for pending photos.",
+      sinAlertas: "Nothing pending - all quiet for now.",
+      impulsar: "Worth pushing today",
+      insignias: { racha3: "3 days in a row", racha7: "A full week", racha30: "A month-long streak",
+                   ventas5: "5 entries in one day", foto: "Location up to date", transf: "Transfer handled",
+                   generico: "Achievement" },
+      switchTitulo: "Employee panel",
+      switchTexto: "Gives your team their own daily panel: streak, points and badges for good habits. It doesn't rank people against each other, never leaves the device, and never touches business data.",
+      switchLabel: "Show the panel to employees"
+    },
+    es: {
+      titulo: "Novedades",
+      resumen: "Tu dia",
+      racha: function (n) { return "Racha: " + n + " dia" + (n === 1 ? "" : "s"); },
+      puntos: "Puntos",
+      ventasHoy: "Registrado hoy",
+      sinInsignias: "Todavia no hay insignias - aparecen con tu primer buen habito del dia.",
+      tip: "Consejo del dia",
+      turno: "Tu turno",
+      cargando: "Cargando...",
+      turnoFallback: "Revisa Inventario para ver que necesita atencion hoy, y Sedes para las fotos pendientes.",
+      sinAlertas: "Nada pendiente - todo tranquilo por ahora.",
+      impulsar: "Vale la pena impulsar hoy",
+      insignias: { racha3: "3 dias seguidos", racha7: "Una semana completa", racha30: "Un mes de racha",
+                   ventas5: "5 registros en un dia", foto: "Sede al dia", transf: "Transferencia atendida",
+                   generico: "Logro" },
+      switchTitulo: "Panel del equipo",
+      switchTexto: "Le da a tu equipo su propio panel diario: racha, puntos e insignias por buenos habitos. No compara a unos con otros, nunca sale del dispositivo y nunca toca los datos del negocio.",
+      switchLabel: "Mostrar el panel a los empleados"
+    }
+  };
+  function T() {
+    var lang = "en";
+    try { if (window.OCI18n && window.OCI18n.getLang) lang = window.OCI18n.getLang(); } catch (_) {}
+    return TXT[lang] || TXT.en;
+  }
+
+
   // DEFAULT ON (JFC, 2026-07-22): used to be off by default, now on so the
   // employee sees What's New from their very first login. The owner can turn
   // it off in Advanced — only an explicit "0" disables it.
@@ -240,32 +291,34 @@
       ? st.insignias.slice(-8).map(function (id) { return '<span class="oc-nov-insignia">🏅 ' + escHtmlLocal(etiquetaInsignia(id)) + "</span>"; }).join("")
       : '<p style="font-size:14px;color:var(--ink-soft,#5d5340);">No badges yet — they start appearing with your first good habit of the day.</p>';
 
+    var _t = T();
     sec.innerHTML =
-      '<h3 class="seccion" style="margin-top:0;">What’s New</h3>' +
+      '<h3 class="seccion" style="margin-top:0;">' + _t.titulo + '</h3>' +
       '<div class="oc-nov-card">' +
-        '<h4 style="margin:0 0 6px;font-size:15px;">🧪 Gamification — experimental feature</h4>' +
+        '<h4 style="margin:0 0 6px;font-size:16px;">' + _t.resumen + '</h4>' +
         '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0 0 10px;">' + escHtmlLocal(mensajeRacha(st)) + '</p>' +
         '<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px;">' +
           '<div><div style="font-size:24px;">' + racheFuego(st.racha) + '</div><div style="font-size:13px;color:var(--ink-soft,#5d5340);">Streak: ' + st.racha + ' day' + (st.racha === 1 ? "" : "s") + '</div></div>' +
-          '<div><div style="font-size:24px;font-weight:700;color:var(--rust,#b2461f);">' + st.puntos + '</div><div style="font-size:13px;color:var(--ink-soft,#5d5340);">Points</div></div>' +
-          '<div><div style="font-size:24px;font-weight:700;">' + st.ventasHoy + '</div><div style="font-size:13px;color:var(--ink-soft,#5d5340);">Sales today</div></div>' +
+          '<div><div style="font-size:24px;font-weight:700;color:var(--rust,#b2461f);">' + st.puntos + '</div><div style="font-size:13px;color:var(--ink-soft,#5d5340);">' + _t.puntos + '</div></div>' +
+          '<div><div style="font-size:24px;font-weight:700;">' + st.ventasHoy + '</div><div style="font-size:13px;color:var(--ink-soft,#5d5340);">' + _t.ventasHoy + '</div></div>' +
         '</div>' +
         insigniasHtml +
       '</div>' +
       '<div class="oc-nov-card">' +
-        '<h4 style="margin:0 0 6px;font-size:15px;">💡 Tip of the day</h4>' +
+        '<h4 style="margin:0 0 6px;font-size:15px;">' + _t.tip + '</h4>' +
         '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0;">' + escHtmlLocal(tipDelDia()) + '</p>' +
       '</div>' +
       '<div class="oc-nov-card" id="oc-nov-turno">' +
-        '<h4 style="margin:0 0 6px;font-size:15px;">📋 Shift alerts</h4>' +
-        '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0;">Loading…</p>' +
+        '<h4 style="margin:0 0 6px;font-size:15px;">' + _t.turno + '</h4>' +
+        '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0;">' + _t.cargando + '</p>' +
       '</div>';
 
     cargarInfoTurno().then(function (info) {
       var cont = document.getElementById("oc-nov-turno");
       if (!cont) return;
+      var _t = T();
       if (info.error) {
-        cont.innerHTML = '<h4 style="margin:0 0 6px;font-size:15px;">📋 Shift alerts</h4><p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0;">Check Inventory for products that need your attention (red and gold) and Perchas for today’s pending photos.</p>';
+        cont.innerHTML = '<h4 style="margin:0 0 6px;font-size:15px;">' + _t.turno + '</h4><p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:0;">' + _t.turnoFallback + '</p>';
         return;
       }
       var alertasHtml = info.alertas.length
@@ -273,24 +326,25 @@
             var color = a.estado === "rojo" ? "var(--rust,#b2461f)" : (a.estado === "amarillo" ? "#8a6d1f" : "var(--ink,#211c14)");
             return '<li style="font-size:14px;color:' + color + ';font-weight:700;margin-bottom:4px;">● ' + escHtmlLocal(a.mensaje) + '</li>';
           }).join("") + '</ul>'
-        : '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:6px 0 14px;">No pending alerts — all quiet for now.</p>';
+        : '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin:6px 0 14px;">' + _t.sinAlertas + '</p>';
       var impulsadosHtml = info.impulsados.length
-        ? '<h4 style="margin:0 0 6px;font-size:15px;">⭐ Push these today</h4><ul style="margin:0;padding-left:0;list-style:none;">' + info.impulsados.map(function (p) {
+        ? '<h4 style="margin:0 0 6px;font-size:15px;">⭐ ' + _t.impulsar + '</h4><ul style="margin:0;padding-left:0;list-style:none;">' + info.impulsados.map(function (p) {
             return '<li style="font-size:14px;color:var(--ink,#211c14);margin-bottom:4px;">⭐ ' + escHtmlLocal(p.nombre) + '</li>';
           }).join("") + '</ul>'
         : '';
-      cont.innerHTML = '<h4 style="margin:0 0 6px;font-size:15px;">📋 Shift alerts</h4>' + alertasHtml + impulsadosHtml;
+      cont.innerHTML = '<h4 style="margin:0 0 6px;font-size:15px;">' + _t.turno + '</h4>' + alertasHtml + impulsadosHtml;
     }).catch(function () {});
   }
 
   function etiquetaInsignia(id) {
-    if (id.indexOf("racha3") === 0) return "3 days in a row";
-    if (id.indexOf("racha7") === 0) return "A full week";
-    if (id.indexOf("racha30") === 0) return "A month-long streak";
-    if (id.indexOf("ventas5") === 0) return "5 sales in one day";
-    if (id.indexOf("foto_") === 0) return "Shelf up to date";
-    if (id.indexOf("transf_") === 0) return "Transfer handled";
-    return "Achievement";
+    var ins = T().insignias;
+    if (id.indexOf("racha3") === 0) return ins.racha3;
+    if (id.indexOf("racha7") === 0) return ins.racha7;
+    if (id.indexOf("racha30") === 0) return ins.racha30;
+    if (id.indexOf("ventas5") === 0) return ins.ventas5;
+    if (id.indexOf("foto_") === 0) return ins.foto;
+    if (id.indexOf("transf_") === 0) return ins.transf;
+    return ins.generico;
   }
   function escHtmlLocal(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
 
@@ -301,12 +355,13 @@
     card.id = "oc-nov-switch-card";
     card.className = "tag-card";
     card.style.cssText = "text-align:left;margin-top:22px;";
+    var _ts = T();
     card.innerHTML =
-      '<h3 class="seccion" style="margin-top:0;">🧪 Employee gamification (experimental)</h3>' +
-      '<p style="font-size:14px;color:var(--ink-soft,#5d5340);margin-top:0;">Gives your employees their own "What’s New" panel: usage streak, points, and badges for good habits (sales, shelf photos, transfers). It doesn’t compete between employees, never leaves the device, and never touches any business data.</p>' +
-      '<label style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;cursor:pointer;">' +
+      '<h3 class="seccion" style="margin-top:0;">' + _ts.switchTitulo + '</h3>' +
+      '<p style="font-size:15px;color:var(--ink-soft,#5d5340);margin-top:0;line-height:1.5;">' + _ts.switchTexto + '</p>' +
+      '<label style="display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;cursor:pointer;">' +
         '<input type="checkbox" id="oc-nov-toggle" style="width:20px;height:20px;">' +
-        'Turn on experimental gamification' +
+        _ts.switchLabel +
       '</label>';
     vista.appendChild(card);
     var chk = document.getElementById("oc-nov-toggle");

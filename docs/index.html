@@ -42,6 +42,12 @@
 <!-- OC_DEMO se setea aquí, al inicio del head, antes de que cualquier script
      se cargue. Así cargarDashboardInicial() siempre ve la bandera correcta
      aunque mock-backend.js tarde en ejecutarse (red lenta / carga asíncrona). -->
+<!-- AISLAMIENTO DE ALMACENAMIENTO — DEBE IR PRIMERO, ANTES QUE TODO.
+     Las 3 apps se sirven desde el mismo origen de GitHub Pages y localStorage
+     es por origen, no por carpeta: sin esto se pisan datos entre si. Tambien
+     coordina dos pestanas de la misma app. Si se mueve mas abajo, otros
+     scripts leen/escriben sin namespace y el aislamiento se rompe. -->
+<script src="./aislamiento.js"></script>
 <script>window.OC_DEMO = true;</script>
 <!-- Capa bilingüe EN/ES (default inglés). Carga en el HEAD, antes del script
      principal, para que window.t() exista cuando las vistas se rendericen. -->

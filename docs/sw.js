@@ -9,10 +9,11 @@
 // (fonts.googleapis.com / fonts.gstatic.com) tras la primera visita, así la
 // tipografía sobrevive sin conexión. Los font stacks del CSS ya traen
 // fallbacks del sistema por si nunca llegaron a cachearse.
-const CACHE = "c123-shell-v6"; // bumped 2026-08-05: fix de contraste (texto ilegible sobre fondos solidos) + tamanos de letra para tablet/movil
+const CACHE = "c123-shell-v7"; // bumped 2026-08-05: fix de contraste (texto ilegible sobre fondos solidos) + tamanos de letra para tablet/movil
 const SHELL = [
   "./",
   "./index.html",
+  "./aislamiento.js",
   "./404.html",
   "./manual.html",
   "./barcode128.js",
