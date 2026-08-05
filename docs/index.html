@@ -624,22 +624,17 @@
      Mismo color siempre; solo cambia que tan fuerte esta encendido.
      Sin clase n* cae al look n2 (retrocompatible). Negro es excepcion: sus
      3 niveles oscurecen hacia el negro absoluto, texto blanco siempre. */
-  .caja.verde{background:linear-gradient(135deg, var(--sim-verde) 0%, var(--sim-verde-dk) 100%); border-color:var(--sim-verde-dk);}
-  .caja.verde.n1{background:var(--sim-verde-bg); border-color:var(--sim-verde);}
-  .caja.verde.n3{background:linear-gradient(135deg, var(--sim-verde) 0%, var(--sim-verde-dk) 45%, var(--sim-verde-dk) 100%); box-shadow:0 0 16px -2px var(--sim-verde);}
-  .caja.amarillo{background:linear-gradient(135deg, var(--sim-amarillo) 0%, var(--sim-amarillo-dk) 100%); border-color:var(--sim-amarillo-dk);}
-  .caja.amarillo.n1{background:var(--sim-amarillo-bg); border-color:var(--sim-amarillo);}
-  .caja.amarillo.n2{background:var(--sim-amarillo); border-color:var(--sim-amarillo-dk); box-shadow:0 3px 0 0 var(--sim-amarillo-dk), 0 4px 8px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(0,0,0,0.08);}
-  .caja.amarillo.n3{box-shadow:0 0 16px -2px var(--sim-amarillo);}
-  .caja.rojo{background:linear-gradient(135deg, var(--sim-rojo) 0%, var(--sim-rojo-dk) 100%); border-color:var(--sim-rojo-dk); animation:pulsoEmergencia 2.2s ease-in-out infinite;}
-  .caja.rojo.n1{background:var(--sim-rojo-bg); border-color:var(--sim-rojo); animation:none;}
-  .caja.rojo.n3{background:linear-gradient(135deg, var(--sim-rojo) 0%, var(--sim-rojo-dk) 45%, var(--sim-rojo-dk) 100%);}
-  .caja.naranja{background:linear-gradient(135deg, var(--sim-naranja) 0%, var(--sim-naranja-dk) 100%); border-color:var(--sim-naranja-dk);}
-  .caja.naranja.n1{background:var(--sim-naranja-bg); border-color:var(--sim-naranja);}
-  .caja.naranja.n3{background:linear-gradient(135deg, var(--sim-naranja) 0%, var(--sim-naranja-dk) 45%, var(--sim-naranja-dk) 100%); box-shadow:0 0 16px -2px var(--sim-naranja);}
+  /* === 1 TONO PLANO POR ESTADO (JFC 2026-08-05) ===
+     Se retiran los degradados y los overrides por nivel (.n1/.n2/.n3): daban
+     a cada tarjeta un tono distinto segun intensidad, que es exactamente el
+     Sinclair Bloom retirado. Ahora el estado es UN color plano y el -dk solo
+     pinta el borde/bisel. El pulso del rojo se queda: es movimiento, no un
+     tono extra. NO reintroducir degradados por nivel. */
+  .caja.verde{background:var(--sim-verde); border-color:var(--sim-verde-dk);}
+  .caja.amarillo{background:var(--sim-amarillo); border-color:var(--sim-amarillo-dk);}
+  .caja.rojo{background:var(--sim-rojo); border-color:var(--sim-rojo-dk); animation:pulsoEmergencia 2.2s ease-in-out infinite;}
+  .caja.naranja{background:var(--sim-naranja); border-color:var(--sim-naranja-dk);}
   .caja.negro{background:var(--sim-negro); border-color:var(--sim-negro-dk);}
-  .caja.negro.n1{background:var(--sim-negro-bg); border-color:var(--sim-negro);}
-  .caja.negro.n3{background:radial-gradient(circle at 30% 20%, #16161C 0%, var(--sim-negro) 55%, #000000 100%); border-color:var(--sim-negro-dk); box-shadow:inset 0 0 22px rgba(0,0,0,0.9);}
   @keyframes pulsoEmergencia{
     0%, 100%{box-shadow:0 0 0 0 rgba(232,54,93,0.55), 0 4px 8px rgba(0,0,0,0.18);}
     50%{box-shadow:0 0 0 8px rgba(232,54,93,0), 0 4px 8px rgba(0,0,0,0.18);}
