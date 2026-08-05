@@ -38,14 +38,14 @@
   const ubicaciones = [
       {
           "id": "smokeshop",
-          "nombre": "Cornerstone Local Souvenirs",
+          "nombre": "Consultorio Central",
           "activa": true,
           "tipo": "propio",
           "sucursalId": "suc01"
       },
       {
           "id": "bookshelf",
-          "nombre": "Ink & Pages — Local Author Shelf",
+          "nombre": "Sede Norte — Consulta Externa",
           "activa": true,
           "tipo": "socio",
           "sucursalId": "suc02",
@@ -73,7 +73,7 @@
       },
       {
           "id": "fairbooth",
-          "nombre": "Weekend Vendor Fair Booth",
+          "nombre": "Campaña de Salud — Fin de Semana",
           "activa": true,
           "tipo": "consignacion",
           "sucursalId": "suc03",
@@ -83,131 +83,132 @@
           "escalasComision": []
       }
   ];
-  // Sucursales: agrupadores backend de perchas. En la UI el usuario ve PERCHAS;
-  // la sucursal es el encabezado de sección en el gestor de perchas (Inventario).
-  // Promotores/as: personas que traen gente (turistas, recomendados,
-  // familiares) y llevan comision. Se asignan por percha (promotoraId).
+  // Sucursales: agrupadores backend de sedes. En la UI el usuario ve SEDES;
+  // la sucursal es el encabezado de sección en el gestor de sedes (Inventario).
+  // Referidos/as: profesionales o campañas que traen pacientes y llevan
+  // comision (promotoraId). Ej: un medico general que refiere a un
+  // especialista, o una campaña de salud comunitaria.
   const promotoras = [
-    { id: "pr01", nombre: "Jamie Ortiz", comision: 10 },
-    { id: "pr02", nombre: "Casey Nguyen", comision: 8 },
+    { id: "pr01", nombre: "Dr. Mateo Ortiz — Medicina General", comision: 10 },
+    { id: "pr02", nombre: "Campaña Salud Comunitaria", comision: 8 },
   ];
   const sucursales = [
-    { id: "suc01", nombre: "Downtown",                  activa: true },
-    { id: "suc02", nombre: "Vendor Row",                activa: true },
-    { id: "suc03", nombre: "Riverside Market",          activa: true },
+    { id: "suc01", nombre: "Centro",             activa: true },
+    { id: "suc02", nombre: "Norte",               activa: true },
+    { id: "suc03", nombre: "Campañas Externas",  activa: true },
   ];
 
   const productos = [
-    {"id":"p01","nombre":"Butane Torch Lighter","categoria":"Smoke Accessories","sku":"CAM-PF-DSM","barcode":"7861000030019","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":30,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Coastal Wholesale Co."},
-    {"id":"p02","nombre":"Souvenir Shot Glass","categoria":"Gifts & Souvenirs","sku":"CAM-MET-MOP","estrella":true,"barcode":"7861000030026","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":8,"umbralRojo":10,"umbralAmarillo":18,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p03","nombre":"Local History Zine Vol. 3","categoria":"Books","sku":"CAM-ACDC-BIB","estrella":true,"barcode":"7861000030033","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":25,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Indie Press Collective"},
-    {"id":"p04","nombre":"Souvenir Keychain 3-Pack","categoria":"Gifts & Souvenirs","sku":"CAM-NIR-NVM","barcode":"7861000030040","ubicacionId":"smokeshop","precio":21,"costo":9,"stockActual":15,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p05","nombre":"Graphic Tee — Skyline Print","categoria":"Apparel","sku":"CAM-IM-TRP","barcode":"7861000030057","ubicacionId":"fairbooth","precio":23,"costo":10,"stockActual":4,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Riverside Textiles"},
-    {"id":"p06","nombre":"Poetry Chapbook — Late Bloom","categoria":"Books","sku":"CAM-RS-TON","barcode":"7861000030064","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":18,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Indie Press Collective"},
-    {"id":"p07","nombre":"Postcard Rack Set","categoria":"Gifts & Souvenirs","sku":"CAM-LZ-ICA","barcode":"7861000030071","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":12,"umbralRojo":5,"umbralAmarillo":13,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p08","nombre":"Graphic Tee — Retro Sunset","categoria":"Apparel","sku":"CAM-RAM-PRS","barcode":"7861000030088","ubicacionId":"fairbooth","precio":19,"costo":8,"stockActual":9,"umbralRojo":5,"umbralAmarillo":11,"proveedor":"Riverside Textiles"},
-    {"id":"p09","nombre":"Fridge Magnet Set","categoria":"Gifts & Souvenirs","sku":"CAM-GNR-APP","barcode":"7861000030095","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":20,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p10","nombre":"Short Story Collection — Night Shift","categoria":"Books","sku":"CAM-QUE-CRS","barcode":"7861000030101","ubicacionId":"bookshelf","precio":21,"costo":9,"stockActual":3,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Indie Press Collective"},
-    {"id":"p11","nombre":"Handmade Beaded Bracelet","categoria":"Handmade Crafts","sku":"SOU-TAZ-001","estrella":true,"barcode":"7861000030118","ubicacionId":"fairbooth","precio":8,"costo":3,"stockActual":40,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"River Valley Artisans"},
-    {"id":"p12","nombre":"Bookmark Set — Pressed Flowers","categoria":"Stationery & Gifts","sku":"SOU-LLA-001","barcode":"7861000030125","ubicacionId":"bookshelf","precio":3.5,"costo":1.2,"stockActual":60,"umbralRojo":15,"umbralAmarillo":30,"proveedor":"Paper & Bind Co."},
-    {"id":"p13","nombre":"Incense Sticks — Sandalwood","categoria":"Smoke Accessories","sku":"ACC-PIN-001","barcode":"7861000030132","ubicacionId":"smokeshop","precio":4,"costo":1.5,"stockActual":50,"umbralRojo":12,"umbralAmarillo":25,"proveedor":"Coastal Wholesale Co."},
-    {"id":"p14","nombre":"Embroidered Patch — Mountain Range","categoria":"Handmade Crafts","sku":"ACC-PAR-001","barcode":"7861000030149","ubicacionId":"fairbooth","precio":5,"costo":2,"stockActual":35,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"River Valley Artisans"},
-    {"id":"p15","nombre":"Snapback Cap — Logo","categoria":"Apparel","sku":"SOU-GOR-001","barcode":"7861000030156","ubicacionId":"smokeshop","precio":15,"costo":6.5,"stockActual":6,"umbralRojo":5,"umbralAmarillo":9,"proveedor":"Coastal Wholesale Co."},
-    {"id":"p16","nombre":"Reading Journal — Lined","categoria":"Stationery & Gifts","sku":"ACC-PUA-006","barcode":"7861000030163","ubicacionId":"bookshelf","precio":6,"costo":2.2,"stockActual":22,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Paper & Bind Co."},
+    {"id":"p01","nombre":"Guantes de nitrilo (caja x100)","categoria":"Insumos Descartables","sku":"CAM-PF-DSM","barcode":"7861000030019","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":30,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p02","nombre":"Termómetro digital","categoria":"Equipo de Diagnóstico","sku":"CAM-MET-MOP","estrella":true,"barcode":"7861000030026","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":8,"umbralRojo":10,"umbralAmarillo":18,"proveedor":"ProMed Ecuador"},
+    {"id":"p03","nombre":"Formulario de Historia Clínica (block x50)","categoria":"Papelería Clínica","sku":"CAM-ACDC-BIB","estrella":true,"barcode":"7861000030033","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":25,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Suministros Salud SA"},
+    {"id":"p04","nombre":"Jeringas descartables 5ml (caja x100)","categoria":"Insumos Descartables","sku":"CAM-NIR-NVM","barcode":"7861000030040","ubicacionId":"smokeshop","precio":21,"costo":9,"stockActual":15,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p05","nombre":"Bata quirúrgica desechable","categoria":"Uniformes y Ropa Clínica","sku":"CAM-IM-TRP","barcode":"7861000030057","ubicacionId":"fairbooth","precio":23,"costo":10,"stockActual":4,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Textiles Sanitarios Andinos"},
+    {"id":"p06","nombre":"Recetario médico (block x100)","categoria":"Papelería Clínica","sku":"CAM-RS-TON","barcode":"7861000030064","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":18,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Suministros Salud SA"},
+    {"id":"p07","nombre":"Mascarillas quirúrgicas (caja x50)","categoria":"Insumos Descartables","sku":"CAM-LZ-ICA","barcode":"7861000030071","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":12,"umbralRojo":5,"umbralAmarillo":13,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p08","nombre":"Gorro quirúrgico desechable (paquete x100)","categoria":"Uniformes y Ropa Clínica","sku":"CAM-RAM-PRS","barcode":"7861000030088","ubicacionId":"fairbooth","precio":19,"costo":8,"stockActual":9,"umbralRojo":5,"umbralAmarillo":11,"proveedor":"Textiles Sanitarios Andinos"},
+    {"id":"p09","nombre":"Set de curación básico","categoria":"Insumos Descartables","sku":"CAM-GNR-APP","barcode":"7861000030095","ubicacionId":"smokeshop","precio":22,"costo":9,"stockActual":20,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p10","nombre":"Hoja de consentimiento informado (block x50)","categoria":"Papelería Clínica","sku":"CAM-QUE-CRS","barcode":"7861000030101","ubicacionId":"bookshelf","precio":21,"costo":9,"stockActual":3,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Suministros Salud SA"},
+    {"id":"p11","nombre":"Férula de muñeca ajustable","categoria":"Prótesis y Ortesis","sku":"SOU-TAZ-001","estrella":true,"barcode":"7861000030118","ubicacionId":"fairbooth","precio":8,"costo":3,"stockActual":40,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Ortopedia Central"},
+    {"id":"p12","nombre":"Etiquetas identificadoras de expediente","categoria":"Papelería Clínica","sku":"SOU-LLA-001","barcode":"7861000030125","ubicacionId":"bookshelf","precio":3.5,"costo":1.2,"stockActual":60,"umbralRojo":15,"umbralAmarillo":30,"proveedor":"Suministros Salud SA"},
+    {"id":"p13","nombre":"Alcohol antiséptico 70% (botella 1L)","categoria":"Insumos Descartables","sku":"ACC-PIN-001","barcode":"7861000030132","ubicacionId":"smokeshop","precio":4,"costo":1.5,"stockActual":50,"umbralRojo":12,"umbralAmarillo":25,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p14","nombre":"Cabestrillo para brazo","categoria":"Prótesis y Ortesis","sku":"ACC-PAR-001","barcode":"7861000030149","ubicacionId":"fairbooth","precio":5,"costo":2,"stockActual":35,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Ortopedia Central"},
+    {"id":"p15","nombre":"Gorro quirúrgico reutilizable","categoria":"Uniformes y Ropa Clínica","sku":"SOU-GOR-001","barcode":"7861000030156","ubicacionId":"smokeshop","precio":15,"costo":6.5,"stockActual":6,"umbralRojo":5,"umbralAmarillo":9,"proveedor":"Textiles Sanitarios Andinos"},
+    {"id":"p16","nombre":"Cuaderno de seguimiento de pacientes","categoria":"Papelería Clínica","sku":"ACC-PUA-006","barcode":"7861000030163","ubicacionId":"bookshelf","precio":6,"costo":2.2,"stockActual":22,"umbralRojo":8,"umbralAmarillo":16,"proveedor":"Suministros Salud SA"},
     /* Novela latinoamericana contemporánea — 8 títulos cultos, selección JFC 2026-07-03 */
-    {"id":"p17","nombre":"Hand-Painted Ceramic Ornament","categoria":"Gifts & Souvenirs","sku":"LIB-ENR-NPN","barcode":"9789584293152","ubicacionId":"smokeshop","precio":22,"costo":9.5,"stockActual":3,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p18","nombre":"Novel — The Long Season","categoria":"Books","sku":"LIB-MEL-TDH","barcode":"9786071653697","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":6,"umbralRojo":3,"umbralAmarillo":7,"proveedor":"Indie Press Collective"},
-    {"id":"p19","nombre":"Local Scene Art Print","categoria":"Home & Decor","sku":"LIB-SCH-KEN","barcode":"9788439735564","ubicacionId":"smokeshop","precio":19,"costo":7.5,"stockActual":11,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p20","nombre":"Novel — Ash and Amber","categoria":"Books","sku":"LIB-REY-COM","barcode":"9789878358154","ubicacionId":"fairbooth","precio":21,"costo":6,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Indie Press Collective"},
-    {"id":"p21","nombre":"Poetry — Salt Water Letters","categoria":"Books","sku":"LIB-TRI-MGR","barcode":"9789974723146","ubicacionId":"fairbooth","precio":18,"costo":8,"stockActual":2,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Indie Press Collective"},
-    {"id":"p22","nombre":"Engraved Wood Coaster Set","categoria":"Gifts & Souvenirs","sku":"LIB-AMP-PDG","estrella":true,"barcode":"9788417125400","ubicacionId":"smokeshop","precio":18,"costo":7.5,"stockActual":9,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
-    {"id":"p23","nombre":"Novel — Low Tide","categoria":"Books","sku":"LIB-MEL-PAR","barcode":"9786071677129","ubicacionId":"bookshelf","precio":17,"costo":7,"stockActual":5,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Indie Press Collective"},
-    {"id":"p24","nombre":"Souvenir Snow Globe","categoria":"Gifts & Souvenirs","sku":"LIB-CAB-CIA","estrella":true,"barcode":"9789877383652","ubicacionId":"smokeshop","precio":20,"costo":7.5,"stockActual":8,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
+    {"id":"p17","nombre":"Vendas elásticas (paquete x10)","categoria":"Insumos Descartables","sku":"LIB-ENR-NPN","barcode":"9789584293152","ubicacionId":"smokeshop","precio":22,"costo":9.5,"stockActual":3,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Distribuidora Médica del Valle"},
+    {"id":"p18","nombre":"Manual de protocolos clínicos","categoria":"Papelería Clínica","sku":"LIB-MEL-TDH","barcode":"9786071653697","ubicacionId":"bookshelf","precio":20,"costo":8.5,"stockActual":6,"umbralRojo":3,"umbralAmarillo":7,"proveedor":"Suministros Salud SA"},
+    {"id":"p19","nombre":"Lámina anatómica de consultorio","categoria":"Mobiliario y Decoración Clínica","sku":"LIB-SCH-KEN","barcode":"9788439735564","ubicacionId":"smokeshop","precio":19,"costo":7.5,"stockActual":11,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Equipos ProMed Ecuador"},
+    {"id":"p20","nombre":"Guía de referencia farmacológica","categoria":"Papelería Clínica","sku":"LIB-REY-COM","barcode":"9789878358154","ubicacionId":"fairbooth","precio":21,"costo":6,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Suministros Salud SA"},
+    {"id":"p21","nombre":"Cuaderno de bitácora de esterilización","categoria":"Papelería Clínica","sku":"LIB-TRI-MGR","barcode":"9789974723146","ubicacionId":"fairbooth","precio":18,"costo":8,"stockActual":2,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Suministros Salud SA"},
+    {"id":"p22","nombre":"Bandeja de instrumental de acero","categoria":"Equipo de Diagnóstico","sku":"LIB-AMP-PDG","estrella":true,"barcode":"9788417125400","ubicacionId":"smokeshop","precio":18,"costo":7.5,"stockActual":9,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
+    {"id":"p23","nombre":"Registro de vacunación (block x50)","categoria":"Papelería Clínica","sku":"LIB-MEL-PAR","barcode":"9786071677129","ubicacionId":"bookshelf","precio":17,"costo":7,"stockActual":5,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Suministros Salud SA"},
+    {"id":"p24","nombre":"Set de otoscopio","categoria":"Equipo de Diagnóstico","sku":"LIB-CAB-CIA","estrella":true,"barcode":"9789877383652","ubicacionId":"smokeshop","precio":20,"costo":7.5,"stockActual":8,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
     /* ---- VITRINAS SIMON: productos diseñados para exhibir los 6 estados del semáforo ---- */
     /* ROJO intensidad 1 — sin stock (inventario muerto, cero unidades) */
-    {"id":"p25","nombre":"Woven Friendship Bracelet Pack","categoria":"Gifts & Souvenirs","sku":"VIN-LZ-PGR","barcode":"7861000030170","ubicacionId":"smokeshop","precio":45,"costo":28,"stockActual":0,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
+    {"id":"p25","nombre":"Muleta de aluminio (par)","categoria":"Prótesis y Ortesis","sku":"VIN-LZ-PGR","barcode":"7861000030170","ubicacionId":"smokeshop","precio":45,"costo":28,"stockActual":0,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Ortopedia Central"},
     /* ROJO intensidad 2 — quedan 1 (critico, reponer urgente) */
-    {"id":"p26","nombre":"Vinyl Record — Midnight Radio","categoria":"Vinyl Records","sku":"VIN-PF-ANM","barcode":"7861000030187","ubicacionId":"bookshelf","precio":42,"costo":25,"stockActual":1,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Second Spin Records"},
+    {"id":"p26","nombre":"Electrocardiógrafo portátil","categoria":"Equipo de Diagnóstico","sku":"VIN-PF-ANM","barcode":"7861000030187","ubicacionId":"bookshelf","precio":42,"costo":25,"stockActual":1,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
     /* ROJO intensidad 3 — exactamente en el umbral rojo (limite de emergencia) */
-    {"id":"p27","nombre":"Graphic Tee — Vintage Fade","categoria":"Apparel","sku":"CAM-BOW-ZIG","barcode":"7861000030194","ubicacionId":"fairbooth","precio":24,"costo":10,"stockActual":5,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"Riverside Textiles"},
+    {"id":"p27","nombre":"Bata desechable para paciente","categoria":"Uniformes y Ropa Clínica","sku":"CAM-BOW-ZIG","barcode":"7861000030194","ubicacionId":"fairbooth","precio":24,"costo":10,"stockActual":5,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"Textiles Sanitarios Andinos"},
     /* NARANJA encendido 3 — a 1 unidad del umbral rojo (revisar hoy) */
-    {"id":"p28","nombre":"Metal Poster — Neon City","categoria":"Home & Decor","sku":"ACC-POS-001","barcode":"7861000030200","ubicacionId":"smokeshop","precio":12,"costo":7,"stockActual":6,"umbralRojo":5,"umbralAmarillo":12,"proveedor":"Coastal Wholesale Co."},
+    {"id":"p28","nombre":"Lámpara de examinación LED","categoria":"Mobiliario y Decoración Clínica","sku":"ACC-POS-001","barcode":"7861000030200","ubicacionId":"smokeshop","precio":12,"costo":7,"stockActual":6,"umbralRojo":5,"umbralAmarillo":12,"proveedor":"Equipos ProMed Ecuador"},
     /* NARANJA encendido 1 — recién entrando a la zona de revisar */
-    {"id":"p29","nombre":"Novel — Static Line","categoria":"Books","sku":"CAM-CUR-DIS","barcode":"7861000030217","ubicacionId":"bookshelf","precio":22,"costo":13,"stockActual":9,"umbralRojo":4,"umbralAmarillo":14,"proveedor":"Indie Press Collective"},
+    {"id":"p29","nombre":"Registro de signos vitales (block x100)","categoria":"Papelería Clínica","sku":"CAM-CUR-DIS","barcode":"7861000030217","ubicacionId":"bookshelf","precio":22,"costo":13,"stockActual":9,"umbralRojo":4,"umbralAmarillo":14,"proveedor":"Suministros Salud SA"},
     /* NARANJA encendido 1 — tope del rango, sin apuro todavía */
-    {"id":"p30","nombre":"Ceramic Mug — Hand Painted","categoria":"Handmade Crafts","sku":"SOU-TAZ-002","barcode":"7861000030224","ubicacionId":"fairbooth","precio":9,"costo":5.5,"stockActual":13,"umbralRojo":4,"umbralAmarillo":14,"proveedor":"River Valley Artisans"},
+    {"id":"p30","nombre":"Taza medidora graduada","categoria":"Equipo de Diagnóstico","sku":"SOU-TAZ-002","barcode":"7861000030224","ubicacionId":"fairbooth","precio":9,"costo":5.5,"stockActual":13,"umbralRojo":4,"umbralAmarillo":14,"proveedor":"ProMed Ecuador"},
     /* VERDE — stock saludable, margen moderado (< 0.50, no es azul) */
-    {"id":"p31","nombre":"Planner 2026 — Hardcover","categoria":"Stationery & Gifts","sku":"PAP-AGE-001","barcode":"7861000030231","ubicacionId":"smokeshop","precio":15,"costo":9,"stockActual":25,"umbralRojo":5,"umbralAmarillo":12,"proveedor":"Paper & Bind Co."},
+    {"id":"p31","nombre":"Agenda de citas 2026","categoria":"Papelería Clínica","sku":"PAP-AGE-001","barcode":"7861000030231","ubicacionId":"smokeshop","precio":15,"costo":9,"stockActual":25,"umbralRojo":5,"umbralAmarillo":12,"proveedor":"Suministros Salud SA"},
     /* VERDE — margen bajo, volumen alto (artículo de bajo costo) */
-    {"id":"p32","nombre":"Canvas Tote Bag — Screen Print","categoria":"Stationery & Gifts","sku":"ACC-BOL-001","barcode":"7861000030248","ubicacionId":"bookshelf","precio":8,"costo":5,"stockActual":40,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Paper & Bind Co."},
+    {"id":"p32","nombre":"Bolsa para desechos biológicos (paquete x50)","categoria":"Insumos Descartables","sku":"ACC-BOL-001","barcode":"7861000030248","ubicacionId":"bookshelf","precio":8,"costo":5,"stockActual":40,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Distribuidora Médica del Valle"},
     /* VERDE — producto de volumen, margen ajustado */
-    {"id":"p33","nombre":"Notebook — Kraft Cover","categoria":"Handmade Crafts","sku":"PAP-LIB-001","barcode":"7861000030255","ubicacionId":"fairbooth","precio":11,"costo":7,"stockActual":18,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"River Valley Artisans"},
+    {"id":"p33","nombre":"Libreta de recordatorios de consultorio","categoria":"Papelería Clínica","sku":"PAP-LIB-001","barcode":"7861000030255","ubicacionId":"fairbooth","precio":11,"costo":7,"stockActual":18,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"Suministros Salud SA"},
     /* AMARILLO (oportunidad) encendido 2 — margen 62%: hay dinero esperándote */
-    {"id":"p34","nombre":"Hand-Blown Glass Ornament","categoria":"Gifts & Souvenirs","sku":"VIN-CLA-LON","barcode":"7861000030262","ubicacionId":"smokeshop","precio":48,"costo":18,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
+    {"id":"p34","nombre":"Monitor de presión arterial digital","categoria":"Equipo de Diagnóstico","sku":"VIN-CLA-LON","barcode":"7861000030262","ubicacionId":"smokeshop","precio":48,"costo":18,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
     /* AMARILLO (oportunidad) encendido 2 — margen 64% */
-    {"id":"p35","nombre":"Vinyl Record — Signal Lost","categoria":"Vinyl Records","sku":"VIN-RAD-OKC","barcode":"7861000030279","ubicacionId":"bookshelf","precio":50,"costo":18,"stockActual":8,"umbralRojo":2,"umbralAmarillo":5,"proveedor":"Second Spin Records"},
+    {"id":"p35","nombre":"Nebulizador portátil","categoria":"Equipo de Diagnóstico","sku":"VIN-RAD-OKC","barcode":"7861000030279","ubicacionId":"bookshelf","precio":50,"costo":18,"stockActual":8,"umbralRojo":2,"umbralAmarillo":5,"proveedor":"ProMed Ecuador"},
     /* AMARILLO (oportunidad) encendido 3 — margen 72%, pieza estrella */
-    {"id":"p36","nombre":"Collectible Figure — Limited Run","categoria":"Collectibles","sku":"COL-IM-EDI","estrella":true,"barcode":"7861000030286","ubicacionId":"fairbooth","precio":65,"costo":18,"stockActual":5,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Second Spin Records"},
+    {"id":"p36","nombre":"Desfibrilador (DEA) portátil","categoria":"Equipo de Diagnóstico","sku":"COL-IM-EDI","estrella":true,"barcode":"7861000030286","ubicacionId":"fairbooth","precio":65,"costo":18,"stockActual":5,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Equipos ProMed Ecuador"},
     /* PERECIBLES — 3 grados de urgencia por vencimiento */
     /* Rojo por vencimiento: vence en 2 dias (retiralo ya aunque el stock sea bueno) */
-    {"id":"p37","nombre":"Homemade Strawberry Jam 8oz","categoria":"Local Foods","sku":"ALI-CAF-001","barcode":"7861000030293","ubicacionId":"smokeshop","precio":7,"costo":3,"stockActual":15,"umbralRojo":5,"umbralAmarillo":10,"perecible":true,"fechaCaducidad":"2026-07-05","proveedor":"Grandma's Kitchen Preserves"},
+    {"id":"p37","nombre":"Vacuna antigripal (dosis, refrigerada)","categoria":"Insumos Refrigerados","sku":"ALI-CAF-001","barcode":"7861000030293","ubicacionId":"smokeshop","precio":7,"costo":3,"stockActual":15,"umbralRojo":5,"umbralAmarillo":10,"perecible":true,"fechaCaducidad":"2026-07-05","proveedor":"Farmacéutica Andina"},
     /* Amarillo por vencimiento: vence en 5 dias (vendelo primero) */
-    {"id":"p38","nombre":"Chocolate Bar — Dark 70%","categoria":"Snacks & Drinks","sku":"ALI-CHO-001","barcode":"7861000030309","ubicacionId":"bookshelf","precio":4,"costo":1.8,"stockActual":20,"umbralRojo":5,"umbralAmarillo":10,"perecible":true,"fechaCaducidad":"2026-07-08","proveedor":"Coastal Wholesale Co."},
+    {"id":"p38","nombre":"Reactivo de laboratorio — glucosa","categoria":"Insumos Refrigerados","sku":"ALI-CHO-001","barcode":"7861000030309","ubicacionId":"bookshelf","precio":4,"costo":1.8,"stockActual":20,"umbralRojo":5,"umbralAmarillo":10,"perecible":true,"fechaCaducidad":"2026-07-08","proveedor":"Distribuidora Médica del Valle"},
     /* Rojo extremo: ya vencio hace 3 dias (retirar inmediatamente) */
-    {"id":"p39","nombre":"Trail Mix Bag","categoria":"Local Foods","sku":"ALI-GRA-001","barcode":"7861000030316","ubicacionId":"fairbooth","precio":9,"costo":4.5,"stockActual":8,"umbralRojo":3,"umbralAmarillo":6,"perecible":true,"fechaCaducidad":"2026-06-30","proveedor":"Coastal Wholesale Co."},
+    {"id":"p39","nombre":"Anestésico local (caja, refrigerado)","categoria":"Insumos Refrigerados","sku":"ALI-GRA-001","barcode":"7861000030316","ubicacionId":"fairbooth","precio":9,"costo":4.5,"stockActual":8,"umbralRojo":3,"umbralAmarillo":6,"perecible":true,"fechaCaducidad":"2026-06-30","proveedor":"Farmacéutica Andina"},
 
     /* ---- VITRINA GRADOS DE ENCENDIDO (JFC 2026-07-07): completa los niveles
        1-3 de cada color que faltaban, para que el visitante VEA la Escala
        Sinclair Bloom en acción sin tener que operar nada. ---- */
     /* VERDE encendido 1 — sano pero con poco fondo (stock < 7) */
-    {"id":"p40","nombre":"Keychain — Bottle Opener","categoria":"Gifts & Souvenirs","sku":"ACC-LLA-001","barcode":"7861000030323","ubicacionId":"smokeshop","precio":12,"costo":8,"stockActual":6,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Coastal Wholesale Co."},
+    {"id":"p40","nombre":"Abrebocas desechable","categoria":"Insumos Descartables","sku":"ACC-LLA-001","barcode":"7861000030323","ubicacionId":"smokeshop","precio":12,"costo":8,"stockActual":6,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Distribuidora Médica del Valle"},
     /* VERDE encendido 2 — sano, fondo medio (7-14) */
-    {"id":"p41","nombre":"Embroidered Patch — Wave","categoria":"Stationery & Gifts","sku":"ACC-PAR-001","barcode":"7861000030330","ubicacionId":"bookshelf","precio":14,"costo":9,"stockActual":10,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Paper & Bind Co."},
+    {"id":"p41","nombre":"Cinta métrica clínica","categoria":"Equipo de Diagnóstico","sku":"ACC-PAR-001","barcode":"7861000030330","ubicacionId":"bookshelf","precio":14,"costo":9,"stockActual":10,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
     /* AMARILLO (oportunidad) encendido 1 — margen 52%, recién cruza el umbral */
-    {"id":"p42","nombre":"Local Landmark Puzzle","categoria":"Gifts & Souvenirs","sku":"VIN-SOD-CAN","barcode":"7861000030347","ubicacionId":"smokeshop","precio":40,"costo":19,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Gift & Souvenir Co."},
+    {"id":"p42","nombre":"Silla de ruedas plegable","categoria":"Prótesis y Ortesis","sku":"VIN-SOD-CAN","barcode":"7861000030347","ubicacionId":"smokeshop","precio":40,"costo":19,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Ortopedia Central"},
     /* NARANJA encendido 2 — a 3 unidades del umbral rojo */
-    {"id":"p43","nombre":"Knit Beanie — Charcoal","categoria":"Apparel","sku":"ACC-GOR-002","barcode":"7861000030354","ubicacionId":"fairbooth","precio":10,"costo":6,"stockActual":7,"umbralRojo":4,"umbralAmarillo":9,"proveedor":"Riverside Textiles"},
+    {"id":"p43","nombre":"Bata térmica para paciente","categoria":"Uniformes y Ropa Clínica","sku":"ACC-GOR-002","barcode":"7861000030354","ubicacionId":"fairbooth","precio":10,"costo":6,"stockActual":7,"umbralRojo":4,"umbralAmarillo":9,"proveedor":"Textiles Sanitarios Andinos"},
     /* AZUL (dato) encendido 1 — margen 22%: revisa precio o costo */
-    {"id":"p44","nombre":"AA Batteries 4-Pack","categoria":"Counter Basics","sku":"BAS-PIL-001","barcode":"7861000030361","ubicacionId":"smokeshop","precio":4.5,"costo":3.5,"stockActual":30,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Metro Distribution"},
+    {"id":"p44","nombre":"Baterías para equipo de diagnóstico (paquete x4)","categoria":"Insumos Básicos","sku":"BAS-PIL-001","barcode":"7861000030361","ubicacionId":"smokeshop","precio":4.5,"costo":3.5,"stockActual":30,"umbralRojo":6,"umbralAmarillo":12,"proveedor":"Metro Distribución Médica"},
     /* AZUL (dato) encendido 2 — margen 15% */
-    {"id":"p45","nombre":"Kraft Gift Bag","categoria":"Stationery & Gifts","sku":"BAS-FUN-001","barcode":"7861000030378","ubicacionId":"bookshelf","precio":2,"costo":1.7,"stockActual":50,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Paper & Bind Co."},
+    {"id":"p45","nombre":"Bolsa para muestras clínicas","categoria":"Papelería Clínica","sku":"BAS-FUN-001","barcode":"7861000030378","ubicacionId":"bookshelf","precio":2,"costo":1.7,"stockActual":50,"umbralRojo":10,"umbralAmarillo":20,"proveedor":"Suministros Salud SA"},
     /* AZUL (dato) encendido 3 — margen 8%: casi trabajas gratis en este */
-    {"id":"p46","nombre":"Clear Packing Tape","categoria":"Counter Basics","sku":"BAS-CIN-001","barcode":"7861000030385","ubicacionId":"fairbooth","precio":1.3,"costo":1.2,"stockActual":24,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"Metro Distribution"},
+    {"id":"p46","nombre":"Cinta adhesiva médica","categoria":"Insumos Básicos","sku":"BAS-CIN-001","barcode":"7861000030385","ubicacionId":"fairbooth","precio":1.3,"costo":1.2,"stockActual":24,"umbralRojo":5,"umbralAmarillo":10,"proveedor":"Metro Distribución Médica"},
     /* NEGRO encendido 1 — ~50 dias dormido (dormidoDesde: solo vitrina/carga manual) */
-    {"id":"p47","nombre":"Vintage-Style Tin Sign","categoria":"Home & Decor","sku":"CD-QUE-WEM","barcode":"7861000030392","ubicacionId":"smokeshop","precio":15,"costo":9,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"dormidoDesde":"2026-05-16","proveedor":"Riverside Gift & Souvenir Co."},
+    {"id":"p47","nombre":"Camilla de examinación (usada, ajustable)","categoria":"Mobiliario y Decoración Clínica","sku":"CD-QUE-WEM","barcode":"7861000030392","ubicacionId":"smokeshop","precio":15,"costo":9,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"dormidoDesde":"2026-05-16","proveedor":"Equipos ProMed Ecuador"},
     /* NEGRO encendido 2 — ~80 dias dormido */
-    {"id":"p48","nombre":"Used VHS — Director's Cut","categoria":"Collectibles","sku":"COL-VHS-WAL","barcode":"7861000030408","ubicacionId":"bookshelf","precio":25,"costo":15,"stockActual":8,"umbralRojo":2,"umbralAmarillo":4,"dormidoDesde":"2026-04-18","proveedor":"Second Spin Records"},
+    {"id":"p48","nombre":"Esterilizador de instrumental (antiguo)","categoria":"Equipo de Diagnóstico","sku":"COL-VHS-WAL","barcode":"7861000030408","ubicacionId":"bookshelf","precio":25,"costo":15,"stockActual":8,"umbralRojo":2,"umbralAmarillo":4,"dormidoDesde":"2026-04-18","proveedor":"ProMed Ecuador"},
     /* NEGRO encendido 3 — ~180 dias dormido: capital bien dormido */
-    {"id":"p49","nombre":"Oversized Tour Poster","categoria":"Collectibles","sku":"ACC-POS-WOO","barcode":"7861000030415","ubicacionId":"fairbooth","precio":18,"costo":11,"stockActual":9,"umbralRojo":2,"umbralAmarillo":4,"dormidoDesde":"2026-01-08","proveedor":"Second Spin Records"},
+    {"id":"p49","nombre":"Panel informativo de consultorio","categoria":"Mobiliario y Decoración Clínica","sku":"ACC-POS-WOO","barcode":"7861000030415","ubicacionId":"fairbooth","precio":18,"costo":11,"stockActual":9,"umbralRojo":2,"umbralAmarillo":4,"dormidoDesde":"2026-01-08","proveedor":"Equipos ProMed Ecuador"},
 
     /* ---- VARIEDAD DE MOSTRADOR (JFC 2026-07-07): categorías de tienda real
        (artesanía, dulces, hogar, ropa, papelería) repartidas por las 3
        perchas, para que el tablero luzca los 6 colores con encendidos
        mezclados — no solo merch rockero. ---- */
     /* VERDE n3 — el caballito de batalla: mucho stock, margen sano */
-    {"id":"p50","nombre":"Woven Sun Hat","categoria":"Handmade Crafts","sku":"ART-SOM-001","barcode":"7861000030422","ubicacionId":"smokeshop","precio":30,"costo":19,"stockActual":22,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"River Valley Artisans"},
+    {"id":"p50","nombre":"Bata de consultorio — talla ajustable","categoria":"Uniformes y Ropa Clínica","sku":"ART-SOM-001","barcode":"7861000030422","ubicacionId":"smokeshop","precio":30,"costo":19,"stockActual":22,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Textiles Sanitarios Andinos"},
     /* VERDE n2 — estable, sin drama */
-    {"id":"p51","nombre":"Beaded Charm Bracelet","categoria":"Handmade Crafts","sku":"ART-PUL-001","barcode":"7861000030439","ubicacionId":"fairbooth","precio":6,"costo":3.8,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"River Valley Artisans"},
+    {"id":"p51","nombre":"Brazalete identificador de paciente","categoria":"Insumos Descartables","sku":"ART-PUL-001","barcode":"7861000030439","ubicacionId":"fairbooth","precio":6,"costo":3.8,"stockActual":12,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Distribuidora Médica del Valle"},
     /* VERDE n1 — sano pero justito de fondo */
-    {"id":"p52","nombre":"Wool Blend Scarf — Grey","categoria":"Apparel","sku":"ROP-BUF-001","barcode":"7861000030446","ubicacionId":"bookshelf","precio":25,"costo":16,"stockActual":6,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Riverside Textiles"},
+    {"id":"p52","nombre":"Chaleco térmico para paciente","categoria":"Uniformes y Ropa Clínica","sku":"ROP-BUF-001","barcode":"7861000030446","ubicacionId":"bookshelf","precio":25,"costo":16,"stockActual":6,"umbralRojo":2,"umbralAmarillo":4,"proveedor":"Textiles Sanitarios Andinos"},
     /* AMARILLO n3 — margen 73%: la mina de oro del mostrador */
-    {"id":"p53","nombre":"Filigree Drop Earrings","categoria":"Handmade Crafts","sku":"ART-ARE-001","estrella":true,"barcode":"7861000030453","ubicacionId":"smokeshop","precio":22,"costo":6,"stockActual":15,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"Riverside Jewelry Co."},
+    {"id":"p53","nombre":"Pulsioxímetro digital","categoria":"Equipo de Diagnóstico","sku":"ART-ARE-001","estrella":true,"barcode":"7861000030453","ubicacionId":"smokeshop","precio":22,"costo":6,"stockActual":15,"umbralRojo":3,"umbralAmarillo":6,"proveedor":"ProMed Ecuador"},
     /* AMARILLO n1 — margen 52%: buena oportunidad, sin ser la joya */
-    {"id":"p54","nombre":"Local Honey 10oz","categoria":"Local Foods","sku":"ALI-MIE-001","barcode":"7861000030460","ubicacionId":"fairbooth","precio":8.5,"costo":4,"stockActual":18,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Blue Ridge Apiary"},
+    {"id":"p54","nombre":"Suero fisiológico 500ml","categoria":"Insumos Refrigerados","sku":"ALI-MIE-001","barcode":"7861000030460","ubicacionId":"fairbooth","precio":8.5,"costo":4,"stockActual":18,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Farmacéutica Andina"},
     /* NARANJA n2 — quedan 6 con umbral rojo 4: reponer esta semana */
-    {"id":"p55","nombre":"Embroidered Shawl","categoria":"Apparel","sku":"ROP-CHA-001","barcode":"7861000030477","ubicacionId":"bookshelf","precio":35,"costo":21,"stockActual":6,"umbralRojo":4,"umbralAmarillo":9,"proveedor":"Riverside Textiles"},
+    {"id":"p55","nombre":"Bata larga de consultorio","categoria":"Uniformes y Ropa Clínica","sku":"ROP-CHA-001","barcode":"7861000030477","ubicacionId":"bookshelf","precio":35,"costo":21,"stockActual":6,"umbralRojo":4,"umbralAmarillo":9,"proveedor":"Textiles Sanitarios Andinos"},
     /* NARANJA n1 por vencimiento — vence en 7 dias, sin apuro pero primero en salir */
-    {"id":"p56","nombre":"Fresh Farmstead Cheese 1lb","categoria":"Local Foods","sku":"ALI-QUE-001","barcode":"7861000030484","ubicacionId":"smokeshop","precio":5.5,"costo":3.6,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"perecible":true,"fechaCaducidad":"2026-07-14","proveedor":"Blue Ridge Creamery"},
+    {"id":"p56","nombre":"Muestra de laboratorio — control (refrigerada)","categoria":"Insumos Refrigerados","sku":"ALI-QUE-001","barcode":"7861000030484","ubicacionId":"smokeshop","precio":5.5,"costo":3.6,"stockActual":14,"umbralRojo":3,"umbralAmarillo":6,"perecible":true,"fechaCaducidad":"2026-07-14","proveedor":"Farmacéutica Andina"},
     /* ROJO n1 — recien tocando el umbral: urgente pero encendido suave */
-    {"id":"p57","nombre":"Eucalyptus Candle 3-Pack","categoria":"Handmade Crafts","sku":"HOG-VEL-001","barcode":"7861000030491","ubicacionId":"fairbooth","precio":9,"costo":5.4,"stockActual":4,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"River Valley Artisans"},
+    {"id":"p57","nombre":"Set de aromaterapia — sala de espera","categoria":"Mobiliario y Decoración Clínica","sku":"HOG-VEL-001","barcode":"7861000030491","ubicacionId":"fairbooth","precio":9,"costo":5.4,"stockActual":4,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Ortopedia Central"},
     /* AZUL n2 — margen 12%: dato contable, este casi no deja nada */
-    {"id":"p58","nombre":"Bottled Water 20oz","categoria":"Counter Basics","sku":"BAS-AGU-001","barcode":"7861000030507","ubicacionId":"smokeshop","precio":0.8,"costo":0.7,"stockActual":48,"umbralRojo":12,"umbralAmarillo":24,"proveedor":"Metro Distribution"},
+    {"id":"p58","nombre":"Agua purificada 500ml (sala de espera)","categoria":"Insumos Básicos","sku":"BAS-AGU-001","barcode":"7861000030507","ubicacionId":"smokeshop","precio":0.8,"costo":0.7,"stockActual":48,"umbralRojo":12,"umbralAmarillo":24,"proveedor":"Metro Distribución Médica"},
     /* AZUL n1 — margen 20%: revisable, no critico */
-    {"id":"p59","nombre":"Mint Gum — Counter Box","categoria":"Counter Basics","sku":"BAS-CHI-001","barcode":"7861000030514","ubicacionId":"bookshelf","precio":15,"costo":12,"stockActual":20,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Metro Distribution"},
+    {"id":"p59","nombre":"Caramelos para paciente pediátrico (caja)","categoria":"Insumos Básicos","sku":"BAS-CHI-001","barcode":"7861000030514","ubicacionId":"bookshelf","precio":15,"costo":12,"stockActual":20,"umbralRojo":4,"umbralAmarillo":8,"proveedor":"Metro Distribución Médica"},
     /* NEGRO n2 — 3 meses dormido: plata parada en la vitrina */
-    {"id":"p60","nombre":"Carved Wooden Chess Set","categoria":"Collectibles","sku":"HOG-AJE-001","barcode":"7861000030521","ubicacionId":"smokeshop","precio":45,"costo":27,"stockActual":5,"umbralRojo":1,"umbralAmarillo":3,"dormidoDesde":"2026-04-05","proveedor":"River Valley Artisans"},
+    {"id":"p60","nombre":"Set de rayos X portátil (uso ocasional)","categoria":"Equipo de Diagnóstico","sku":"HOG-AJE-001","barcode":"7861000030521","ubicacionId":"smokeshop","precio":45,"costo":27,"stockActual":5,"umbralRojo":1,"umbralAmarillo":3,"dormidoDesde":"2026-04-05","proveedor":"ProMed Ecuador"},
     /* NEGRO n3 — dormido desde el año pasado: el ejemplo perfecto de capital congelado */
-    {"id":"p61","nombre":"Antique Cuckoo Clock","categoria":"Collectibles","sku":"HOG-REL-001","barcode":"7861000030538","ubicacionId":"bookshelf","precio":120,"costo":75,"stockActual":2,"umbralRojo":0,"umbralAmarillo":1,"dormidoDesde":"2025-11-20","proveedor":"Heritage Imports"}
+    {"id":"p61","nombre":"Equipo de anestesia general (uso ocasional)","categoria":"Equipo de Diagnóstico","sku":"HOG-REL-001","barcode":"7861000030538","ubicacionId":"bookshelf","precio":120,"costo":75,"stockActual":2,"umbralRojo":0,"umbralAmarillo":1,"dormidoDesde":"2025-11-20","proveedor":"Equipos ProMed Ecuador"}
   ];
 
   const ventas = [];
