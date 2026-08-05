@@ -1,0 +1,396 @@
+/* ============================================================
+   Consultorio 123 — CSS de gestión de consultorio médico
+   Mobile-first (base 320px, escala con min-width).
+   Paleta "brasilera vívida": un solo tono sólido por color.
+   ------------------------------------------------------------
+   Reglas duras aplicadas:
+   - Texto body >= 16px; labels/badges >= 13px (.82rem)
+   - Texto SIEMPRE sólido: nunca gris/azul/rgba/opacity
+   - --azul SOLO como fondo o borde, jamás como color de texto
+   - Touch targets >= 44px de alto
+   - Radios generosos 12-16px; sombras sólidas sin blur excesivo
+   - Sin backdrop-filter en la base
+   ============================================================ */
+
+/* ---------- Variables de paleta (un tono sólido por color) ---------- */
+:root {
+  --verde:    #00A651; /* acciones positivas / saldo a favor */
+  --amarillo: #FFD400; /* alertas medias / tarjetas destacadas */
+  --laranja:  #FF6B00; /* acento primario / botones principales */
+  --vermelho: #E8112D; /* alertas / deuda / negativo */
+  --azul:     #0057B8; /* info — SOLO fondo o borde, NUNCA texto */
+  --roxo:     #8E2DE2; /* secundario */
+  --tinta:    #1A1A1A; /* texto principal sobre fondos claros */
+  --branco:   #FFFFFF; /* texto sobre fondos de color sólido */
+  --crema:    #FFF8ED; /* fondo general de la app */
+
+  /* Derivados sólidos (fondos/bordes/sombras, NUNCA texto) */
+  --borde:     #E3D3B3; /* borde cálido sobre crema */
+  --sombra:    #E6D7B6; /* sombra sólida suave para tarjetas */
+  --raya:      #FAF1DE; /* fila alterna de tabla (fondo) */
+  --halo:      #FFE3CC; /* halo de foco laranja (fondo, no texto) */
+}
+
+/* ---------- Reset básico ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* evita zoom automático de iOS */
+}
+
+body {
+  min-height: 100vh;  /* fallback navegadores viejos */
+  min-height: 100svh; /* mejora progresiva Chrome 108+ / iOS 15.4+ */
+  background-color: var(--crema);
+  color: var(--tinta);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 16px;    /* piso de legibilidad, jamás menos */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--laranja);
+  color: var(--branco);
+}
+
+/* ---------- Estructura general de la app ---------- */
+.app-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 16px; /* padding base móvil (320px) */
+}
+
+.app-header {
+  padding: 4px 0 20px;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--tinta);
+}
+
+/* ---------- Grid de módulos (4 tarjetas tocables) ---------- */
+/* Estructura esperada: <nav class="menu-grid"><a class="menu-card">…</a>…</nav> */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2x2 en móvil base */
+  gap: 12px;
+  list-style: none;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;          /* touch target holgado */
+  padding: 16px 12px;
+  border: none;
+  border-radius: 16px;
+  background-color: var(--roxo); /* color por defecto; se sobreescribe abajo */
+  color: var(--branco);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #641FA8; /* sombra sólida dura, sin blur */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Cada tarjeta con un color vivo de la paleta + sombra sólida a juego */
+.menu-card:nth-child(4n+1) { background-color: var(--laranja); box-shadow: 0 4px 0 #C45500; }
+.menu-card:nth-child(4n+2) { background-color: var(--verde);   box-shadow: 0 4px 0 #007A3D; }
+.menu-card:nth-child(4n+3) { background-color: var(--azul);    box-shadow: 0 4px 0 #003D7D; } /* azul permitido como fondo */
+.menu-card:nth-child(4n+4) { background-color: var(--roxo);    box-shadow: 0 4px 0 #641FA8; }
+
+.menu-card:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #003D7D; /* genérico: se aplana al tocar */
+}
+
+/* ---------- Tarjeta contenedora ---------- */
+.card {
+  background-color: var(--branco);
+  border-radius: 16px;
+  padding: 20px 16px;
+  box-shadow: 0 4px 10px var(--sombra); /* sombra sólida, blur moderado */
+}
+
+.card + .card {
+  margin-top: 16px;
+}
+
+.card-titulo {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+/* ---------- Botones (touch target >= 44px) ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 14px;
+  background-color: var(--roxo); /* secundario por defecto */
+  color: var(--branco);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 0 #641FA8;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #641FA8;
+}
+
+.btn-primary { background-color: var(--laranja); box-shadow: 0 4px 0 #C45500; }
+.btn-primary:active { box-shadow: 0 2px 0 #C45500; }
+
+.btn-danger { background-color: var(--vermelho); box-shadow: 0 4px 0 #9E0A1D; }
+.btn-danger:active { box-shadow: 0 2px 0 #9E0A1D; }
+
+.btn-success { background-color: var(--verde); box-shadow: 0 4px 0 #007A3D; }
+.btn-success:active { box-shadow: 0 2px 0 #007A3D; }
+
+/* Botón ancho completo (útil en móvil) */
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* Estado deshabilitado: sólido y legible, sin opacidad */
+.btn:disabled {
+  background-color: var(--borde);
+  color: var(--tinta);
+  box-shadow: 0 4px 0 #C9B68C;
+  cursor: not-allowed;
+}
+
+/* ---------- Tabla responsive con scroll horizontal propio ---------- */
+/* Estructura esperada: <div class="table"><table>…</table></div>
+   El contenedor scrolla en horizontal cuando no cabe (móvil). */
+.table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 16px;
+  background-color: var(--branco);
+  box-shadow: 0 4px 10px var(--sombra);
+}
+
+.table table {
+  width: 100%;
+  min-width: 560px; /* fuerza el scroll horizontal en pantallas chicas */
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.table th {
+  background-color: var(--azul); /* azul como fondo — permitido */
+  color: var(--branco);
+  font-size: 14px;   /* >= 13px */
+  font-weight: 700;
+  text-align: left;
+  padding: 14px 12px;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 14px 12px;
+  color: var(--tinta);
+  border-bottom: 1px solid var(--raya);
+  vertical-align: middle;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--raya); /* filas alternas cálidas (fondo) */
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---------- Badges / etiquetas ---------- */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background-color: var(--roxo);
+  color: var(--branco);
+  font-size: 13px; /* piso .82rem — jamás menos */
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.badge-success { background-color: var(--verde);   color: var(--branco); }
+.badge-warning { background-color: var(--amarillo); color: var(--tinta); } /* amarillo claro -> texto tinta */
+.badge-danger  { background-color: var(--vermelho); color: var(--branco); }
+.badge-info    { background-color: var(--azul);     color: var(--branco); } /* azul solo como fondo */
+
+/* ---------- Formularios ---------- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;  /* >= 13px */
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  min-height: 44px; /* touch target */
+  padding: 12px 14px;
+  border: 2px solid var(--borde);
+  border-radius: 12px;
+  background-color: var(--branco);
+  color: var(--tinta);
+  font-size: 16px; /* evita el zoom de iOS al enfocar */
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+/* Placeholder: piso terciario sancionado (#999999), sólido, jamás más oscuro */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #999999;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px var(--halo); /* halo sólido suave (fondo, no texto) */
+}
+
+/* ---------- Fila de totales destacada ---------- */
+/* Sirve como franja suelta (div) o como fila de tabla (tr). */
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  background-color: var(--amarillo); /* fondo de tarjeta destacada */
+  color: var(--tinta);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.total-row .total-valor {
+  font-weight: 800;
+}
+
+/* Variante cuando .total-row es un <tr> dentro de .table */
+.table tr.total-row {
+  display: table-row;
+}
+
+.table tr.total-row td {
+  background-color: var(--amarillo);
+  color: var(--tinta);
+  font-weight: 800;
+  font-size: 17px;
+  border-bottom: none;
+}
+
+/* ---------- Accesibilidad: foco visible (azul como borde, permitido) ---------- */
+:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+/* ---------- Hover SOLO en dispositivos con puntero (evita hover pegajoso en táctil) ---------- */
+@media (hover: hover) {
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .menu-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* ---------- Usuarios que prefieren menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Escalado a tablet / desktop (>= 640px) ---------- */
+@media (min-width: 640px) {
+  .app-shell {
+    padding: 24px 32px;
+  }
+
+  .app-title {
+    font-size: 28px;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 módulos en una fila */
+    gap: 16px;
+  }
+
+  .menu-card {
+    min-height: 120px;
+    font-size: 18px;
+  }
+
+  .card {
+    padding: 28px 24px;
+  }
+
+  .card + .card {
+    margin-top: 20px;
+  }
+
+  .btn {
+    min-height: 48px;
+    padding: 12px 24px;
+  }
+
+  .form-group label {
+    font-size: 15px;
+  }
+
+  .total-row {
+    font-size: 20px;
+    padding: 20px;
+  }
+}
