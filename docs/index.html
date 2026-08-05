@@ -14,7 +14,10 @@
 <div class="app-shell">
   <header class="app-header">
     <h1 class="app-title">Consultorio 123</h1>
-    <button id="btn-bloquear" class="btn-bloquear" title="Bloquear sesión">🔒</button>
+    <div class="app-header-botones">
+      <button id="btn-ayuda" class="btn-bloquear" title="Ayuda">❓</button>
+      <button id="btn-bloquear" class="btn-bloquear" title="Bloquear sesión">🔒</button>
+    </div>
   </header>
 
   <main id="vista"></main>
@@ -28,11 +31,17 @@
 <script src="./ingresos.js"></script>
 <script src="./inventario.js"></script>
 <script src="./estado-resultados.js"></script>
+<script src="./respaldo.js"></script>
+<script src="./edutips.js"></script>
+<script src="./help.js"></script>
 <script src="./app.js"></script>
 <script>
   window.addEventListener("c123-desbloqueado", function () { window.__c123Desbloqueado = true; });
   document.getElementById("btn-bloquear").addEventListener("click", function () {
     location.reload();
+  });
+  document.getElementById("btn-ayuda").addEventListener("click", function () {
+    window.C123Help.abrir();
   });
 </script>
 </body>

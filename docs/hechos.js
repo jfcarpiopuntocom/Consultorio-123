@@ -346,6 +346,17 @@
     return false;
   }
 
+  // Escritura directa para restaurar un respaldo (respaldo.js): el hecho YA
+  // trae su id/hash calculados por el dispositivo que lo generó — put() es
+  // idempotente por id, así que reimportar el mismo respaldo dos veces no
+  // duplica nada. A propósito NO pasa por registrar(): un hecho importado no
+  // debe encadenarse a la cadena de hash de ESTE dispositivo, conserva la
+  // suya propia (de quien lo generó).
+  function guardarDirecto(hecho) {
+    if (!hecho || !hecho.id) return Promise.resolve(null);
+    return guardar(hecho);
+  }
+
   global.AMG = global.AMG || {};
   global.AMG.Hechos = {
     VERSION: "1.0.0-faseA",
@@ -355,6 +366,7 @@
     verificarCadena: verificarCadena,
     instanceId: instanceId,
     meta: leerMeta,
+    _guardarDirecto: guardarDirecto,
     _arrancar: arrancar
   };
 

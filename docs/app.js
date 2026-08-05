@@ -28,6 +28,33 @@
   }
 
   // ---------------------------------------------------------------------
+  // Toasts — confirmación visible tras cada acción que guarda algo. Sin esto
+  // el usuario no tiene forma de saber si el formulario realmente se guardó.
+  // ---------------------------------------------------------------------
+  function toast(mensaje, tipo) {
+    var cont = document.getElementById("toast-cont");
+    if (!cont) {
+      cont = document.createElement("div");
+      cont.id = "toast-cont";
+      cont.className = "toast-cont";
+      document.body.appendChild(cont);
+    }
+    var el = document.createElement("div");
+    el.className = "toast toast--" + (tipo || "ok");
+    el.textContent = mensaje;
+    cont.appendChild(el);
+    setTimeout(function () { el.classList.add("toast--saliendo"); }, 2200);
+    setTimeout(function () { el.remove(); }, 2600);
+  }
+
+  // ---------------------------------------------------------------------
+  // Estado vacío reutilizable
+  // ---------------------------------------------------------------------
+  function vacio(icono, texto) {
+    return '<div class="estado-vacio"><span class="estado-vacio-icono">' + icono + '</span><p>' + esc(texto) + "</p></div>";
+  }
+
+  // ---------------------------------------------------------------------
   // Menú principal
   // ---------------------------------------------------------------------
   function vistaMenu() {
@@ -37,7 +64,8 @@
       '<a class="menu-card" href="#/inventario"><span class="menu-card-icono">📦</span><span class="menu-card-texto">Inventario</span><span class="menu-card-sub">Costo de venta</span></a>' +
       '<a class="menu-card" href="#/cxc"><span class="menu-card-icono">👥</span><span class="menu-card-texto">Cuentas por cobrar</span><span class="menu-card-sub">Tratamientos y abonos</span></a>' +
       '<a class="menu-card" href="#/resultados"><span class="menu-card-icono">📈</span><span class="menu-card-texto">Estado de resultados</span><span class="menu-card-sub">Utilidad del mes</span></a>' +
-      "</nav>";
+      "</nav>" +
+      '<a class="btn" href="#/respaldo" style="margin-top:16px">💾 Respaldo de datos</a>';
   }
 
   function botonMenu() {
@@ -79,6 +107,7 @@
         observaciones: f.get("observaciones")
       }).then(function () {
         e.target.reset();
+        toast("Ingreso guardado");
         renderIngresos();
       });
     });
@@ -100,7 +129,7 @@
 
       document.getElementById("tabla-ingresos").innerHTML = info.movimientos.length
         ? '<div class="table"><table><thead><tr><th>Fecha</th><th>Paciente</th><th>Concepto</th><th>Valor</th><th>Cuenta</th></tr></thead><tbody>' + filas + "</tbody></table></div>"
-        : "";
+        : vacio("💵", "Todavía no hay ingresos registrados. El primero que anotes aparece aquí.");
     });
   }
 
@@ -111,7 +140,7 @@
     vista.innerHTML =
       botonMenu() +
       '<div class="card">' +
-      '<h2 class="card-titulo">Agregar / actualizar artículo</h2>' +
+      '<h2 class="card-titulo" id="titulo-form-inventario">Agregar artículo</h2>' +
       '<form id="form-inventario">' +
       '<input type="hidden" name="id">' +
       '<div class="form-group"><label>Nombre del artículo</label><input name="nombre" required></div>' +
@@ -119,14 +148,28 @@
       '<div class="form-group"><label>Inventario inicial</label><input name="inicial" type="number" step="0.01" min="0"></div>' +
       '<div class="form-group"><label>Compras</label><input name="compras" type="number" step="0.01" min="0"></div>' +
       '<div class="form-group"><label>Inventario final</label><input name="final" type="number" step="0.01" min="0"></div>' +
+      '<div style="display:flex;gap:10px">' +
       '<button type="submit" class="btn btn-primary btn-block">Guardar artículo</button>' +
-      "</form></div>" +
+      '<button type="button" id="btn-cancelar-edicion" class="btn" hidden>Cancelar</button>' +
+      "</div></form></div>" +
       '<div id="totales-inventario" class="card"></div>' +
       '<div id="tabla-inventario"></div>';
 
-    document.getElementById("form-inventario").addEventListener("submit", function (e) {
+    var form = document.getElementById("form-inventario");
+    var tituloForm = document.getElementById("titulo-form-inventario");
+    var btnCancelar = document.getElementById("btn-cancelar-edicion");
+
+    function salirModoEdicion() {
+      form.reset();
+      form.id.value = "";
+      tituloForm.textContent = "Agregar artículo";
+      btnCancelar.hidden = true;
+    }
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
       var f = new FormData(e.target);
+      var editando = !!f.get("id");
       window.AMG.Inventario.guardarItem({
         id: f.get("id") || undefined,
         nombre: f.get("nombre"),
@@ -135,14 +178,17 @@
         compras: f.get("compras"),
         final: f.get("final")
       });
-      e.target.reset();
+      toast(editando ? "Artículo actualizado" : "Artículo agregado");
+      salirModoEdicion();
       renderInventario();
     });
 
-    renderInventario();
+    btnCancelar.addEventListener("click", salirModoEdicion);
+
+    renderInventario(form, tituloForm, btnCancelar);
   }
 
-  function renderInventario() {
+  function renderInventario(form, tituloForm, btnCancelar) {
     var info = window.AMG.Inventario.listar();
     document.getElementById("totales-inventario").innerHTML =
       '<div class="total-row"><span>TOTAL COSTO DE VENTA</span><span class="total-valor">' + fmt(info.totalCostoVenta) + "</span></div>";
@@ -150,17 +196,37 @@
     var filas = info.items.map(function (it) {
       return "<tr><td>" + esc(it.nombre) + "</td><td>" + fmt(it.precio) + "</td><td>" + fmt(it.inicial) +
         "</td><td>" + fmt(it.compras) + "</td><td>" + fmt(it.final) + "</td><td>" + fmt(it.costoVenta) +
-        '</td><td><button class="btn btn-danger" data-eliminar="' + esc(it.id) + '" style="min-height:36px;padding:6px 14px">Quitar</button></td></tr>';
+        '</td><td style="white-space:nowrap"><button class="btn" data-editar="' + esc(it.id) + '" style="min-height:36px;padding:6px 12px;margin-right:6px">Editar</button>' +
+        '<button class="btn btn-danger" data-eliminar="' + esc(it.id) + '" style="min-height:36px;padding:6px 12px">Quitar</button></td></tr>';
     }).join("");
 
     document.getElementById("tabla-inventario").innerHTML = info.items.length
       ? '<div class="table"><table><thead><tr><th>Artículo</th><th>Precio</th><th>Inicial</th><th>Compras</th><th>Final</th><th>Costo venta</th><th></th></tr></thead><tbody>' + filas + "</tbody></table></div>"
-      : "";
+      : vacio("📦", "Todavía no hay artículos en el inventario. Agrega el primero arriba.");
 
     document.querySelectorAll("[data-eliminar]").forEach(function (btn) {
       btn.addEventListener("click", function () {
+        if (!confirm("¿Quitar este artículo del inventario?")) return;
         window.AMG.Inventario.eliminarItem(btn.getAttribute("data-eliminar"));
-        renderInventario();
+        toast("Artículo eliminado", "danger");
+        renderInventario(form, tituloForm, btnCancelar);
+      });
+    });
+
+    if (!form) return;
+    document.querySelectorAll("[data-editar]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var it = info.items.find(function (x) { return x.id === btn.getAttribute("data-editar"); });
+        if (!it) return;
+        form.id.value = it.id;
+        form.nombre.value = it.nombre;
+        form.precio.value = it.precio;
+        form.inicial.value = it.inicial;
+        form.compras.value = it.compras;
+        form.final.value = it.final;
+        tituloForm.textContent = "Editando: " + it.nombre;
+        btnCancelar.hidden = false;
+        form.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
   }
@@ -194,14 +260,14 @@
       e.preventDefault();
       var f = new FormData(e.target);
       window.AMG.CxC.registrarTratamiento(f.get("paciente").trim(), f.get("concepto"), f.get("valorTotal"), f.get("pagoInicial"))
-        .then(function () { e.target.reset(); renderCxc(); });
+        .then(function () { e.target.reset(); toast("Tratamiento registrado"); renderCxc(); });
     });
 
     document.getElementById("form-abono").addEventListener("submit", function (e) {
       e.preventDefault();
       var f = new FormData(e.target);
       window.AMG.CxC.registrarMovimiento(f.get("paciente").trim(), "abono", f.get("monto"), f.get("concepto"))
-        .then(function () { e.target.reset(); renderCxc(); });
+        .then(function () { e.target.reset(); toast("Abono registrado"); renderCxc(); });
     });
 
     renderCxc();
@@ -222,7 +288,7 @@
         '<div class="total-row" style="margin-bottom:16px;background-color:var(--vermelho);color:var(--branco)"><span>TOTAL PENDIENTE DE COBRO</span><span class="total-valor">' + fmt(totalPendiente) + "</span></div>" +
         (saldos.length
           ? '<div class="table"><table><thead><tr><th>Paciente</th><th>Saldo</th></tr></thead><tbody>' + filas + "</tbody></table></div>"
-          : "");
+          : vacio("👥", "Todavía no hay tratamientos registrados."));
     });
   }
 
@@ -252,6 +318,7 @@
         salarios: f.get("salarios"), arriendo: f.get("arriendo"), servicios: f.get("servicios"),
         impuestos: f.get("impuestos"), gastosVarios: f.get("gastosVarios")
       });
+      toast("Gastos guardados");
       renderResultados();
     });
 
@@ -275,7 +342,69 @@
         '<div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">' +
         '<span class="badge badge-info">Margen bruto ' + r.margenBruto + "%</span>" +
         '<span class="badge badge-info">Margen neto ' + r.margenNeto + "%</span>" +
-        "</div></div>";
+        "</div></div>" +
+        '<div class="card tip-card"><span class="tip-icono">💡</span><p>' + esc(window.AMG.EduTips.tipDeHoy()) + "</p></div>";
+    });
+  }
+
+  // ---------------------------------------------------------------------
+  // Respaldo de datos
+  // ---------------------------------------------------------------------
+  function vistaRespaldo() {
+    vista.innerHTML =
+      botonMenu() +
+      '<div class="card">' +
+      '<h2 class="card-titulo">Respaldo de datos</h2>' +
+      '<p style="margin-bottom:16px">Todo lo que registras vive solo en este dispositivo — nada sale a internet. Descarga una copia periódica para no perderla si el dispositivo se daña o se pierde.</p>' +
+      '<button id="btn-exportar" class="btn btn-primary btn-block">⬇️ Descargar respaldo (.json)</button>' +
+      "</div>" +
+      '<div class="card">' +
+      '<h2 class="card-titulo">Restaurar desde un respaldo</h2>' +
+      '<p style="margin-bottom:16px">Selecciona un archivo .json exportado antes. No borra nada — solo agrega lo que falte.</p>' +
+      '<input type="file" id="input-restaurar" accept="application/json" class="form-group">' +
+      "</div>" +
+      '<div class="card">' +
+      '<h2 class="card-titulo">Verificar integridad</h2>' +
+      '<p style="margin-bottom:16px">Comprueba que el historial de ingresos y cuentas por cobrar de este dispositivo no haya sido alterado.</p>' +
+      '<button id="btn-verificar" class="btn btn-block">🔍 Verificar historial</button>' +
+      '<p id="resultado-verificar" style="margin-top:12px"></p>' +
+      "</div>";
+
+    document.getElementById("btn-exportar").addEventListener("click", function () {
+      window.AMG.Respaldo.exportarTodo().then(function (datos) {
+        window.AMG.Respaldo.descargar(datos);
+        toast("Respaldo descargado");
+      });
+    });
+
+    document.getElementById("input-restaurar").addEventListener("change", function (e) {
+      var archivo = e.target.files[0];
+      if (!archivo) return;
+      var lector = new FileReader();
+      lector.onload = function () {
+        try {
+          var datos = JSON.parse(lector.result);
+          window.AMG.Respaldo.importar(datos).then(function () {
+            toast("Respaldo restaurado");
+          }).catch(function (err) {
+            toast(err.message || "No se pudo restaurar", "danger");
+          });
+        } catch (_) {
+          toast("Archivo inválido", "danger");
+        }
+      };
+      lector.readAsText(archivo);
+    });
+
+    document.getElementById("btn-verificar").addEventListener("click", function () {
+      window.AMG.Hechos.verificarCadena().then(function (problema) {
+        var el = document.getElementById("resultado-verificar");
+        if (!problema) {
+          el.innerHTML = '<span class="badge badge-success">✓ Historial íntegro, sin alteraciones detectadas</span>';
+        } else {
+          el.innerHTML = '<span class="badge badge-danger">⚠ Se detectó una discrepancia en el hecho ' + esc(problema.en) + "</span>";
+        }
+      });
     });
   }
 
@@ -287,7 +416,8 @@
     "#/ingresos": vistaIngresos,
     "#/inventario": vistaInventario,
     "#/cxc": vistaCxc,
-    "#/resultados": vistaResultados
+    "#/resultados": vistaResultados,
+    "#/respaldo": vistaRespaldo
   };
 
   function ruteo() {

@@ -71,6 +71,7 @@
       '<div class="gate-pin-dots" id="gate-pin-dots"></div>' +
       '<div class="gate-pin-pad" id="gate-pin-pad"></div>' +
       '<p id="gate-pin-error" class="gate-pin-error" hidden>PIN incorrecto. Intenta de nuevo.</p>' +
+      '<button type="button" id="gate-pin-olvide" class="gate-link" hidden>¿Olvidaste tu PIN?</button>' +
       "</div>";
     document.body.appendChild(overlay);
     return overlay;
@@ -140,6 +141,7 @@
       titulo.textContent = "Crea tu PIN";
       sub.textContent = "4 dígitos. Lo vas a necesitar cada vez que abras la app.";
       errorEl.hidden = true;
+      $("gate-pin-olvide").hidden = true;
       teclado = montarTeclado(pad, dots, 4, function (pin) {
         if (!creandoPrimero) {
           creandoPrimero = pin;
@@ -165,6 +167,19 @@
       titulo.textContent = "Ingresa tu PIN";
       sub.textContent = "";
       errorEl.hidden = true;
+      var olvide = $("gate-pin-olvide");
+      olvide.hidden = false;
+      olvide.onclick = function () {
+        // Sin backend propio v1.0, no hay forma de recuperar el PIN olvidado
+        // — solo reiniciarlo. Esto NUNCA toca los datos del consultorio
+        // (ingresos, inventario, cxc): solo borra el hash del PIN, así que el
+        // próximo arranque pide crear uno nuevo. Confirmación explícita para
+        // que no sea un botón que alguien apriete sin querer y se preocupe.
+        if (!confirm("Esto NO borra tus datos del consultorio. Solo vas a tener que crear un PIN nuevo. ¿Continuar?")) return;
+        try { localStorage.removeItem(PIN_KEY); } catch (_) {}
+        creandoPrimero = null;
+        modoCrear();
+      };
       teclado = montarTeclado(pad, dots, 4, function (pin) {
         pinCorrecto(pin).then(function (ok) {
           if (ok) { desbloquear(overlay); return; }
