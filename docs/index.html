@@ -421,6 +421,8 @@
   nav button[data-vista="comisiones"].activo{background:var(--sim-azul);color:#fff;}
   nav button[data-vista="clientes"].activo{background:var(--sim-azul);color:#fff;}
   nav button[data-vista="avanzado"].activo{background:var(--sim-azul);color:#fff;}
+  nav button[data-vista="contabilidad"].activo{background:#FF6B00;color:#fff;}
+  nav button[data-vista="agenda"].activo{background:#8E2DE2;color:#fff;}
   nav button.activo svg{ transform:scale(1.05); }
   nav button:active{ transform:scale(0.94); }
 
@@ -1099,6 +1101,16 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.5v3.4M12 18.1v3.4M3.6 6l2.4 2.4M18 15.6l2.4 2.4M3.6 18l2.4-2.4M18 8.4l2.4-2.4M2.5 12h3.4M18.1 12h3.4"></path></svg>
     <span data-i18n="nav.advanced">Advanced</span>
   </button>
+  <!-- Núcleo: diseño exacto de Manuel García (Ingresos/Inventario/CxC/Estado de
+       Resultados con las fórmulas del borrador original) — ver nucleo-ui.js -->
+  <button data-vista="contabilidad">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="13" y2="16"></line></svg>
+    <span>Contabilidad</span>
+  </button>
+  <button data-vista="agenda">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <span>Agenda</span>
+  </button>
 </nav>
 
 <main>
@@ -1433,6 +1445,12 @@
   </section>
 
   <!-- VISTA: AVANZADO -->
+  <!-- Núcleo (diseño exacto de Manuel García) — contenido inyectado por nucleo-ui.js -->
+  <section id="vista-contabilidad" class="vista"></section>
+
+  <!-- Agenda + integración de calendario (Google/Outlook) — contenido inyectado por agenda-ui.js -->
+  <section id="vista-agenda" class="vista"></section>
+
   <section id="vista-avanzado" class="vista">
     <h3 class="seccion" style="margin-top:0;" data-i18n="adv.heading">Advanced mode</h3>
     <details style="margin:-4px 0 12px;font-size:14px;">
@@ -4420,6 +4438,18 @@ setTimeout(() => {
      hechos.js se engancha a el al cargar. Ver docs/reconciliacion.js. -->
 <script src="./event-bus.js"></script>
 <script src="./hechos.js"></script>
+<!-- Núcleo: diseño exacto de Manuel García de Cuenca (Ingresos/Inventario/
+     CxC/Estado de Resultados con las fórmulas del borrador original). Vive
+     aparte de cartera.js/caja-chica.js heredados de friendly-123 — ambos
+     conviven, uno es el semáforo operativo, el otro es la capa contable
+     exacta que pidió Manuel. Mismo motor hechos.js/event-bus.js. -->
+<script src="./nucleo-ingresos.js"></script>
+<script src="./nucleo-inventario.js"></script>
+<script src="./nucleo-cxc.js"></script>
+<script src="./nucleo-resultados.js"></script>
+<script src="./nucleo-ui.js"></script>
+<script src="./agenda.js"></script>
+<script src="./agenda-ui.js"></script>
 <script src="./reconciliacion.js"></script>
 <script src="./cartera.js"></script>
 <script src="./caja-chica.js"></script>
