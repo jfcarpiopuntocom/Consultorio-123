@@ -33,10 +33,10 @@
   function vistaMenu() {
     vista.innerHTML =
       '<nav class="menu-grid">' +
-      '<a class="menu-card" href="#/ingresos">Ingresos</a>' +
-      '<a class="menu-card" href="#/inventario">Inventario</a>' +
-      '<a class="menu-card" href="#/cxc">Cuentas por cobrar</a>' +
-      '<a class="menu-card" href="#/resultados">Estado de resultados</a>' +
+      '<a class="menu-card" href="#/ingresos"><span class="menu-card-icono">💵</span><span class="menu-card-texto">Ingresos</span><span class="menu-card-sub">Caja chica y bancos</span></a>' +
+      '<a class="menu-card" href="#/inventario"><span class="menu-card-icono">📦</span><span class="menu-card-texto">Inventario</span><span class="menu-card-sub">Costo de venta</span></a>' +
+      '<a class="menu-card" href="#/cxc"><span class="menu-card-icono">👥</span><span class="menu-card-texto">Cuentas por cobrar</span><span class="menu-card-sub">Tratamientos y abonos</span></a>' +
+      '<a class="menu-card" href="#/resultados"><span class="menu-card-icono">📈</span><span class="menu-card-texto">Estado de resultados</span><span class="menu-card-sub">Utilidad del mes</span></a>' +
       "</nav>";
   }
 
@@ -295,6 +295,10 @@
     (RUTAS[hash] || vistaMenu)();
   }
 
+  // app.js no rutea nada hasta que gate.js confirma PIN correcto (o hasta que
+  // se crea el PIN por primera vez). Si el candado ya se cerró antes de que
+  // este script termine de cargar, "desbloqueado" en window ya está en true.
   window.addEventListener("hashchange", ruteo);
-  window.addEventListener("DOMContentLoaded", ruteo);
+  window.addEventListener("c123-desbloqueado", ruteo);
+  if (window.__c123Desbloqueado) ruteo();
 })();

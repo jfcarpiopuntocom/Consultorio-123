@@ -66,6 +66,9 @@ body {
 }
 
 .app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 4px 0 20px;
 }
 
@@ -74,6 +77,184 @@ body {
   font-weight: 800;
   line-height: 1.2;
   color: var(--tinta);
+}
+
+.btn-bloquear {
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 12px;
+  background-color: var(--branco);
+  box-shadow: 0 3px 8px var(--sombra);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ---------- Íconos y subtítulo dentro de la tarjeta de módulo ---------- */
+.menu-card {
+  gap: 4px;
+}
+
+.menu-card-icono {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.menu-card-texto {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.menu-card-sub {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--branco);
+}
+
+/* ---------- Splash + candado de PIN (gate.js) ---------- */
+.gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--laranja);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: opacity 0.2s ease;
+}
+
+.gate-overlay--cerrando {
+  opacity: 0;
+}
+
+.gate-splash,
+.gate-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.gate-splash[hidden],
+.gate-pin[hidden] {
+  display: none;
+}
+
+.gate-logo {
+  min-width: 96px;
+  min-height: 96px;
+  padding: 0 12px;
+  border-radius: 24px;
+  background-color: var(--branco);
+  color: var(--laranja);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  box-shadow: 0 6px 0 #C45500;
+  margin-bottom: 20px;
+}
+
+.gate-logo--sm {
+  min-width: 64px;
+  min-height: 64px;
+  font-size: 18px;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 #C45500;
+  margin-bottom: 16px;
+}
+
+.gate-marca {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--branco);
+}
+
+.gate-tagline {
+  margin-top: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--branco);
+}
+
+.gate-pin h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--branco);
+  margin-bottom: 6px;
+}
+
+.gate-sub {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--branco);
+  min-height: 20px;
+  margin-bottom: 18px;
+}
+
+.gate-pin-dots {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.gate-pin-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--branco);
+  background-color: transparent;
+}
+
+.gate-pin-dot--lleno {
+  background-color: var(--branco);
+}
+
+.gate-pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.gate-pin-key {
+  min-height: 60px;
+  border: none;
+  border-radius: 16px;
+  background-color: var(--branco);
+  color: var(--tinta);
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #C45500;
+}
+
+.gate-pin-key--vacio {
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+.gate-pin-key--borrar {
+  background-color: var(--vermelho);
+  color: var(--branco);
+  box-shadow: 0 4px 0 #9E0A1D;
+}
+
+.gate-pin-error {
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--branco);
+  background-color: var(--vermelho);
+  padding: 8px 16px;
+  border-radius: 10px;
 }
 
 /* ---------- Grid de módulos (4 tarjetas tocables) ---------- */

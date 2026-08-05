@@ -14,11 +14,13 @@
 <div class="app-shell">
   <header class="app-header">
     <h1 class="app-title">Consultorio 123</h1>
+    <button id="btn-bloquear" class="btn-bloquear" title="Bloquear sesión">🔒</button>
   </header>
 
   <main id="vista"></main>
 </div>
 
+<script src="./gate.js"></script>
 <script src="./event-bus.js"></script>
 <script src="./hechos.js"></script>
 <script src="./device-identity.js"></script>
@@ -27,5 +29,11 @@
 <script src="./inventario.js"></script>
 <script src="./estado-resultados.js"></script>
 <script src="./app.js"></script>
+<script>
+  window.addEventListener("c123-desbloqueado", function () { window.__c123Desbloqueado = true; });
+  document.getElementById("btn-bloquear").addEventListener("click", function () {
+    location.reload();
+  });
+</script>
 </body>
 </html>
