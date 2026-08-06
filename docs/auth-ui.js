@@ -1021,8 +1021,19 @@
     // Chip naranja de rol (homologado de AMIGABLE, JFC 2026-07-29: "no tiene
     // el indicador naranja de si el usuario es owner o employee"). No se
     // muestra en sesion demo — solo en dispositivos apropiados de verdad.
+    // Chip naranja de rol (homologado de AMIGABLE). En modo demo NO se muestra
+    // el rol real (entra como dueno) sino un chip "Demo" en el MISMO lugar —
+    // JFC 2026-08-05: mato la franja amarilla de arriba, el aviso de demo va
+    // aqui, junto al indicador de rol / SALIR.
     const _rolChipKey = { dueno: "auth.roleChip.owner", admin: "auth.roleChip.admin", empleado: "auth.roleChip.employee", contador: "auth.roleChip.accountant" }[rol];
-    if (_rolChipKey && !demoSesion) {
+    if (demoSesion) {
+      const rc = document.createElement("span");
+      rc.id = "oc-rol-chip";
+      rc.textContent = "Demo";
+      rc.style.cssText = "font-size:12px;font-weight:700;color:#14181C !important;-webkit-text-fill-color:#14181C !important;"
+        + "margin-right:6px;padding:4px 10px;background-image:linear-gradient(180deg,#F5C518 0%,#E0AF00 100%);border:1px solid #9E7C00;border-radius:20px;";
+      header.appendChild(rc);
+    } else if (_rolChipKey) {
       const rc = document.createElement("span");
       rc.id = "oc-rol-chip";
       rc.textContent = window.t(_rolChipKey);
