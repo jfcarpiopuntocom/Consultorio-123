@@ -9,7 +9,7 @@
 // (fonts.googleapis.com / fonts.gstatic.com) tras la primera visita, así la
 // tipografía sobrevive sin conexión. Los font stacks del CSS ya traen
 // fallbacks del sistema por si nunca llegaron a cachearse.
-const CACHE = "c123-shell-v13"; // bumped 2026-08-05: botones de menu metalicos (fuera zebra) + fix "se tapa el HOY" (riel lateral sincroniza el alto real del header)
+const CACHE = "c123-shell-v14"; // bumped 2026-08-05: guardia de doble pestana (VITAL, evita que 2 pestanas se pisen los datos)
 const SHELL = [
   "./",
   "./index.html",

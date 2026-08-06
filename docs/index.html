@@ -2609,6 +2609,38 @@ document.querySelectorAll("nav button").forEach(btn => {
   window.addEventListener("oc-login", function () { setTimeout(ajustar, 60); });
 })();
 
+// GUARDIA DE DOBLE PESTAÑA (portado de AMIGABLE, JFC 2026-08-05) — VITAL.
+// Dos pestañas de la MISMA app se pisan el estado (last-writer-wins): la que
+// guarda de última gana y la otra pierde su trabajo en silencio. El listener
+// "storage" que debía recargar quedó neutralizado por el prefijo que pone
+// aislamiento.js a cada clave (e.key llega como "c123::..." y no matchea), así
+// que la única defensa segura es NO permitir dos pestañas activas a la vez.
+// Detecta la 2ª por BroadcastChannel y la tapa con un aviso (con escape para el
+// caso legítimo de una pestaña zombie). NO borrar sin reemplazo equivalente.
+(function guardiaDoblePestana() {
+  if (typeof BroadcastChannel === "undefined") return; // navegador viejo: sin guardia, igual que antes
+  var esES = true;
+  try { esES = !window.OCI18n || window.OCI18n.getLang() !== "en"; } catch (_) {}
+  var canal = new BroadcastChannel("consultorio-123-sesion-unica");
+  var soyPrincipal = true;
+  canal.onmessage = function (e) {
+    if (e.data === "hola" && soyPrincipal) canal.postMessage("ocupado");
+    if (e.data === "ocupado" && !document.getElementById("oc-doble-tab")) {
+      soyPrincipal = false;
+      var d = document.createElement("div");
+      d.id = "oc-doble-tab";
+      d.style.cssText = "position:fixed;inset:0;z-index:10003;background:#0F1923;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;";
+      d.innerHTML = '<p style="color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-size:18px;font-weight:700;max-width:440px;">'
+        + (esES ? 'Ya hay una sesión de consultorio-123 abierta en otra pestaña. Para no pisar los datos, usa una sola a la vez.' : 'consultorio-123 is already open in another tab. To avoid overwriting your data, use just one at a time.')
+        + '</p><button id="oc-doble-usar" style="min-height:48px;padding:12px 22px;border-radius:8px;border:2px solid #5294AC;background:transparent;color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important;font-size:16px;font-weight:700;cursor:pointer;">'
+        + (esES ? 'Usar aquí de todos modos' : 'Use here anyway') + '</button>';
+      document.body.appendChild(d);
+      document.getElementById("oc-doble-usar").addEventListener("click", function () { soyPrincipal = true; d.remove(); });
+    }
+  };
+  canal.postMessage("hola");
+})();
+
 // Mood/flavor del día para el dueño (12, voz JFC). Estable por día.
 const MOODS = [
   "What you already have counts double: protect your inventory before chasing the next sale.",
