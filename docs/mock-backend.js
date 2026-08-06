@@ -283,7 +283,18 @@
   // Apropiación 789 (2026-07-08): ID único de esta instancia. null en la demo;
   // se fija al activar con 789. Viaja en respaldos/sync para que los datos
   // queden atados a un negocio y no se confundan entre compradores.
-  let instanceId = null;
+  // instanceId se HIDRATA desde f123_owned en el arranque (JFC 2026-08-06):
+  // antes arrancaba null y solo se seteaba al activar, asi que un dispositivo
+  // ya apropiado quedaba null tras recargar. (En consultorio los topes free
+  // estan apagados de todas formas — ver TIER_GRATIS_ACTIVO — pero instanceId
+  // se usa tambien en el heartbeat y el estado exportable.)
+  let instanceId = (function () { try { return (JSON.parse(localStorage.getItem("f123_owned") || "null") || {}).instanceId || null; } catch (_) { return null; } })();
+  // consultorio-123 NO tiene tier gratuito (JFC 2026-08-06): a diferencia de
+  // amigable-123 NO hay tope de 25 productos / 100 ventas / 1 empleado. Esta
+  // bandera apaga TODAS las compuertas free-tier de golpe. Si algun dia se
+  // decide cobrar por tier: ponerla en true Y corregir los mensajes (dicen
+  // "PIN 789" cuando el de consultorio es 7895, y estan en ingles hardcodeado).
+  const TIER_GRATIS_ACTIVO = false;
   // Mejora #2 (JFC 2026-07-16): "limitada" = JFC bajo el estado desde el panel
   // (ej. cliente moroso) sin bloquear del todo. Se comporta como si el
   // dispositivo NUNCA se hubiera activado: vuelve a los topes free (25/100/1).
@@ -524,8 +535,11 @@
         // en vez de mostrar stock de otra app. (Sin _app = buffer legacy pre-
         // sello; se tolera para no borrar datos reales viejos.)
         if (body && body._app && body._app !== "consultorio-123") continue;
-        // Rechazar estados escritos por una pestaña más antigua (_rev más bajo) — solo en eventos onstorage
-        if (typeof body._rev === "number" && body._rev < _localRev) return;
+        // Rechazar estados escritos por una pestaña más antigua (_rev más bajo).
+        // #6 (JFC 2026-08-06): antes hacia `return` y abandonaba la carga entera
+        // si el buffer ACTIVO era stale — sin siquiera mirar el otro buffer, que
+        // podia traer una copia mas fresca. Ahora `continue`: prueba el buffer B.
+        if (typeof body._rev === "number" && body._rev < _localRev) continue;
         const error = validarRespaldo(body);
         if (error) continue; // invalido: probar el otro buffer
         // Sincroniza el contador local con el _rev cargado — si no, una pestaña que
@@ -1220,7 +1234,7 @@
         const ubicNueva = body.ubicacionId && body.ubicacionId !== "todas" ? ubicaciones.find((x) => x.id === body.ubicacionId) : null;
         if (ubicNueva && ubicNueva.activa === false) return J({ error: `"${ubicNueva.nombre}" está desactivada — reactívala en Avanzado antes de agregar productos ahí.` }, 400);
         // Free-tier: sin dispositivo activado (PIN 789), tope de 25 productos.
-        if ((!instanceId || licenciaLimitada()) && productos.length >= 25) {
+        if ((TIER_GRATIS_ACTIVO && (!instanceId || licenciaLimitada())) && productos.length >= 25) {
           return J({ error: "You've reached the 25-product limit on the free plan. Activate this device (PIN 789) to unlock unlimited products.", codigo: "LIMITE_PRODUCTOS" }, 403);
         }
         const nuevo = {
@@ -1248,7 +1262,7 @@
         const cant = Number.isInteger(body.cantidad) && body.cantidad > 0 ? body.cantidad : 1;
         if (p.stockActual < cant) return J({ error: `No hay suficiente stock disponible (quedan ${p.stockActual}).` }, 400);
         // Free-tier: sin dispositivo activado (PIN 789), tope de 100 ventas/mes (global).
-        if ((!instanceId || licenciaLimitada()) && ventasCountMesGlobal() >= 100) {
+        if ((TIER_GRATIS_ACTIVO && (!instanceId || licenciaLimitada())) && ventasCountMesGlobal() >= 100) {
           return J({ error: "You've reached the 100-sales/month limit on the free plan. Activate this device (PIN 789) to unlock unlimited sales.", codigo: "LIMITE_VENTAS" }, 403);
         }
         const montoBruto = p.precio * cant;
@@ -1488,7 +1502,7 @@
       // una sola vez (misma logica de split/comisiones que la venta normal).
       // Se aplican los items validos y se reportan los que no calzan.
       if (path === "/api/ventas/cierre" && opts && opts.method === "POST") {
-        if (!instanceId || licenciaLimitada()) return J({ error: "Activate this device (PIN 789) to use day close." }, 403);
+        if (TIER_GRATIS_ACTIVO && (!instanceId || licenciaLimitada())) return J({ error: "Activate this device (PIN 789) to use day close." }, 403);
         const items = Array.isArray(body.items) ? body.items : [];
         if (!items.length) return J({ error: "No hay cantidades que aplicar." }, 400);
         const errores = [];
@@ -1653,7 +1667,7 @@
         if (!/^\d{3}$/.test(pin))        return J({ error: "El PIN debe tener exactamente 3 digitos." }, 400);
         // Limite free: 1 empleado (admins exentos — son co-duenos, no personal)
         const empleadosActuales = usuarios.filter((u) => u.rol === "empleado").length;
-        if (rolNuevo === "empleado" && empleadosActuales >= 1 && (!instanceId || licenciaLimitada()))
+        if (rolNuevo === "empleado" && empleadosActuales >= 1 && (TIER_GRATIS_ACTIVO && (!instanceId || licenciaLimitada())))
           return J({ error: "The free plan includes 1 employee. Activate this device (PIN 789) for unlimited employees.", codigo: "LIMITE_EMPLEADOS" }, 403);
         if (usuarios.some((u) => u.pin === pin)) return J({ error: "Ese PIN ya lo usa otro miembro del equipo. Elige uno diferente." }, 400);
         const nuevo = { id: uuid("u"), nombre, pin, rol: rolNuevo, email, activo: true, creadoEn: new Date().toISOString() };

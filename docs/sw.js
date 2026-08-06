@@ -9,7 +9,7 @@
 // (fonts.googleapis.com / fonts.gstatic.com) tras la primera visita, así la
 // tipografía sobrevive sin conexión. Los font stacks del CSS ya traen
 // fallbacks del sistema por si nunca llegaron a cachearse.
-const CACHE = "c123-shell-v17"; // bumped 2026-08-06: fix CRITICO - la pantalla de activacion decia PIN 789 pero fija 7895 (dejaba al dueno fuera); ahora dice 7895 y respeta el idioma
+const CACHE = "c123-shell-v18"; // bumped 2026-08-06: tier gratis APAGADO (consultorio no cobra por tope) + instanceId se hidrata + #4 strings bilingues + #5 fotos vp_ + #6 carga prueba ambos buffers
 const SHELL = [
   "./",
   "./index.html",

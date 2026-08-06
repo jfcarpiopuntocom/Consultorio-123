@@ -516,8 +516,10 @@
       t.style.cssText = "position:fixed;left:16px;right:16px;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:10005;"
         + "background:#1c3049;color:#F8F9FB;padding:12px 14px;border-radius:8px;font-size:14px;"
         + "box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;gap:10px;max-width:480px;margin:0 auto;";
-      t.innerHTML = '<span style="flex:1;">Ese PIN no se reconoció — estás viendo el modo demo. '
-        + '<button id="oc-aviso-demo-reintentar" style="background:none;border:none;color:#8ecbff;text-decoration:underline;font-weight:700;cursor:pointer;padding:0;font-size:14px;">Reintentar mi PIN</button></span>'
+      var _esES = true; try { _esES = !window.OCI18n || window.OCI18n.getLang() !== "en"; } catch (_) {}
+      t.innerHTML = '<span style="flex:1;">'
+        + (_esES ? 'Ese PIN no se reconoció — estás viendo el modo demo. ' : "That PIN wasn't recognized — you're seeing demo mode. ")
+        + '<button id="oc-aviso-demo-reintentar" style="background:none;border:none;color:#8ecbff;text-decoration:underline;font-weight:700;cursor:pointer;padding:0;font-size:14px;">' + (_esES ? 'Reintentar mi PIN' : 'Retry my PIN') + '</button></span>'
         + '<button id="oc-aviso-demo-cerrar" style="background:none;border:none;color:#F8F9FB;font-size:18px;cursor:pointer;padding:0 2px;" aria-label="Cerrar">×</button>';
       document.body.appendChild(t);
       const cerrar = () => { if (t.isConnected) t.remove(); };
@@ -633,7 +635,10 @@
       }
       try { window.OCSecure.actualizarCorreo(email); } catch (_) {}
       if (vaciar) {
-        try { var rm = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf("f123_foto_percha_") === 0) rm.push(k); } rm.forEach(function (kk) { localStorage.removeItem(kk); }); } catch (_) {}
+        // #5 (JFC 2026-08-06): antes solo borraba "f123_foto_percha_", pero las
+        // fotos se guardan bajo "vp_foto_percha_" (vista-perchas), asi que al
+        // "empezar vacio" las fotos demo sobrevivian. Ahora limpia ambos prefijos.
+        try { var rm = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && (k.indexOf("f123_foto_percha_") === 0 || k.indexOf("vp_foto_percha_") === 0)) rm.push(k); } rm.forEach(function (kk) { localStorage.removeItem(kk); }); } catch (_) {}
       }
       // Sincro-equipos (homologado de AMIGABLE, 2026-07-23): generar el codigo
       // de sala y activar sync en el mismo instante — sin pantalla extra. Sync
@@ -694,7 +699,8 @@
       try {
         var owned = JSON.parse(localStorage.getItem("f123_owned") || "null") || {};
         if (owned.licenseEstado === "bloqueada") {
-          error("This instance is blocked. Contact the consultorio-123 administrator.");
+          var _esESb = true; try { _esESb = !window.OCI18n || window.OCI18n.getLang() !== "en"; } catch (_) {}
+          error(_esESb ? "Este dispositivo está bloqueado. Contacta al administrador de consultorio-123." : "This instance is blocked. Contact the consultorio-123 administrator.");
           return;
         }
       } catch (_) {}
