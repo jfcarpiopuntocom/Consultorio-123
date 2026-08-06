@@ -133,7 +133,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
   // incorrecta" para siempre sin ninguna pista de que el problema no era su
   // memoria del PIN, sino el dato mismo.
   function estadoSecreto() {
-    const raw = localStorage.getItem("f123_secure");
+    const raw = localStorage.getItem("c123_secure_v1");
     if (!raw) return "vacio";
     try {
       const s = JSON.parse(raw);
@@ -145,7 +145,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
   // Si José ya había configurado sus claves/correo antes de este cambio, NO se
   // pierden ni se resetean: se migran tal cual a oc_secure en el primer load.
   async function migrarSiHaceFalta() {
-    if (!localStorage.getItem("f123_secure")) {
+    if (!localStorage.getItem("c123_secure_v1")) {
       let viejo = null;
       try { viejo = JSON.parse(localStorage.getItem("f123_auth") || "null"); } catch {}
       const DEF = { owner: "7895", empleados: ["2605"], acct: "3570", email: "" }; // consultorio-123: 4 digitos (JFC 2026-08-05)
@@ -161,7 +161,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
       let _apropiado = false;
       try { _apropiado = !!(JSON.parse(localStorage.getItem("f123_owned") || "null") || {}).instanceId; } catch (_) {}
       if (!_apropiado) {
-        await guardarSecreto("888", ["260"], "357", "");
+        await guardarSecreto("7895", ["2605"], "3570", ""); // consultorio-123: 4 digitos (JFC 2026-08-05)
       }
     }
     // AMIGABLE (JFC 2026-07-02): el PIN de dueño pasó de 159 a 888. Si un
@@ -184,7 +184,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
   // que cada llamador pueda decidir qué decirle al usuario si falla.
   function guardarSecureResiliente(s) {
     const payload = JSON.stringify(s);
-    try { localStorage.setItem("f123_secure", payload); return true; }
+    try { localStorage.setItem("c123_secure_v1", payload); return true; }
     catch (_) {
       try {
         const rm = [];
@@ -193,7 +193,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
           if (k && k.indexOf("vp_foto_percha_") === 0) rm.push(k);
         }
         rm.forEach((kk) => { try { localStorage.removeItem(kk); } catch (_) {} });
-        localStorage.setItem("f123_secure", payload);
+        localStorage.setItem("c123_secure_v1", payload);
         return true;
       } catch (_) { return false; }
     }
@@ -209,7 +209,7 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
   }
 
   function leerSecreto() {
-    try { return JSON.parse(localStorage.getItem("f123_secure")); } catch { return null; }
+    try { return JSON.parse(localStorage.getItem("c123_secure_v1")); } catch { return null; }
   }
 
   // Verifica un PIN de 3 dígitos contra un rol ("owner"|"acct") o la lista de empleados.

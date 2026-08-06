@@ -214,10 +214,10 @@
   /* === FAILSAFE COLORES — navegadores sin CSS variables (Chrome <49, IE, Opera Mini)
      JFC 2026-07-03. Colores literales como base; el bloque :root los sobreescribe
      en cualquier browser moderno. Nunca borrar este bloque — es la capa "forever". === */
-  .caja.verde   {background:#00C87A;border-color:#009A5A;color:#fff;}
-  .caja.amarillo{background:#FFC700;border-color:#B8860B;color:#1e1a12;}
+  .caja.verde   {background:#0FA46A;border-color:#086944;color:#fff;}
+  .caja.amarillo{background:#F5C518;border-color:#9E7C00;color:#1e1a12;}
   .caja.naranja {background:#F97316;border-color:#C05000;color:#fff;}
-  .caja.rojo    {background:#E8365D;border-color:#B0183E;color:#fff;}
+  .caja.rojo    {background:#C41E3A;border-color:#7C1024;color:#fff;}
   .caja.negro   {background:#0A0A0F;border-color:#000000;color:#fff;}
 
   .lista-alertas li.verde   {background:#C0F5E0;color:#009A5A;border:2px solid #00C87A;}
@@ -2103,6 +2103,13 @@ const ESTACIONES = {
 // Cada cuadrante tiene color semántico Simon: verde=saludable, rojo=emergencia, naranja=urgente, azul=contable.
 function badgeComportamiento(ev) {
   if (!ev) return "";
+  function _tEv(k) {
+    var lang = "en";
+    try { if (window.OCI18n && window.OCI18n.getLang) lang = window.OCI18n.getLang(); } catch (_) {}
+    var d = { en: { dificil:"Difficult", agradable:"Pleasant", precaucion:"Caution", confiable:"Reliable" },
+              es: { dificil:"Difícil", agradable:"Agradable", precaucion:"Precaución", confiable:"Confiable" } }[lang] || {};
+    return d[k.replace("eval.", "")] || k;
+  }
   const t = ev.trato, cv = ev.confiabilidad;
   if (t === 0 && cv === 0) return "";
   // Icono estrella SVG reutilizable (relleno dorado)
@@ -2114,20 +2121,20 @@ function badgeComportamiento(ev) {
   // Icono maletín SVG (trazo azul contable)
   const svgCase = `<svg width="14" height="13" viewBox="0 0 14 13" fill="none" stroke="#2E6278" stroke-width="1.4" style="vertical-align:middle;"><rect x="1" y="4" width="12" height="8" rx="2"/><path d="M5 4V2.5A1.5 1.5 0 0 1 9 2.5V4"/></svg>`;
   // Iconos simples de medio eje
-  const svgThumbUp = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#009A5A" stroke-width="1.5" style="vertical-align:middle;"><path d="M4 13V7L7 1l1 .5V5h4l-1 6H4z"/><path d="M4 7H1v6h3"/></svg>`;
-  const svgThumbDn = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C0392B" stroke-width="1.5" style="vertical-align:middle;"><path d="M10 1v6L7 13l-1-.5V9H2l1-6h7z"/><path d="M10 7h3V1h-3"/></svg>`;
-  const svgShield  = `<svg width="13" height="14" viewBox="0 0 13 14" fill="none" stroke="#009A5A" stroke-width="1.4" style="vertical-align:middle;"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z"/><polyline points="4,7 6,9 9.5,5" stroke-width="1.6"/></svg>`;
-  const svgWarn    = `<svg width="14" height="13" viewBox="0 0 14 13" fill="none" style="vertical-align:middle;"><polygon points="7,1 13.5,12.5 0.5,12.5" fill="#E8A020"/><text x="7" y="11.2" text-anchor="middle" font-size="8" font-weight="700" fill="#0F1923">!</text></svg>`;
+  const svgThumbUp = `<svg width="14" height="14" viewBox="0 0 14 14" fill="#009A5A" stroke="none" style="vertical-align:middle;"><polygon points="7,1 8.8,5.3 13.4,5.7 10.1,8.6 11.1,13.1 7,10.6 2.9,13.1 3.9,8.6 0.6,5.7 5.2,5.3"/></svg>`;
+  const svgThumbDn = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C0392B" stroke-width="1.3" style="vertical-align:middle;"><polygon points="7,1 8.8,5.3 13.4,5.7 10.1,8.6 11.1,13.1 7,10.6 2.9,13.1 3.9,8.6 0.6,5.7 5.2,5.3"/></svg>`;
+  const svgShield  = `<svg width="13" height="14" viewBox="0 0 13 14" fill="#009A5A" stroke="none" style="vertical-align:middle;"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z"/></svg>`;
+  const svgWarn    = `<svg width="14" height="14" viewBox="0 0 13 14" fill="none" stroke="#E8A020" stroke-width="1.3" style="vertical-align:middle;"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z" stroke-dasharray="2 2"/></svg>`;
   const chip = (icon, txt, bg, color) =>
     `<span title="${txt}" style="display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:2px 7px;border-radius:20px;font-size:12px;font-weight:700;background:${bg};color:${color} !important;-webkit-text-fill-color:${color} !important;">${icon}${txt}</span>`;
   if (t === 1 && cv === 1)   return chip(svgStar,  "VIP",      "#FEF6E0", "#8A5A00");
   if (t === -1 && cv === -1) return chip(svgFlag,  "Alert",   "#FDECEA", "#C0392B");
   if (t === 1 && cv === -1)  return chip(svgEye,   "Watch",   "#FFF3EE", "#E86040");
   if (t === -1 && cv === 1)  return chip(svgCase,  "Difficult",  "#EBF4F9", "#2E6278");
-  if (t === 1)   return chip(svgThumbUp, "Good manner",  "#EDFAF4", "#006B3C");
-  if (t === -1)  return chip(svgThumbDn, "Difficult manner","#FDECEA","#C0392B");
-  if (cv === 1)  return chip(svgShield,  "Reliable",   "#EDFAF4", "#006B3C");
-  if (cv === -1) return chip(svgWarn,    "Caution",  "#FEF6E0", "#8A5A00");
+  if (t === 1)   return chip(svgThumbUp, _tEv("eval.agradable"),  "#EDFAF4", "#006B3C");
+  if (t === -1)  return chip(svgThumbDn, _tEv("eval.dificil"),"#FDECEA","#C0392B");
+  if (cv === 1)  return chip(svgShield,  _tEv("eval.confiable"),   "#EDFAF4", "#006B3C");
+  if (cv === -1) return chip(svgWarn,    _tEv("eval.precaucion"),  "#FEF6E0", "#8A5A00");
   return "";
 }
 
@@ -2137,18 +2144,29 @@ function tarjetaCliente(c, esDueno){
     ? `<div style="font-size:15px;color:#2C3E50;margin-top:3px;">${c.frecuencia} purchase(s) in 90 days · ${fmtMoney(c.monto)}${c.recencia != null ? ` · last ${c.recencia} day(s) ago` : " · no purchases yet"}</div>`
     : "";
   // Controles de evaluación: visibles a dueño y empleados (no en demo si no hay sesión).
+  const _EV_TXT = {
+    en: { trato:"Manner", confiabilidad:"Reliability", dificil:"Difficult", agradable:"Pleasant", neutro:"Neutral", precaucion:"Caution", confiable:"Reliable" },
+    es: { trato:"Modales / Trato Personal", confiabilidad:"Confiabilidad", dificil:"Difícil", agradable:"Agradable", neutro:"Neutral", precaucion:"Precaución", confiable:"Confiable" }
+  };
+  function _tEv(k) {
+    var lang = "en";
+    try { if (window.OCI18n && window.OCI18n.getLang) lang = window.OCI18n.getLang(); } catch (_) {}
+    var d = _EV_TXT[lang] || _EV_TXT.en;
+    return d[k.replace("eval.", "")] || k;
+  }
   const puedeEvaluar = window.OCAuth && window.OCAuth.rolActual && (window.OCAuth.rolActual() === "dueno" || window.OCAuth.rolActual() === "empleado");
-  // Botones de evaluación con SVG inline — sin emojis, aspecto profesional.
-  // val=-1 rojo, val=0 gris, val=1 verde. Campo puede ser "trato" o "confiabilidad".
+  // ESTRELLAS y CORAZONES (JFC 2026-08-05, corrige un retroceso a manitos):
+  // trato -> estrella (pleasant=llena, difficult=vacia). confiabilidad ->
+  // corazon (reliable=lleno, caution=roto). val=-1 apagado, 0 neutro, 1 activo.
   const icoTrato = {
-    "-1": `<svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 1v6L7 13l-1-.5V9H2l1-6h7z"/><path d="M10 7h3V1h-3"/></svg>`,
+    "-1": `<svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.3"><polygon points="7,1 8.8,5.3 13.4,5.7 10.1,8.6 11.1,13.1 7,10.6 2.9,13.1 3.9,8.6 0.6,5.7 5.2,5.3"/></svg>`,
     "0":  `<svg width="15" height="3" viewBox="0 0 15 3"><rect x="0" y="1" width="15" height="1.5" rx="0.75" fill="currentColor"/></svg>`,
-    "1":  `<svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 13V7L7 1l1 .5V5h4l-1 6H4z"/><path d="M4 7H1v6h3"/></svg>`
+    "1":  `<svg width="15" height="15" viewBox="0 0 14 14" fill="currentColor" stroke="none"><polygon points="7,1 8.8,5.3 13.4,5.7 10.1,8.6 11.1,13.1 7,10.6 2.9,13.1 3.9,8.6 0.6,5.7 5.2,5.3"/></svg>`
   };
   const icoConf = {
-    "-1": `<svg width="15" height="14" viewBox="0 0 14 13" fill="none"><polygon points="7,1 13.5,12.5 0.5,12.5" fill="currentColor"/><text x="7" y="11" text-anchor="middle" font-size="7.5" font-weight="700" fill="#0F1923">!</text></svg>`,
+    "-1": `<svg width="15" height="14" viewBox="0 0 13 14" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z" stroke-dasharray="2 2"/></svg>`,
     "0":  `<svg width="15" height="3" viewBox="0 0 15 3"><rect x="0" y="1" width="15" height="1.5" rx="0.75" fill="currentColor"/></svg>`,
-    "1":  `<svg width="14" height="14" viewBox="0 0 13 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z"/><polyline points="4,7 6,9 9.5,5" stroke-width="1.7"/></svg>`
+    "1":  `<svg width="14" height="14" viewBox="0 0 13 14" fill="currentColor" stroke="none"><path d="M6.5 1 L12 3.5 V7 C12 10.5 6.5 13 6.5 13 C6.5 13 1 10.5 1 7 V3.5 Z"/></svg>`
   };
   const icoMap = { trato: icoTrato, confiabilidad: icoConf };
   const btnEv = (campo, val, titulo) => {
@@ -2171,10 +2189,10 @@ function tarjetaCliente(c, esDueno){
     </div>` : "";
   const controles = puedeEvaluar ? `
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;align-items:center;">
-      <span style="font-size:13px;font-weight:700;color:#2E6278;">Manner:</span>
-      ${btnEv("trato",-1,"Difficult")}${btnEv("trato",0,"Neutral")}${btnEv("trato",1,"Pleasant")}
-      <span style="font-size:13px;font-weight:700;color:#2E6278;margin-left:6px;">Reliability:</span>
-      ${btnEv("confiabilidad",-1,"Caution")}${btnEv("confiabilidad",0,"Neutral")}${btnEv("confiabilidad",1,"Reliable")}
+      <span style="font-size:13px;font-weight:700;color:#2E6278;">${_tEv("eval.trato")}:</span>
+      ${btnEv("trato",-1,_tEv("eval.dificil"))}${btnEv("trato",0,_tEv("eval.neutro"))}${btnEv("trato",1,_tEv("eval.agradable"))}
+      <span style="font-size:13px;font-weight:700;color:#2E6278;margin-left:6px;">${_tEv("eval.confiabilidad")}:</span>
+      ${btnEv("confiabilidad",-1,_tEv("eval.precaucion"))}${btnEv("confiabilidad",0,_tEv("eval.neutro"))}${btnEv("confiabilidad",1,_tEv("eval.confiable"))}
     </div>${campoHora}` : "";
   const btnDespedir = (esDueno && ev.trato === -1 && ev.confiabilidad === -1)
     ? `<button style="margin-top:8px;font-size:13px;padding:4px 12px;background:#FDECEA;border:1.5px solid #C0392B;border-radius:6px;color:#C0392B !important;-webkit-text-fill-color:#C0392B !important;cursor:pointer;"

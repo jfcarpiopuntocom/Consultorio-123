@@ -1285,7 +1285,7 @@
           // en el fuente — cualquiera con el archivo recuperaria el PIN del dueno.
           // Se quita del export; la recuperacion "Olvidaste?" se re-arma sola en
           // el proximo cambio de PIN tras restaurar.
-          try { const s = JSON.parse(localStorage.getItem("f123_secure")); if (s) delete s.ownerPinR; return s ? JSON.stringify(s) : null; } catch (_) { return localStorage.getItem("f123_secure"); }
+          try { const s = JSON.parse(localStorage.getItem("c123_secure_v1")); if (s) delete s.ownerPinR; return s ? JSON.stringify(s) : null; } catch (_) { return localStorage.getItem("c123_secure_v1"); }
         })(), fotosPerchas };
         const contenidoPlano = JSON.stringify(paquete);
         const checksum = await window.OCSecure.hashTexto(contenidoPlano);
@@ -1370,7 +1370,7 @@
         let secretoOk = true;
         if (paquete.oc_secure) {
           secretoOk = false;
-          try { localStorage.setItem("f123_secure", paquete.oc_secure); secretoOk = true; }
+          try { localStorage.setItem("c123_secure_v1", paquete.oc_secure); secretoOk = true; }
           catch (_) {
             // Guard G4 (2026-08-04): sin este purge-and-retry, un dispositivo con poco
             // espacio importaba productos/ventas OK pero perdia el PIN en silencio.
@@ -1378,7 +1378,7 @@
               const rm = [];
               for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf("vp_foto_percha_") === 0) rm.push(k); }
               rm.forEach((kk) => { try { localStorage.removeItem(kk); } catch (_) {} });
-              localStorage.setItem("f123_secure", paquete.oc_secure);
+              localStorage.setItem("c123_secure_v1", paquete.oc_secure);
               secretoOk = true;
             } catch (_) { secretoOk = false; }
           }
@@ -1800,7 +1800,7 @@
           // en el fuente — cualquiera con el archivo recuperaria el PIN del dueno.
           // Se quita del export; la recuperacion "Olvidaste?" se re-arma sola en
           // el proximo cambio de PIN tras restaurar.
-          try { const s = JSON.parse(localStorage.getItem("f123_secure")); if (s) delete s.ownerPinR; return s ? JSON.stringify(s) : null; } catch (_) { return localStorage.getItem("f123_secure"); }
+          try { const s = JSON.parse(localStorage.getItem("c123_secure_v1")); if (s) delete s.ownerPinR; return s ? JSON.stringify(s) : null; } catch (_) { return localStorage.getItem("c123_secure_v1"); }
         })(), fotosPerchas };
         const contenidoPlano = JSON.stringify(paquete);
         const checksum = await window.OCSecure.hashTexto(contenidoPlano);

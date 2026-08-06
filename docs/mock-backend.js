@@ -305,7 +305,7 @@
   // no por carpeta. Con la clave vieja, TODO el estado del negocio (productos,
   // ventas, clientes) se mezclaba entre ambas apps en el mismo navegador.
   const OC_STATE_KEY_VIEJA = "amigable_demo_state_v4";
-  const OC_STATE_KEY = "f123_estado_v4";
+  const OC_STATE_KEY = "c123_estado_v1";
   // Migracion de un solo uso: si ya hay estado bajo la clave nueva, no tocar
   // nada. Si NO hay nada bajo la nueva pero SI bajo la vieja compartida,
   // copiarlo una vez para no perder datos de un cliente que ya venia usando
@@ -543,7 +543,7 @@
         // la rama de abajo. Gap preexistente antes de Fase 3 — el parse vivia
         // fuera de su propio try y un JSON cortado a la mitad se tragaba en
         // silencio sin guardar el rescate ni avisar.
-        try { localStorage.setItem("f123_rescate_v4", raw); } catch (_) {}
+        try { localStorage.setItem("c123_rescate_v1", raw); } catch (_) {}
         setTimeout(() => {
           try {
             if (document.getElementById("oc-estado-corrupto-aviso")) return;
@@ -566,7 +566,7 @@
       } else {
         // Estado guardado no pasa validación — rescatar raw ANTES de sobrescribir con datos semilla.
         // El dueño puede recuperar el archivo desde Avanzado > Exportar (busca oc_rescate_v4).
-        try { localStorage.setItem("f123_rescate_v4", raw); } catch (_) {}
+        try { localStorage.setItem("c123_rescate_v1", raw); } catch (_) {}
         // Banda roja: advertir inmediatamente, no fallar silencioso
         setTimeout(() => {
           try {
