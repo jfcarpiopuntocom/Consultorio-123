@@ -654,10 +654,19 @@
       var ow2 = {}; try { ow2 = JSON.parse(localStorage.getItem("f123_owned") || "null") || {}; } catch (_) {}
       enviarHeartbeat({ instanceId: idInstancia, licenseCode: ow2.licenseCode || "", email: email, activatedAt: ow2.activatedAt, accion: "register" });
       var seguro = email.replace(/[&<>"']/g, "");
-      wrap.querySelector("#oc-act-exito-txt").innerHTML =
-        "Your owner PIN is <strong>789</strong> — change it anytime in Advanced &rarr; Keys. " +
-        "We saved <strong>" + seguro + "</strong> to recover your access. " +
-        "To use your system on another phone or tablet, go to Advanced &rarr; Sync.";
+      // BUG FIJADO (JFC 2026-08-06): decia "tu PIN es 789" pero el PIN que se
+      // fija de verdad (fijarOwnerPin de arriba) es ACTIVATION_PIN = 7895 — el
+      // dueno quedaba fuera de su propio negocio con el numero equivocado.
+      // Ademas estaba hardcodeado en ingles; ahora respeta el switch.
+      var _esES = true;
+      try { _esES = !window.OCI18n || window.OCI18n.getLang() !== "en"; } catch (_) {}
+      wrap.querySelector("#oc-act-exito-txt").innerHTML = _esES
+        ? ("Tu PIN de dueño es <strong>" + ACTIVATION_PIN + "</strong> — puedes cambiarlo cuando quieras en Avanzado &rarr; Claves. " +
+           "Guardamos <strong>" + seguro + "</strong> para recuperar tu acceso. " +
+           "Para usar tu sistema en otro teléfono o tablet, ve a Avanzado &rarr; Sincronizar.")
+        : ("Your owner PIN is <strong>" + ACTIVATION_PIN + "</strong> — change it anytime in Advanced &rarr; Keys. " +
+           "We saved <strong>" + seguro + "</strong> to recover your access. " +
+           "To use your system on another phone or tablet, go to Advanced &rarr; Sync.");
       wrap.querySelector("#oc-act-form").style.display = "none";
       wrap.querySelector("#oc-act-exito").style.display = "block";
     });
