@@ -288,7 +288,10 @@ const PIN_XOR_KEY = "oc-pin-r-v1";
       const s = leerSecreto();
       if (!s || !s.ownerPinR) return null;
       const out = unxorPin(s.ownerPinR);
-      return out && /^\d{3}$/.test(out) ? out : null;
+      // consultorio-123 usa PIN de 4 digitos (JFC 2026-08-05). Antes exigia 3
+      // (heredado de friendly-123) y "Olvidaste?" devolvia null para todo PIN
+      // de dueno valido de 4 digitos.
+      return out && /^\d{4}$/.test(out) ? out : null;
     } catch { return null; }
   }
 

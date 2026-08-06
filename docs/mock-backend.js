@@ -304,20 +304,18 @@
   // origen (jfcarpiopuntocom.github.io) — localStorage se comparte por origen,
   // no por carpeta. Con la clave vieja, TODO el estado del negocio (productos,
   // ventas, clientes) se mezclaba entre ambas apps en el mismo navegador.
-  const OC_STATE_KEY_VIEJA = "amigable_demo_state_v4";
-  const OC_STATE_KEY = "c123_estado_v1";
-  // Migracion de un solo uso: si ya hay estado bajo la clave nueva, no tocar
-  // nada. Si NO hay nada bajo la nueva pero SI bajo la vieja compartida,
-  // copiarlo una vez para no perder datos de un cliente que ya venia usando
-  // la app antes de este fix (aunque ese estado pudo venir mezclado con
-  // AMIGABLE si el cliente tambien uso esa app en el mismo navegador).
-  (function migrarEstadoSiHaceFalta() {
-    try {
-      if (localStorage.getItem(OC_STATE_KEY) != null) return;
-      const viejo = localStorage.getItem(OC_STATE_KEY_VIEJA);
-      if (viejo != null) localStorage.setItem(OC_STATE_KEY, viejo);
-    } catch (_) {}
-  })();
+  // v2 (JFC 2026-08-06): se abandona c123_estado_v1 porque en navegadores de
+  // prueba ya quedo CONTAMINADO con el estado retail de AMIGABLE (bug de la
+  // migracion cruzada de abajo). v2 nace limpio y SIEMPRE lleva sello _app.
+  const OC_STATE_KEY = "c123_estado_v2";
+  // MIGRACION DESDE amigable_demo_state_v4 ELIMINADA (JFC 2026-08-06). Era la
+  // causa REAL del bug "entro con 2605 y veo stock de una tienda de camisetas":
+  // consultorio-123 y AMIGABLE comparten origen en GitHub Pages, y esta
+  // migracion COPIABA el estado demo RETAIL de AMIGABLE dentro de la clave de
+  // consultorio cuando aun no habia estado propio. consultorio-123 NUNCA debe
+  // sembrarse desde una app hermana: si no hay estado propio, cae a su semilla
+  // medica (el array `productos` de este archivo). NO reintroducir esta
+  // migracion cruzada. Ver tambien la guarda de appId en cargarEstadoLocal.
   // Severidad Simon (menor = mas grave). Usado para quedarse con la señal
   // mas urgente entre stock y vencimiento, y para ordenar alertas.
   const ORDEN = { rojo: 0, naranja: 1, amarillo: 2, negro: 3, verde: 4 };
@@ -335,6 +333,9 @@
   function estadoActualExportable() {
     return {
       schemaVersion: 3,
+      _app: "consultorio-123", // SELLO DE APP (JFC 2026-08-06): cargarEstadoLocal
+      // rechaza cualquier estado cuyo _app no sea el nuestro. Guarda contra el
+      // bug de sembrarse con datos RETAIL de una app hermana del mismo origen.
       _rev: _localRev,
       modo: "demo-estatico",
       ubicaciones: clonar(ubicaciones), productos: clonar(productos), ventas: clonar(ventas),
@@ -517,6 +518,12 @@
         if (raw == null) continue;
         let body;
         try { body = JSON.parse(raw); } catch (_) { continue; } // corrupto: probar el otro buffer
+        // GUARDA DE SELLO DE APP (JFC 2026-08-06, self-repair): si el buffer
+        // trae un _app que NO es el nuestro, es estado de una app hermana que
+        // se colo en nuestro origen — se descarta y se cae a la semilla medica
+        // en vez de mostrar stock de otra app. (Sin _app = buffer legacy pre-
+        // sello; se tolera para no borrar datos reales viejos.)
+        if (body && body._app && body._app !== "consultorio-123") continue;
         // Rechazar estados escritos por una pestaña más antigua (_rev más bajo) — solo en eventos onstorage
         if (typeof body._rev === "number" && body._rev < _localRev) return;
         const error = validarRespaldo(body);
